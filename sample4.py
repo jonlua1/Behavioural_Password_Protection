@@ -27,15 +27,6 @@ class Ui_MainWindow(object):
         self.label.setPixmap(QtGui.QPixmap("images/whitecat.jpg"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
-        self.label_noOfWords = QtWidgets.QLabel(self.centralwidget)
-        self.label_noOfWords.setGeometry(QtCore.QRect(100, 200, 100, 43))
-        self.label.setText("Select Number of Words")
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.label_noOfWords.setFont(font)
-        self.label_noOfWords.setAutoFillBackground(True)
-        self.label_noOfWords.setObjectName("label_noOfWords")
-        
         self.checkBox_Alphabet = QtWidgets.QCheckBox(self.centralwidget)
         self.checkBox_Alphabet.setEnabled(True)
         self.checkBox_Alphabet.setGeometry(QtCore.QRect(30, 450, 91, 31))
@@ -72,11 +63,11 @@ class Ui_MainWindow(object):
         self.comboBox_Alphabet.addItem("")
         self.comboBox_Alphabet.addItem("")
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QtCore.QRect(0, 40, 481, 121))
+        self.textBrowser.setGeometry(QtCore.QRect(0, 40, 500, 130))
         self.textBrowser.setObjectName("textBrowser")
         self.genPwd = QtWidgets.QPushButton(self.centralwidget)
-        self.genPwd.setEnabled(False)
-        self.genPwd.setGeometry(QtCore.QRect(30, 700, 191, 41))
+        self.genPwd.setEnabled(True)
+        self.genPwd.setGeometry(QtCore.QRect(20, 770, 191, 41))
         self.genPwd.setAutoFillBackground(False)
         self.genPwd.setStyleSheet("")
         self.genPwd.setCheckable(False)
@@ -120,22 +111,13 @@ class Ui_MainWindow(object):
         self.comboBox_Symbol.addItem("")
         self.comboBox_Symbol.addItem("")
         self.comboBox_Symbol.addItem("")
-        self.comboBox_noOfWords = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox_noOfWords.setEnabled(True)
-        self.comboBox_noOfWords.setGeometry(QtCore.QRect(500, 350, 200, 41))
-        self.comboBox_noOfWords.setObjectName("comboBox_Symbol")
-        self.comboBox_noOfWords.addItem("")
-        self.comboBox_noOfWords.addItem("")
-        self.comboBox_noOfWords.addItem("")
-        self.comboBox_noOfWords.addItem("")
-        self.comboBox_noOfWords.addItem("")
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(10, 190, 341, 71))
-        
+        self.label_selectBrowser = QtWidgets.QLabel(self.centralwidget)
+        self.label_selectBrowser.setGeometry(QtCore.QRect(10, 190, 341, 71))
+        font = QtGui.QFont()
         font.setPointSize(16)
-        self.label_2.setFont(font)
-        self.label_2.setAutoFillBackground(True)
-        self.label_2.setObjectName("label_2")
+        self.label_selectBrowser.setFont(font)
+        self.label_selectBrowser.setAutoFillBackground(True)
+        self.label_selectBrowser.setObjectName("label_selectBrowser")
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.layoutWidget.setGeometry(QtCore.QRect(10, 240, 581, 191))
         self.layoutWidget.setObjectName("layoutWidget")
@@ -170,6 +152,25 @@ class Ui_MainWindow(object):
         self.MicrosoftEdge.setIconSize(QtCore.QSize(20, 20))
         self.MicrosoftEdge.setObjectName("MicrosoftEdge")
         self.horizontalLayout.addWidget(self.MicrosoftEdge)
+        self.label_noOfWords = QtWidgets.QLabel(self.centralwidget)
+        self.label_noOfWords.setGeometry(QtCore.QRect(30, 570, 341, 81))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label_noOfWords.setFont(font)
+        self.label_noOfWords.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_noOfWords.setObjectName("label_noOfWords")
+        self.comboBox_Number_2 = QtWidgets.QComboBox(self.centralwidget)
+        self.comboBox_Number_2.setEnabled(True)
+        self.comboBox_Number_2.setGeometry(QtCore.QRect(30, 660, 81, 41))
+        self.comboBox_Number_2.setObjectName("comboBox_Number_2")
+        self.comboBox_Number_2.addItem("")
+        self.comboBox_Number_2.addItem("")
+        self.comboBox_Number_2.addItem("")
+        self.comboBox_Number_2.addItem("")
+        self.comboBox_Number_2.addItem("")
+        self.exitButton = QtWidgets.QPushButton(self.centralwidget)
+        self.exitButton.setGeometry(QtCore.QRect(1650, 0, 250, 40))
+        self.exitButton.setObjectName("exitButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 2000, 18))
@@ -178,16 +179,8 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        
-       
-     
-
-        self.exitButton = QtWidgets.QPushButton(self.centralwidget)
-        self.exitButton.setGeometry(QtCore.QRect(1650, 0, 250, 40))
-        self.exitButton.setObjectName("exitButton")
 
         self.retranslateUi(MainWindow)
-        
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.MicrosoftEdge.clicked.connect(self.getButtonName)
@@ -229,19 +222,19 @@ class Ui_MainWindow(object):
         print('%s Clicked!' % str(name.objectName()))
         
         if name.objectName() == 'chromeButton':
-            self.label_2.setText("Chrome is selected!")
+            self.label_selectBrowser.setText("Chrome is selected!")
             self.updateLabelSize()
 
         elif name.objectName() == 'OperaButton':
-            self.label_2.setText("Opera is selected!")
+            self.label_selectBrowser.setText("Opera is selected!")
             self.updateLabelSize()
 
         elif name.objectName() == 'MicrosoftEdge':
-            self.label_2.setText("Microsoft Edge is selected!")
+            self.label_selectBrowser.setText("Microsoft Edge is selected!")
             self.updateLabelSize()
 
         elif name.objectName() == 'FireFoxButton':
-            self.label_2.setText("FireFox is selected!")
+            self.label_selectBrowser.setText("FireFox is selected!")
             self.updateLabelSize()
 
 
@@ -251,7 +244,7 @@ class Ui_MainWindow(object):
         app.quit()
 
     def updateLabelSize(self):
-        self.label_2.adjustSize()
+        self.label_selectBrowser.adjustSize()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -311,17 +304,17 @@ class Ui_MainWindow(object):
         self.comboBox_Symbol.setItemText(6, _translate("MainWindow", "&"))
         self.comboBox_Symbol.setItemText(7, _translate("MainWindow", "*"))
         self.comboBox_Symbol.setItemText(8, _translate("MainWindow", "?"))
-        self.label_noOfWords.setText(_translate("MainWindow", "Please select number of words"))
-        self.comboBox_noOfWords.setItemText(0, _translate("MainWindow", "1"))
-        self.comboBox_noOfWords.setItemText(1, _translate("MainWindow", "2"))
-        self.comboBox_noOfWords.setItemText(2, _translate("MainWindow", "3"))
-        self.comboBox_noOfWords.setItemText(3, _translate("MainWindow", "4"))
-        self.comboBox_noOfWords.setItemText(4, _translate("MainWindow", "5"))
-        self.label_2.setText(_translate("MainWindow", "Select Your Browser"))
+        self.label_selectBrowser.setText(_translate("MainWindow", "Select Your Browser"))
         self.chromeButton.setText(_translate("MainWindow", "Google Chrome"))
         self.FireFoxButton.setText(_translate("MainWindow", "FireFox"))
         self.OperaButton.setText(_translate("MainWindow", "Opera"))
         self.MicrosoftEdge.setText(_translate("MainWindow", "Microsoft Edge"))
+        self.label_noOfWords.setText(_translate("MainWindow", "Select number of words"))
+        self.comboBox_Number_2.setItemText(0, _translate("MainWindow", "1"))
+        self.comboBox_Number_2.setItemText(1, _translate("MainWindow", "2"))
+        self.comboBox_Number_2.setItemText(2, _translate("MainWindow", "3"))
+        self.comboBox_Number_2.setItemText(3, _translate("MainWindow", "4"))
+        self.comboBox_Number_2.setItemText(4, _translate("MainWindow", "5"))
         self.exitButton.setText(_translate("MainWindow", "Exit"))
 
 if __name__ == "__main__":
