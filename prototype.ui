@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>717</width>
-    <height>600</height>
+    <width>2000</width>
+    <height>1200</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>lock_icon.png</normaloff>lock_icon.png</iconset>
+    <normaloff>images/lock_icon.png</normaloff>images/lock_icon.png</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -37,7 +37,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../Pictures/whitecat.jpg</pixmap>
+     <pixmap>images/whitecat.jpg</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -51,7 +51,7 @@
      <rect>
       <x>30</x>
       <y>450</y>
-      <width>81</width>
+      <width>91</width>
       <height>31</height>
      </rect>
     </property>
@@ -242,8 +242,8 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>500</y>
+      <x>30</x>
+      <y>700</y>
       <width>191</width>
       <height>41</height>
      </rect>
@@ -252,8 +252,7 @@ p, li { white-space: pre-wrap; }
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Generate Password</string>
@@ -268,7 +267,7 @@ p, li { white-space: pre-wrap; }
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="comboBox_Number">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -331,7 +330,7 @@ p, li { white-space: pre-wrap; }
      </property>
     </item>
    </widget>
-   <widget class="QCheckBox" name="checkBox_Alphabet_2">
+   <widget class="QCheckBox" name="checkBox_Number">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -339,7 +338,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>150</x>
       <y>450</y>
-      <width>81</width>
+      <width>91</width>
       <height>31</height>
      </rect>
     </property>
@@ -350,7 +349,7 @@ p, li { white-space: pre-wrap; }
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_Alphabet_3">
+   <widget class="QCheckBox" name="checkBox_Symbol">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -358,7 +357,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>270</x>
       <y>450</y>
-      <width>81</width>
+      <width>91</width>
       <height>31</height>
      </rect>
     </property>
@@ -369,7 +368,7 @@ p, li { white-space: pre-wrap; }
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_2">
+   <widget class="QComboBox" name="comboBox_Symbol">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -433,7 +432,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>717</width>
+     <width>2000</width>
      <height>18</height>
     </rect>
    </property>
