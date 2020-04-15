@@ -8,6 +8,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from dialogBox import Ui_Dialog;
 
 
 class Ui_MainWindow(object):
@@ -19,20 +20,72 @@ class Ui_MainWindow(object):
         MainWindow.setWindowIcon(icon)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet("")
+        
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(0, 0, 800, 450))
+        self.label.setGeometry(QtCore.QRect(0, 0, 2000, 800))
+        self.label.setProperty("cssClass", "backgroundImage")
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("images/whitecat.jpg"))
+        self.label.setPixmap(QtGui.QPixmap("images/background.jpg"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
-        self.checkBox_Alphabet = QtWidgets.QCheckBox(self.centralwidget)
+
+        self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
+        self.textBrowser.setGeometry(QtCore.QRect((MainWindow.width() - 900) / 2, 0, 900, 150))
+        self.textBrowser.setObjectName("textBrowser")
+
+        self.label_selectBrowser = QtWidgets.QLabel(self.centralwidget)
+        self.label_selectBrowser.setGeometry(QtCore.QRect((MainWindow.width() - 350) / 2, self.textBrowser.y() + self.textBrowser.height() + 20, 350, 71))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        self.label_selectBrowser.setFont(font)
+        self.label_selectBrowser.setAutoFillBackground(True)
+        self.label_selectBrowser.setObjectName("label_selectBrowser")
+        self.label_selectBrowser.setProperty("class", "displayText_selectBrowser")
+       
+        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.layoutWidget.setGeometry(QtCore.QRect((MainWindow.width() - 1200) / 2, self.label_selectBrowser.y() + 100, 1200, 100))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.layout_checkBox = QtWidgets.QWidget(self.centralwidget)
+        self.layout_checkBox.setGeometry(QtCore.QRect((MainWindow.width() - 1200) / 2, self.layoutWidget.y() + 100, 1200, 100))
+        self.layout_checkBox.setObjectName("layoutWidget_vertical")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.layout_checkBox)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout_checkBox = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_checkBox.setObjectName("horizontalLayout_checkBox")
+        
+        self.horizontalLayout_comboBox = QtWidgets.QHBoxLayout(self.layout_checkBox)
+        self.horizontalLayout_comboBox.setContentsMargins(0,0,0,0)
+        self.horizontalLayout_comboBox.setObjectName("horizontalLayout_comboBox")
+
+        self.checkBox_Alphabet = QtWidgets.QCheckBox(self.layout_checkBox)
         self.checkBox_Alphabet.setEnabled(True)
         self.checkBox_Alphabet.setGeometry(QtCore.QRect(30, 450, 91, 31))
         self.checkBox_Alphabet.setCheckable(True)
         self.checkBox_Alphabet.setObjectName("checkBox_Alphabet")
-        self.comboBox_Alphabet = QtWidgets.QComboBox(self.centralwidget)
+        self.horizontalLayout_checkBox.addWidget(self.checkBox_Alphabet)
+        self.verticalLayout.addLayout(self.horizontalLayout_checkBox)
+        self.checkBox_Number = QtWidgets.QCheckBox(self.layout_checkBox)
+        self.checkBox_Number.setEnabled(True)
+        self.checkBox_Number.setGeometry(QtCore.QRect(150, 450, 91, 31))
+        self.checkBox_Number.setCheckable(True)
+        self.checkBox_Number.setObjectName("checkBox_Number")
+        self.horizontalLayout_checkBox.addWidget(self.checkBox_Number)
+        self.verticalLayout.addLayout(self.horizontalLayout_checkBox)
+        self.checkBox_Symbol = QtWidgets.QCheckBox(self.layout_checkBox)
+        self.checkBox_Symbol.setEnabled(True)
+        self.checkBox_Symbol.setGeometry(QtCore.QRect(270, 450, 91, 31))
+        self.checkBox_Symbol.setCheckable(True)
+        self.checkBox_Symbol.setObjectName("checkBox_Symbol")
+        self.horizontalLayout_checkBox.addWidget(self.checkBox_Symbol)
+        self.verticalLayout.addLayout(self.horizontalLayout_checkBox)
+
+        self.comboBox_Alphabet = QtWidgets.QComboBox(self.layout_checkBox)
         self.comboBox_Alphabet.setEnabled(False)
         self.comboBox_Alphabet.setGeometry(QtCore.QRect(30, 500, 81, 41))
         self.comboBox_Alphabet.setObjectName("comboBox_Alphabet")
@@ -62,19 +115,9 @@ class Ui_MainWindow(object):
         self.comboBox_Alphabet.addItem("")
         self.comboBox_Alphabet.addItem("")
         self.comboBox_Alphabet.addItem("")
-        self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QtCore.QRect(0, 40, 500, 130))
-        self.textBrowser.setObjectName("textBrowser")
-        self.genPwd = QtWidgets.QPushButton(self.centralwidget)
-        self.genPwd.setEnabled(True)
-        self.genPwd.setGeometry(QtCore.QRect(20, 770, 191, 41))
-        self.genPwd.setAutoFillBackground(False)
-        self.genPwd.setStyleSheet("")
-        self.genPwd.setCheckable(False)
-        self.genPwd.setChecked(False)
-        self.genPwd.setFlat(False)
-        self.genPwd.setObjectName("genPwd")
-        self.comboBox_Number = QtWidgets.QComboBox(self.centralwidget)
+        self.horizontalLayout_comboBox.addWidget(self.comboBox_Alphabet)
+        self.verticalLayout.addLayout(self.horizontalLayout_comboBox)
+        self.comboBox_Number = QtWidgets.QComboBox(self.layout_checkBox)
         self.comboBox_Number.setEnabled(False)
         self.comboBox_Number.setGeometry(QtCore.QRect(150, 500, 81, 41))
         self.comboBox_Number.setObjectName("comboBox_Number")
@@ -88,17 +131,9 @@ class Ui_MainWindow(object):
         self.comboBox_Number.addItem("")
         self.comboBox_Number.addItem("")
         self.comboBox_Number.addItem("")
-        self.checkBox_Number = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkBox_Number.setEnabled(True)
-        self.checkBox_Number.setGeometry(QtCore.QRect(150, 450, 91, 31))
-        self.checkBox_Number.setCheckable(True)
-        self.checkBox_Number.setObjectName("checkBox_Number")
-        self.checkBox_Symbol = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkBox_Symbol.setEnabled(True)
-        self.checkBox_Symbol.setGeometry(QtCore.QRect(270, 450, 91, 31))
-        self.checkBox_Symbol.setCheckable(True)
-        self.checkBox_Symbol.setObjectName("checkBox_Symbol")
-        self.comboBox_Symbol = QtWidgets.QComboBox(self.centralwidget)
+        self.horizontalLayout_comboBox.addWidget(self.comboBox_Number)
+        self.comboBox_Symbol = QtWidgets.QComboBox(self.layout_checkBox)
+        self.verticalLayout.addLayout(self.horizontalLayout_comboBox)
         self.comboBox_Symbol.setEnabled(False)
         self.comboBox_Symbol.setGeometry(QtCore.QRect(270, 500, 81, 41))
         self.comboBox_Symbol.setObjectName("comboBox_Symbol")
@@ -111,67 +146,81 @@ class Ui_MainWindow(object):
         self.comboBox_Symbol.addItem("")
         self.comboBox_Symbol.addItem("")
         self.comboBox_Symbol.addItem("")
-        self.label_selectBrowser = QtWidgets.QLabel(self.centralwidget)
-        self.label_selectBrowser.setGeometry(QtCore.QRect(10, 190, 341, 71))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.label_selectBrowser.setFont(font)
-        self.label_selectBrowser.setAutoFillBackground(True)
-        self.label_selectBrowser.setObjectName("label_selectBrowser")
-        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.layoutWidget.setGeometry(QtCore.QRect(10, 240, 581, 191))
-        self.layoutWidget.setObjectName("layoutWidget")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.chromeButton = QtWidgets.QPushButton(self.layoutWidget)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("images/Google-Chrome-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.chromeButton.setIcon(icon1)
-        self.chromeButton.setIconSize(QtCore.QSize(20, 20))
-        self.chromeButton.setObjectName("chromeButton")
-        self.horizontalLayout.addWidget(self.chromeButton)
-        self.FireFoxButton = QtWidgets.QPushButton(self.layoutWidget)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("images/Firefox-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.FireFoxButton.setIcon(icon2)
-        self.FireFoxButton.setIconSize(QtCore.QSize(20, 20))
-        self.FireFoxButton.setObjectName("FireFoxButton")
-        self.horizontalLayout.addWidget(self.FireFoxButton)
-        self.OperaButton = QtWidgets.QPushButton(self.layoutWidget)
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("images/Opera-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.OperaButton.setIcon(icon3)
-        self.OperaButton.setIconSize(QtCore.QSize(20, 20))
-        self.OperaButton.setObjectName("OperaButton")
-        self.horizontalLayout.addWidget(self.OperaButton)
-        self.MicrosoftEdge = QtWidgets.QPushButton(self.layoutWidget)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("images/icons8-microsoft-edge-96.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.MicrosoftEdge.setIcon(icon4)
-        self.MicrosoftEdge.setIconSize(QtCore.QSize(20, 20))
-        self.MicrosoftEdge.setObjectName("MicrosoftEdge")
-        self.horizontalLayout.addWidget(self.MicrosoftEdge)
-        self.label_noOfWords = QtWidgets.QLabel(self.centralwidget)
-        self.label_noOfWords.setGeometry(QtCore.QRect(30, 570, 341, 81))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.label_noOfWords.setFont(font)
-        self.label_noOfWords.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.label_noOfWords.setObjectName("label_noOfWords")
+        self.horizontalLayout_comboBox.addWidget(self.comboBox_Symbol)
+        self.verticalLayout.addLayout(self.horizontalLayout_comboBox)
         self.comboBox_Number_2 = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox_Number_2.setEnabled(True)
-        self.comboBox_Number_2.setGeometry(QtCore.QRect(30, 660, 81, 41))
+        self.comboBox_Number_2.setGeometry(QtCore.QRect((MainWindow.width( ) - 81) / 2, 660, 81, 41))
         self.comboBox_Number_2.setObjectName("comboBox_Number_2")
         self.comboBox_Number_2.addItem("")
         self.comboBox_Number_2.addItem("")
         self.comboBox_Number_2.addItem("")
         self.comboBox_Number_2.addItem("")
         self.comboBox_Number_2.addItem("")
+
+
+        self.genPwd = QtWidgets.QPushButton(self.centralwidget)
+        self.genPwd.setEnabled(True)
+        self.genPwd.setGeometry(QtCore.QRect((MainWindow.width() - 190) / 2, 770, 191, 41))
+        self.genPwd.setAutoFillBackground(False)
+        self.genPwd.setStyleSheet("")
+        self.genPwd.setCheckable(False)
+        self.genPwd.setChecked(False)
+        self.genPwd.setFlat(False)
+        self.genPwd.setObjectName("genPwd")
+        self.chromeButton = QtWidgets.QPushButton(self.layoutWidget)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("images/Google-Chrome-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.chromeButton.setIcon(icon1)
+        self.chromeButton.setIconSize(QtCore.QSize(40, 40))
+        self.chromeButton.setObjectName("chromeButton")
+        self.chromeButton.setFixedHeight(80)
+        self.chromeButton.setFixedWidth(250)
+        self.chromeButton.setProperty("class", "browserBtns")
+        self.horizontalLayout.addWidget(self.chromeButton)
+        self.FireFoxButton = QtWidgets.QPushButton(self.layoutWidget)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("images/Firefox-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.FireFoxButton.setIcon(icon2)
+        self.FireFoxButton.setIconSize(QtCore.QSize(40, 40))
+        self.FireFoxButton.setObjectName("FireFoxButton")
+        self.FireFoxButton.setFixedHeight(80)
+        self.FireFoxButton.setFixedWidth(250)
+        self.FireFoxButton.setProperty("class", "browserBtns")
+        self.horizontalLayout.addWidget(self.FireFoxButton)
+        self.OperaButton = QtWidgets.QPushButton(self.layoutWidget)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("images/Opera-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.OperaButton.setIcon(icon3)
+        self.OperaButton.setIconSize(QtCore.QSize(40, 40))
+        self.OperaButton.setObjectName("OperaButton")
+        self.OperaButton.setFixedHeight(80)
+        self.OperaButton.setFixedWidth(250)
+        self.OperaButton.setProperty("class", "browserBtns")
+        self.horizontalLayout.addWidget(self.OperaButton)
+        self.MicrosoftEdgeButton = QtWidgets.QPushButton(self.layoutWidget)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("images/icons8-microsoft-edge-96.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.MicrosoftEdgeButton.setIcon(icon4)
+        self.MicrosoftEdgeButton.setIconSize(QtCore.QSize(40, 40))
+        self.MicrosoftEdgeButton.setObjectName("MicrosoftEdgeButton")
+        self.MicrosoftEdgeButton.setFixedHeight(80)
+        self.MicrosoftEdgeButton.setFixedWidth(250)
+        self.MicrosoftEdgeButton.setProperty("class", "browserBtns")
+        self.horizontalLayout.addWidget(self.MicrosoftEdgeButton)
         self.exitButton = QtWidgets.QPushButton(self.centralwidget)
         self.exitButton.setGeometry(QtCore.QRect(1650, 0, 250, 40))
         self.exitButton.setObjectName("exitButton")
         MainWindow.setCentralWidget(self.centralwidget)
+       
+        self.label_noOfWords = QtWidgets.QLabel(self.centralwidget)
+        self.label_noOfWords.setGeometry(QtCore.QRect((MainWindow.width() - 340) / 2, 570, 340, 81))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label_noOfWords.setFont(font)
+        self.label_noOfWords.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_noOfWords.setObjectName("label_noOfWords")
+    
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 2000, 18))
         self.menubar.setObjectName("menubar")
@@ -183,13 +232,13 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        self.MicrosoftEdge.clicked.connect(self.getButtonName)
+        self.MicrosoftEdgeButton.clicked.connect(self.getButtonName)
         self.OperaButton.clicked.connect(self.getButtonName)
         self.chromeButton.clicked.connect(self.getButtonName)
         self.FireFoxButton.clicked.connect(self.getButtonName)
+        self.genPwd.clicked.connect(self.getPWD)
         self.exitButton.clicked.connect(self.exitSystem)
         
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -229,7 +278,7 @@ class Ui_MainWindow(object):
             self.label_selectBrowser.setText("Opera is selected!")
             self.updateLabelSize()
 
-        elif name.objectName() == 'MicrosoftEdge':
+        elif name.objectName() == 'MicrosoftEdgeButton':
             self.label_selectBrowser.setText("Microsoft Edge is selected!")
             self.updateLabelSize()
 
@@ -240,11 +289,33 @@ class Ui_MainWindow(object):
 
 ##################################################################################################################################            
 
-    def exitSystem(self):
-        app.quit()
+    def exitSystem(self, event):
+
+        reply = QtWidgets.QMessageBox.question(
+            MainWindow, "Message" , "Are you sure you want to quit?",
+            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
+        )
+
+        if reply == QtWidgets.QMessageBox.Yes:
+            app.quit()
+
+        else: 
+            pass
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            self.close()
+
 
     def updateLabelSize(self):
         self.label_selectBrowser.adjustSize()
+
+    def getPWD(self):
+        Dialog = QtWidgets.QDialog()
+        ui = Ui_Dialog()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        Dialog.exec_()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -308,7 +379,7 @@ class Ui_MainWindow(object):
         self.chromeButton.setText(_translate("MainWindow", "Google Chrome"))
         self.FireFoxButton.setText(_translate("MainWindow", "FireFox"))
         self.OperaButton.setText(_translate("MainWindow", "Opera"))
-        self.MicrosoftEdge.setText(_translate("MainWindow", "Microsoft Edge"))
+        self.MicrosoftEdgeButton.setText(_translate("MainWindow", "Microsoft Edge"))
         self.label_noOfWords.setText(_translate("MainWindow", "Select number of words"))
         self.comboBox_Number_2.setItemText(0, _translate("MainWindow", "1"))
         self.comboBox_Number_2.setItemText(1, _translate("MainWindow", "2"))
@@ -321,7 +392,37 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
+    MainWindow.styleSheet = """
+
+        QMainWindow {
+            background-color: #ede0bb;
+        }
+
+        .backgroundImage{
+            border-style: outset;
+        }
+
+        QLabel {
+            border: 5px solid red;
+            text-align: center;
+            background-color: #ffffff;
+        }
+
+        .browserBtns{
+            display: block;
+            color: #ffff99;
+            background-color: #000000;
+        }
+
+        .displayText_selectBrowser {
+            display: block;
+        }
+
+
+
+    """
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.showFullScreen()
+    MainWindow.setStyleSheet(MainWindow.styleSheet)
     sys.exit(app.exec_())
