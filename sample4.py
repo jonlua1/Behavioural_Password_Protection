@@ -13,8 +13,12 @@ from dialogBox import Ui_Dialog;
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+
+        width = QtWidgets.QDesktopWidget().screenGeometry(-1).width()
+        height = QtWidgets.QDesktopWidget().screenGeometry(-1).height()
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(2000, 1200)
+        #there shouldn't be a hard coded number here in setGeometry
+        MainWindow.setGeometry(0,0,width, height)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("images/lock_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
