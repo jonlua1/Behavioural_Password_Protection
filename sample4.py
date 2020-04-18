@@ -10,7 +10,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from dialogBox import Ui_Dialog;
+#from dialogBox import Ui_Dialog;
+from PyQt5.QtWidgets import QMessageBox
 
 
 class Ui_MainWindow(object):
@@ -42,6 +43,7 @@ class Ui_MainWindow(object):
         self.textBrowser.setObjectName("textBrowser")
 
         self.label_selectBrowser = QtWidgets.QLabel(self.centralwidget)
+        self.label_selectBrowser.setAlignment(QtCore.Qt.AlignCenter)
         self.label_selectBrowser.setGeometry(QtCore.QRect(round((MainWindow.width() - (width / 5) ) / 2), self.textBrowser.y() + self.textBrowser.height() + 50, round(width/5), 71))
         font = QtGui.QFont()
         font.setPointSize(16)
@@ -307,13 +309,23 @@ class Ui_MainWindow(object):
 ##################################################################################################################################            
 
     def exitSystem(self, event):
+        
+        msg = QtWidgets.QMessageBox()
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("images/lock_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        msg.setWindowIcon(icon)
+        msg.setWindowTitle("Exit")
+        msg.setText("Exit the system?")
+        msg.setIconPixmap(QtGui.QIcon("./images/icons8-help-100.png").pixmap(90))
+        msg.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+        msg.setDefaultButton(QMessageBox.No)
+        buttonYes = msg.button(QtWidgets.QMessageBox.Yes)
+        buttonYes.setText("Yes")
+        buttonNo = msg.button(QtWidgets.QMessageBox.No)
+        buttonNo.setText("No")
+        x = msg.exec_()
 
-        reply = QtWidgets.QMessageBox.question(
-            MainWindow, "Message" , "Are you sure you want to quit?",
-            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
-        )
-
-        if reply == QtWidgets.QMessageBox.Yes:
+        if msg.clickedButton() == buttonYes:
             app.quit()
 
         else: 
@@ -328,11 +340,22 @@ class Ui_MainWindow(object):
         self.label_selectBrowser.adjustSize()
 
     def getPWD(self):
-        Dialog = QtWidgets.QDialog()
-        ui = Ui_Dialog()
-        ui.setupUi(Dialog)
-        Dialog.show()
-        Dialog.exec_()
+        result = self.pwdGenFunction("Hi World")
+        msg = QtWidgets.QMessageBox()
+        msg.setProperty("class", "pwdBox")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("images/lock_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        msg.setWindowIcon(icon)
+        msg.setWindowTitle("Generated password result")
+        msg.setText(result)
+        msg.setIconPixmap(QtGui.QIcon("./images/icons8-info-popup-100.png").pixmap(90))
+        
+        x = msg.exec_()
+
+    def pwdGenFunction(self, keyword):
+        keyword += "??????????????????????????????????????????????????"
+        return keyword
+   
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -426,7 +449,7 @@ if __name__ == "__main__":
 
         .browserBtns{
             background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
-            background-color:#7892c2;
+            background-color:#0a0a0a;
             border-radius:30px;
             border:2px solid #4e6096;
             color:#ffffff;
@@ -435,6 +458,15 @@ if __name__ == "__main__":
             font-weight:bold;
         
             text-decoration:none;
+        }
+
+        .browserBtns:hover {
+            background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+            background-color:#4f6b6b;
+        }
+        .broserBtns:active {
+            position:relative;
+            top:1px;
         }
 
         .displayText_selectBrowser {
@@ -476,6 +508,9 @@ if __name__ == "__main__":
             top:1px;
         }
 
+        .pwdBox {
+            min-width: 400px;
+        }
 
 
     """
