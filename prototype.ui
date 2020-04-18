@@ -542,7 +542,30 @@ p, li { white-space: pre-wrap; }
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">.genPwdBtn {
+	box-shadow: -7px 4px 8px 1px #9fb4f2;
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	background-color:#7892c2;
+	border-radius:30px;
+	border:2px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Trebuchet MS;
+	font-size:19px;
+	font-weight:bold;
+	padding:25px 59px;
+	text-decoration:none;
+	text-shadow:0px 2px 0px #283966;
+}
+.genPwdBtn:hover {
+	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color:#476e9e;
+}
+.genPwdBtn:active {
+	position:relative;
+	top:1px;
+}</string>
     </property>
     <property name="text">
      <string>Generate Password</string>

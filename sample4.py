@@ -6,6 +6,8 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+#Customized button image comes from: https://icons8.com
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from dialogBox import Ui_Dialog;
@@ -28,19 +30,19 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(0, 0, 2000, 800))
-        self.label.setProperty("cssClass", "backgroundImage")
+        self.label.setGeometry(QtCore.QRect(0, 0, width, height))
+        self.label.setProperty("class", "backgroundImage")
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("images/background.jpg"))
+        #self.label.setPixmap(QtGui.QPixmap("images/background.jpg"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
 
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QtCore.QRect((MainWindow.width() - 900) / 2, 0, 900, 150))
+        self.textBrowser.setGeometry(QtCore.QRect(round((MainWindow.width() - 900) / 2), 0, 900, 150))
         self.textBrowser.setObjectName("textBrowser")
 
         self.label_selectBrowser = QtWidgets.QLabel(self.centralwidget)
-        self.label_selectBrowser.setGeometry(QtCore.QRect((MainWindow.width() - 350) / 2, self.textBrowser.y() + self.textBrowser.height() + 20, 350, 71))
+        self.label_selectBrowser.setGeometry(QtCore.QRect(round((MainWindow.width() - (width / 5) ) / 2), self.textBrowser.y() + self.textBrowser.height() + 50, round(width/5), 71))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.label_selectBrowser.setFont(font)
@@ -49,13 +51,14 @@ class Ui_MainWindow(object):
         self.label_selectBrowser.setProperty("class", "displayText_selectBrowser")
        
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.layoutWidget.setGeometry(QtCore.QRect((MainWindow.width() - 1200) / 2, self.label_selectBrowser.y() + 100, 1200, 100))
+        self.layoutWidget.setGeometry(QtCore.QRect(round((MainWindow.width() - 1200) / 2), self.label_selectBrowser.y() + 100, 1200, 100))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.layout_checkBox = QtWidgets.QWidget(self.centralwidget)
-        self.layout_checkBox.setGeometry(QtCore.QRect((MainWindow.width() - 1200) / 2, self.layoutWidget.y() + 100, 1200, 100))
+        self.layout_checkBox.setGeometry(QtCore.QRect(round((MainWindow.width() - 1200) / 2), height - round(height / 6 * 4) + 100, 1200, 100))
+        self.layout_checkBox.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         self.layout_checkBox.setObjectName("layoutWidget_vertical")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.layout_checkBox)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -63,27 +66,27 @@ class Ui_MainWindow(object):
         self.horizontalLayout_checkBox = QtWidgets.QHBoxLayout()
         self.horizontalLayout_checkBox.setObjectName("horizontalLayout_checkBox")
         
-        self.horizontalLayout_comboBox = QtWidgets.QHBoxLayout(self.layout_checkBox)
+        self.horizontalLayout_comboBox = QtWidgets.QHBoxLayout()
         self.horizontalLayout_comboBox.setContentsMargins(0,0,0,0)
         self.horizontalLayout_comboBox.setObjectName("horizontalLayout_comboBox")
 
         self.checkBox_Alphabet = QtWidgets.QCheckBox(self.layout_checkBox)
         self.checkBox_Alphabet.setEnabled(True)
-        self.checkBox_Alphabet.setGeometry(QtCore.QRect(30, 450, 91, 31))
+        #self.checkBox_Alphabet.setGeometry(QtCore.QRect(30, 450, 91, 31))
         self.checkBox_Alphabet.setCheckable(True)
         self.checkBox_Alphabet.setObjectName("checkBox_Alphabet")
         self.horizontalLayout_checkBox.addWidget(self.checkBox_Alphabet)
         self.verticalLayout.addLayout(self.horizontalLayout_checkBox)
         self.checkBox_Number = QtWidgets.QCheckBox(self.layout_checkBox)
         self.checkBox_Number.setEnabled(True)
-        self.checkBox_Number.setGeometry(QtCore.QRect(150, 450, 91, 31))
+        #self.checkBox_Number.setGeometry(QtCore.QRect(150, 450, 91, 31))
         self.checkBox_Number.setCheckable(True)
         self.checkBox_Number.setObjectName("checkBox_Number")
         self.horizontalLayout_checkBox.addWidget(self.checkBox_Number)
         self.verticalLayout.addLayout(self.horizontalLayout_checkBox)
         self.checkBox_Symbol = QtWidgets.QCheckBox(self.layout_checkBox)
         self.checkBox_Symbol.setEnabled(True)
-        self.checkBox_Symbol.setGeometry(QtCore.QRect(270, 450, 91, 31))
+        #self.checkBox_Symbol.setGeometry(QtCore.QRect(270, 450, 91, 31))
         self.checkBox_Symbol.setCheckable(True)
         self.checkBox_Symbol.setObjectName("checkBox_Symbol")
         self.horizontalLayout_checkBox.addWidget(self.checkBox_Symbol)
@@ -91,7 +94,7 @@ class Ui_MainWindow(object):
 
         self.comboBox_Alphabet = QtWidgets.QComboBox(self.layout_checkBox)
         self.comboBox_Alphabet.setEnabled(False)
-        self.comboBox_Alphabet.setGeometry(QtCore.QRect(30, 500, 81, 41))
+        #self.comboBox_Alphabet.setGeometry(QtCore.QRect(30, 500, 81, 41))
         self.comboBox_Alphabet.setObjectName("comboBox_Alphabet")
         self.comboBox_Alphabet.addItem("")
         self.comboBox_Alphabet.addItem("")
@@ -123,7 +126,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout_comboBox)
         self.comboBox_Number = QtWidgets.QComboBox(self.layout_checkBox)
         self.comboBox_Number.setEnabled(False)
-        self.comboBox_Number.setGeometry(QtCore.QRect(150, 500, 81, 41))
+        #self.comboBox_Number.setGeometry(QtCore.QRect(150, 500, 81, 41))
         self.comboBox_Number.setObjectName("comboBox_Number")
         self.comboBox_Number.addItem("")
         self.comboBox_Number.addItem("")
@@ -139,7 +142,7 @@ class Ui_MainWindow(object):
         self.comboBox_Symbol = QtWidgets.QComboBox(self.layout_checkBox)
         self.verticalLayout.addLayout(self.horizontalLayout_comboBox)
         self.comboBox_Symbol.setEnabled(False)
-        self.comboBox_Symbol.setGeometry(QtCore.QRect(270, 500, 81, 41))
+        #self.comboBox_Symbol.setGeometry(QtCore.QRect(270, 500, 81, 41))
         self.comboBox_Symbol.setObjectName("comboBox_Symbol")
         self.comboBox_Symbol.addItem("")
         self.comboBox_Symbol.addItem("")
@@ -154,7 +157,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout_comboBox)
         self.comboBox_Number_2 = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox_Number_2.setEnabled(True)
-        self.comboBox_Number_2.setGeometry(QtCore.QRect((MainWindow.width( ) - 81) / 2, 660, 81, 41))
+        self.comboBox_Number_2.setGeometry(QtCore.QRect(round((MainWindow.width( ) - 81) / 2), height - round(height / 6 * 2), 81, 41))
         self.comboBox_Number_2.setObjectName("comboBox_Number_2")
         self.comboBox_Number_2.addItem("")
         self.comboBox_Number_2.addItem("")
@@ -164,14 +167,19 @@ class Ui_MainWindow(object):
 
 
         self.genPwd = QtWidgets.QPushButton(self.centralwidget)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("images/icons8-privacy-100.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.genPwd.setIcon(icon5)
+        self.genPwd.setIconSize(QtCore.QSize(80,80))
         self.genPwd.setEnabled(True)
-        self.genPwd.setGeometry(QtCore.QRect((MainWindow.width() - 190) / 2, 770, 191, 41))
+        self.genPwd.setGeometry(QtCore.QRect(round((MainWindow.width() - 450) / 2), height - round(height / 6), 450, 125))
         self.genPwd.setAutoFillBackground(False)
         self.genPwd.setStyleSheet("")
         self.genPwd.setCheckable(False)
         self.genPwd.setChecked(False)
         self.genPwd.setFlat(False)
         self.genPwd.setObjectName("genPwd")
+        self.genPwd.setProperty("class", "genPwdBtn")
         self.chromeButton = QtWidgets.QPushButton(self.layoutWidget)
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("images/Google-Chrome-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -213,12 +221,17 @@ class Ui_MainWindow(object):
         self.MicrosoftEdgeButton.setProperty("class", "browserBtns")
         self.horizontalLayout.addWidget(self.MicrosoftEdgeButton)
         self.exitButton = QtWidgets.QPushButton(self.centralwidget)
-        self.exitButton.setGeometry(QtCore.QRect(1650, 0, 250, 40))
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("images/icons8-exit-100.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.exitButton.setIcon(icon5)
+        self.exitButton.setIconSize(QtCore.QSize(80, 80))
+        self.exitButton.setGeometry(QtCore.QRect(width - 255, 0, 250, 100))
         self.exitButton.setObjectName("exitButton")
+        self.exitButton.setProperty("class", "exitBtn")
         MainWindow.setCentralWidget(self.centralwidget)
        
         self.label_noOfWords = QtWidgets.QLabel(self.centralwidget)
-        self.label_noOfWords.setGeometry(QtCore.QRect((MainWindow.width() - 340) / 2, 570, 340, 81))
+        self.label_noOfWords.setGeometry(QtCore.QRect(round((MainWindow.width() - 340) / 2), height - round(height / 6 * 2.5), 340, 81))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.label_noOfWords.setFont(font)
@@ -407,19 +420,60 @@ if __name__ == "__main__":
         }
 
         QLabel {
-            border: 5px solid red;
             text-align: center;
             background-color: #ffffff;
         }
 
         .browserBtns{
-            display: block;
-            color: #ffff99;
-            background-color: #000000;
+            background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+            background-color:#7892c2;
+            border-radius:30px;
+            border:2px solid #4e6096;
+            color:#ffffff;
+            font-family:Trebuchet MS;
+            font-size:19px;
+            font-weight:bold;
+        
+            text-decoration:none;
         }
 
         .displayText_selectBrowser {
-            display: block;
+            text-align: right;
+        }
+        
+        QCheckBox::indicator {
+            width: 100px;
+            height: 100px;
+        }
+
+        QCheckBox::indicator:unchecked{
+            image: url(images/icons8-unchecked-checkbox-100.png)
+        }
+
+        QCheckBox::indicator:checked{
+            image: url(images/icons8-checkmark-100.png)
+        }
+
+        .genPwdBtn {
+            background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+            background-color:#7892c2;
+            border-radius:30px;
+            border:2px solid #4e6096;
+            color:#ffffff;
+            font-family:Trebuchet MS;
+            font-size:19px;
+            font-weight:bold;
+            padding:25px 59px;
+            text-decoration:none;
+          
+        }
+        .genPwdBtn:hover {
+            background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+            background-color:#476e9e;
+        }
+        .genPwdBtn:active {
+            position:relative;
+            top:1px;
         }
 
 
