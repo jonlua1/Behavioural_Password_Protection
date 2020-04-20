@@ -15,13 +15,18 @@ from PyQt5.QtWidgets import QMessageBox
 
 
 class Ui_MainWindow(object):
+    def __init__(self):
+        super().__init__()
+        self.left = 400
+        self.top = 300
+        self.width = 1200
+        self.height = 700
+
     def setupUi(self, MainWindow):
 
-        width = QtWidgets.QDesktopWidget().screenGeometry(-1).width()
-        height = QtWidgets.QDesktopWidget().screenGeometry(-1).height()
         MainWindow.setObjectName("MainWindow")
         #there shouldn't be a hard coded number here in setGeometry
-        MainWindow.setGeometry(0,0,width, height)
+        MainWindow.setGeometry(0,0, self.width, self.height)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("images/lock_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -31,7 +36,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(0, 0, width, height))
+        self.label.setGeometry(QtCore.QRect(0, 0, MainWindow.width(), MainWindow.height()))
         self.label.setProperty("class", "backgroundImage")
         self.label.setText("")
         #self.label.setPixmap(QtGui.QPixmap("images/background.jpg"))
@@ -44,7 +49,7 @@ class Ui_MainWindow(object):
 
         self.label_selectBrowser = QtWidgets.QLabel(self.centralwidget)
         self.label_selectBrowser.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_selectBrowser.setGeometry(QtCore.QRect(round((MainWindow.width() - (width / 5) ) / 2), self.textBrowser.y() + self.textBrowser.height() + 50, round(width/5), 71))
+        self.label_selectBrowser.setGeometry(QtCore.QRect(round((MainWindow.width() - (self.width / 5) ) / 2), self.textBrowser.y() + self.textBrowser.height() + 50, round(self.width/5), 71))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.label_selectBrowser.setFont(font)
@@ -59,7 +64,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.layout_checkBox = QtWidgets.QWidget(self.centralwidget)
-        self.layout_checkBox.setGeometry(QtCore.QRect(round((MainWindow.width() - 1200) / 2), height - round(height / 6 * 4) + 100, 1200, 100))
+        self.layout_checkBox.setGeometry(QtCore.QRect(round((MainWindow.width() - 1200) / 2), self.height - round(self.height / 6 * 4) + 100, 1200, 100))
         self.layout_checkBox.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         self.layout_checkBox.setObjectName("layoutWidget_vertical")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.layout_checkBox)
@@ -159,7 +164,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout_comboBox)
         self.comboBox_Number_2 = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox_Number_2.setEnabled(True)
-        self.comboBox_Number_2.setGeometry(QtCore.QRect(round((MainWindow.width( ) - 81) / 2), height - round(height / 6 * 2), 81, 41))
+        self.comboBox_Number_2.setGeometry(QtCore.QRect(round((MainWindow.width( ) - 81) / 2), self.height - round(self.height / 6 * 2), 81, 41))
         self.comboBox_Number_2.setObjectName("comboBox_Number_2")
         self.comboBox_Number_2.addItem("")
         self.comboBox_Number_2.addItem("")
@@ -174,7 +179,7 @@ class Ui_MainWindow(object):
         self.genPwd.setIcon(icon5)
         self.genPwd.setIconSize(QtCore.QSize(80,80))
         self.genPwd.setEnabled(True)
-        self.genPwd.setGeometry(QtCore.QRect(round((MainWindow.width() - 450) / 2), height - round(height / 6), 450, 125))
+        self.genPwd.setGeometry(QtCore.QRect(round((MainWindow.width() - 450) / 2), self.height - round(self.height / 6), 450, 125))
         self.genPwd.setAutoFillBackground(False)
         self.genPwd.setStyleSheet("")
         self.genPwd.setCheckable(False)
@@ -227,13 +232,13 @@ class Ui_MainWindow(object):
         icon5.addPixmap(QtGui.QPixmap("images/icons8-exit-100.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.exitButton.setIcon(icon5)
         self.exitButton.setIconSize(QtCore.QSize(80, 80))
-        self.exitButton.setGeometry(QtCore.QRect(width - 255, 0, 250, 100))
+        self.exitButton.setGeometry(QtCore.QRect(self.width - 255, 0, 250, 100))
         self.exitButton.setObjectName("exitButton")
         self.exitButton.setProperty("class", "exitBtn")
         MainWindow.setCentralWidget(self.centralwidget)
        
         self.label_noOfWords = QtWidgets.QLabel(self.centralwidget)
-        self.label_noOfWords.setGeometry(QtCore.QRect(round((MainWindow.width() - 340) / 2), height - round(height / 6 * 2.5), 340, 81))
+        self.label_noOfWords.setGeometry(QtCore.QRect(round((MainWindow.width() - 340) / 2), self.height - round(self.height / 6 * 2.5), 340, 81))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.label_noOfWords.setFont(font)
@@ -338,6 +343,9 @@ class Ui_MainWindow(object):
 
     def updateLabelSize(self):
         self.label_selectBrowser.adjustSize()
+
+    def updateWindowSize(self):
+        self.centralwidget.adjustSize()
 
     def getPWD(self):
         result = self.pwdGenFunction("Hi World")
@@ -516,6 +524,6 @@ if __name__ == "__main__":
     """
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-    MainWindow.showFullScreen()
+    MainWindow.show()
     MainWindow.setStyleSheet(MainWindow.styleSheet)
     sys.exit(app.exec_())
