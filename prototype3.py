@@ -6,6 +6,8 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+#Icon of Buttons come from : https://icons8.com !!! 
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -53,7 +55,7 @@ class Ui_MainWindow(object):
         self.FireFoxButton.setObjectName("FireFoxButton")
         self.MicrosoftEdge = QtWidgets.QPushButton(self.groupBox)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("images/icons8-microsoft-edge-96.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("images/icons8-microsoft-edge-144.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.MicrosoftEdge.setIcon(icon3)
         self.MicrosoftEdge.setIconSize(QtCore.QSize(40, 40))
         self.MicrosoftEdge.setObjectName("MicrosoftEdge")
