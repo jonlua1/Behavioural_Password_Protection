@@ -291,6 +291,7 @@ if __name__ == "__main__":
             background-color: #d2c15d;
             border: none;
             text-align: left;
+            font-size: 30px;
         }
 
         .navBar {

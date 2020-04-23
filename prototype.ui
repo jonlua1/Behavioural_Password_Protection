@@ -21,7 +21,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(0, 0, 0);</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="groupBox">
@@ -158,8 +158,26 @@
          <property name="autoFillBackground">
           <bool>false</bool>
          </property>
+         <property name="lineWidth">
+          <number>0</number>
+         </property>
          <property name="text">
           <string>1. Select browser</string>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+         <property name="margin">
+          <number>-1</number>
+         </property>
+         <property name="indent">
+          <number>14</number>
          </property>
         </widget>
        </item>
