@@ -3,27 +3,27 @@ import sqlite3
 from browser import Browser
 from check_running_process import check_running_process
 
-class Opera(Browser):
+class Chrome(Browser):
     def __init__(self):
         super().__init__()
 
-    #to get Opera History file
-    #returns string of path of Opera History file
+    #to get Chrome History file path
+    #returns string of path of Chrome History file
     #if file doesnt exist return None
     def locate_history(self):
-        opera_path = os.path.join(os.getenv('APPDATA'), r'Opera Software\Opera Stable')
-        opera_history = os.path.join(opera_path, "History")
-        if(os.path.isfile(opera_history)):
-            self._history_path = opera_history
-            return opera_history
+        chrome_path = os.path.join(os.getenv('LOCALAPPDATA'), r'Google\Chrome\User Data\Default')
+        chrome_history = os.path.join(chrome_path, "History")
+        if(os.path.isfile(chrome_history)):
+            self._history_path = chrome_history
+            return chrome_history
         else: 
             return None
     
     #get words from keyword_search_terms table in history file
     def get_keyword_search_terms(self):
-        #checks if opera process is running    
-        if(check_running_process('opera')):
-            print("Please exit all opera processes and retry again")
+        #checks if chrome process is running    
+        if(check_running_process('chrome')):
+            print("Please exit all chrome processes and retry again")
             return
         else:
             conn = sqlite3.connect(self._history_path)
@@ -43,9 +43,9 @@ class Opera(Browser):
 
     #get words from urls table in history file
     def get_title(self):
-        #checks if opera process is running    
-        if(check_running_process('opera')):
-            print("Please exit all opera processes and retry again")
+        #checks if chrome process is running    
+        if(check_running_process('chrome')):
+            print("Please exit all chrome processes and retry again")
             return
         else:
             conn = sqlite3.connect(self._history_path)
@@ -65,7 +65,8 @@ class Opera(Browser):
 
     def print_words(self):
         str1 = ""
-        with open("opera_words.txt", "w", encoding="utf-8") as f:
+        with open("chrome_words.txt", "w", encoding="utf-8") as f:
             for ele in self._keywords:
                 str1 += ele
             f.write(str1)
+

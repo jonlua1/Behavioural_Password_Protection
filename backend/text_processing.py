@@ -19,6 +19,9 @@ def clean_text(keywords):
     #removes all words containing numbers
     str1 = re.sub(r'\w*\d\w*', '', str1).strip()
 
+    #remove stopwords from string
+    str1 = remove_stopwords(str1)
+
     tokens = word_tokenize(str1)
     #remove all tokens that are not alphabetic
     words = [word for word in tokens if word.isalpha()]
@@ -30,9 +33,6 @@ def clean_text(keywords):
         word = ''.join(filter(whitelist.__contains__, word))
         str2 += word + ' '
 
-    #remove stopwords from string
-    str2 = remove_stopwords(str2)
-
     #remove words of length lesser than 4 and greater than 10
     str2 = re.sub(r'\b\w{1,3}\b', '', str2)
     str2 = re.sub(r'\b\w{10,}\b', '', str2)
@@ -40,7 +40,9 @@ def clean_text(keywords):
     #removes excess whitespaces
     result = re.sub(r"\s+"," ",str2, flags = re.I)
 
+    words = result.split()
     keywords = []
-    keywords.append(result)
+    for word in words:
+        keywords.append(word)
 
     return keywords
