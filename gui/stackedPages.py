@@ -9,6 +9,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import prototype3 as p3
+from customWidget import OnOffWidget
 
 
 class Ui_MainWindow(object):
@@ -68,7 +69,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_GenPass_Home.addWidget(self.dummy_label1_Home)
         self.buttonPixmap_Gen_Home = QtWidgets.QLabel(self.layoutWidget_2_Home)
         self.buttonPixmap_Gen_Home.setText("")
-        self.buttonPixmap_Gen_Home.setPixmap(QtGui.QPixmap("../images/generate_password.jpg"))
+        self.buttonPixmap_Gen_Home.setPixmap(QtGui.QPixmap("images/generate_password.jpg"))
         self.buttonPixmap_Gen_Home.setAlignment(QtCore.Qt.AlignCenter)
         self.buttonPixmap_Gen_Home.setObjectName("buttonPixmap_Gen_Home")
         self.horizontalLayout_GenPass_Home.addWidget(self.buttonPixmap_Gen_Home)
@@ -105,7 +106,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_vault_Home.addWidget(self.dummy_label2_Home)
         self.buttonPixmap_Vault_Home = QtWidgets.QLabel(self.layoutWidget_Home)
         self.buttonPixmap_Vault_Home.setText("")
-        self.buttonPixmap_Vault_Home.setPixmap(QtGui.QPixmap("../images/smaller_vault.png"))
+        self.buttonPixmap_Vault_Home.setPixmap(QtGui.QPixmap("images/smaller_vault.png"))
         self.buttonPixmap_Vault_Home.setScaledContents(True)
         self.buttonPixmap_Vault_Home.setAlignment(QtCore.Qt.AlignCenter)
         self.buttonPixmap_Vault_Home.setObjectName("buttonPixmap_Vault_Home")
@@ -143,7 +144,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_audit_Home.addWidget(self.dummy_label3_Home)
         self.buttonPixmap_audit_Home = QtWidgets.QLabel(self.layoutWidget_3_Home)
         self.buttonPixmap_audit_Home.setText("")
-        self.buttonPixmap_audit_Home.setPixmap(QtGui.QPixmap("../images/security_Audit.jpg"))
+        self.buttonPixmap_audit_Home.setPixmap(QtGui.QPixmap("images/security_Audit_adjust.jpg"))
         self.buttonPixmap_audit_Home.setObjectName("buttonPixmap_audit_Home")
         self.buttonPixmap_audit_Home.setAlignment(QtCore.Qt.AlignCenter)
         self.horizontalLayout_audit_Home.addWidget(self.buttonPixmap_audit_Home)
@@ -153,7 +154,7 @@ class Ui_MainWindow(object):
         self.logoBackground_Home.setProperty("class", "logoBackground_Home")
         self.label_Home = QtWidgets.QLabel(self.page_Home)
         self.label_Home.setGeometry(QtCore.QRect( round((MainWindow.width() - 560) / 2 ), 30, 560, 150))
-        self.label_Home.setPixmap(QtGui.QPixmap("../images/ezPassLogo.PNG"))
+        self.label_Home.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
         self.label_Home.setScaledContents(True)
         self.label_Home.setAlignment(QtCore.Qt.AlignCenter)
         self.label_Home.setObjectName("label_Home")
@@ -196,28 +197,28 @@ class Ui_MainWindow(object):
         #buttons
         self.chromeButton_genPas = QtWidgets.QPushButton(self.groupBox_genPas)
         icon1_genPas = QtGui.QIcon()
-        icon1_genPas.addPixmap(QtGui.QPixmap("../images/Google-Chrome-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1_genPas.addPixmap(QtGui.QPixmap("images/Google-Chrome-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.chromeButton_genPas.setIcon(icon1_genPas)
         self.chromeButton_genPas.setIconSize(QtCore.QSize(40, 40))
         self.chromeButton_genPas.setObjectName("chromeButton_genPas")
         self.chromeButton_genPas.setProperty("class", "QPushButton_genPas")
         self.FireFoxButton_genPas = QtWidgets.QPushButton(self.groupBox_genPas)
         icon2_genPas = QtGui.QIcon()
-        icon2_genPas.addPixmap(QtGui.QPixmap("../images/Firefox-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2_genPas.addPixmap(QtGui.QPixmap("images/Firefox-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.FireFoxButton_genPas.setIcon(icon2_genPas)
         self.FireFoxButton_genPas.setIconSize(QtCore.QSize(40, 40))
         self.FireFoxButton_genPas.setObjectName("FireFoxButton_genPas")
         self.FireFoxButton_genPas.setProperty("class", "QPushButton_genPas")
         self.MicrosoftEdgeButton_genPas = QtWidgets.QPushButton(self.groupBox_genPas)
         icon3_genPas = QtGui.QIcon()
-        icon3_genPas.addPixmap(QtGui.QPixmap("../images/icons8-microsoft-edge-144.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3_genPas.addPixmap(QtGui.QPixmap("images/icons8-microsoft-edge-144.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.MicrosoftEdgeButton_genPas.setIcon(icon3_genPas)
         self.MicrosoftEdgeButton_genPas.setIconSize(QtCore.QSize(40, 40))
         self.MicrosoftEdgeButton_genPas.setObjectName("MicrosoftEdgeButton_genPas")
         self.MicrosoftEdgeButton_genPas.setProperty("class", "QPushButton_genPas")
         self.OperaButton_genPas = QtWidgets.QPushButton(self.groupBox_genPas)
         icon4_genPas = QtGui.QIcon()
-        icon4_genPas.addPixmap(QtGui.QPixmap("../images/Opera-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4_genPas.addPixmap(QtGui.QPixmap("images/Opera-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.OperaButton_genPas.setIcon(icon4_genPas)
         self.OperaButton_genPas.setIconSize(QtCore.QSize(40, 40))
         self.OperaButton_genPas.setObjectName("OperaButton_genPas")
@@ -298,9 +299,9 @@ class Ui_MainWindow(object):
         self.logoBackground_genPas = QtWidgets.QLabel(self.page_genPas)
         self.logoBackground_genPas.setGeometry(QtCore.QRect(0, 0, self.stackedWidget.width(), 250))
         self.logoBackground_genPas.setProperty("class", "logoBackground_genPas")
-        self.label_genPas = QtWidgets.QLabel(self.centralwidget)
+        self.label_genPas = QtWidgets.QLabel(self.page_genPas)
         self.label_genPas.setGeometry(QtCore.QRect( round((self.stackedWidget.width() - 560) / 2 ), 30, 560, 150))
-        self.label_genPas.setPixmap(QtGui.QPixmap("../images/ezPassLogo.PNG"))
+        self.label_genPas.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
         self.label_genPas.setScaledContents(True)
         self.label_genPas.setAlignment(QtCore.Qt.AlignCenter)
         self.label_genPas.setObjectName("label_genPas")
@@ -334,62 +335,141 @@ class Ui_MainWindow(object):
         self.navBar_genPas.addWidget(self.dummyLabel_4_genPas)
 
         self.stackedWidget.addWidget(self.page_genPas)
-
+#########################################################################################
         self.page_vault = QtWidgets.QWidget()
         self.page_vault.setObjectName("page_vault")
-        self.groupBox_vault = QtWidgets.QGroupBox(self.page_vault)
-        self.groupBox_vault.setGeometry(QtCore.QRect(round((self.stackedWidget.width() - 1300) / 2), round((self.stackedWidget.height() - 450 ) / 7 *6), 1300, 450))
-        self.groupBox_vault.setObjectName("groupBox_vault")
-        self.groupBox_vault.setProperty("class", "QGroupBox_genPas")
-        self.verticalLayout_vault = QtWidgets.QVBoxLayout(self.groupBox_vault)
+        self.scrollArea_vault = QtWidgets.QScrollArea(self.page_vault)
+        self.scrollArea_vault.setGeometry(QtCore.QRect(0, 0, MainWindow.width(), MainWindow.height()))
+        self.scrollArea_vault.setStyleSheet("")
+        self.scrollArea_vault.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.scrollArea_vault.setWidgetResizable(True)
+        self.scrollArea_vault.setObjectName("scrollArea_vault")
+        self.scrollAreaWidgetContents_vault = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents_vault.setGeometry(QtCore.QRect(0, 0, 436, 530))
+        self.scrollAreaWidgetContents_vault.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.scrollAreaWidgetContents_vault.setAutoFillBackground(False)
+        self.scrollAreaWidgetContents_vault.setStyleSheet("background-color: #34363a")
+        self.scrollAreaWidgetContents_vault.setObjectName("scrollAreaWidgetContents_vault")
+        self.verticalLayout_vault = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_vault)
+        self.verticalLayout_vault.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.verticalLayout_vault.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_vault.setSpacing(0)
         self.verticalLayout_vault.setObjectName("verticalLayout_vault")
-        self.container_1_vault = QtWidgets.QWidget()
-        self.container_1_vault.setProperty("class", "containers_genPas")
-        self.gridLayout_vault = QtWidgets.QGridLayout(self.container_1_vault)
-        self.gridLayout_vault.setContentsMargins(25, 10, 15, 10)
-        self.gridLayout_vault.setHorizontalSpacing(30)
-        self.gridLayout_vault.setVerticalSpacing(10)
-        self.gridLayout_vault.setObjectName("gridLayout_vault")
-        self.label_Title_vault = QtWidgets.QLabel(self.page_vault)
-        self.label_Title_vault.setProperty("class", "label_Title_genPas")
-        self.label_Title_vault.setGeometry(QtCore.QRect(self.groupBox_vault.x() + 20, self.groupBox_vault.y() - 70, 300, 70))
-
-        self.logoBackground_vault = QtWidgets.QLabel(self.page_vault)
-        self.logoBackground_vault.setGeometry(QtCore.QRect(0, 0, self.stackedWidget.width(), 250))
-        self.logoBackground_vault.setProperty("class", "logoBackground_genPas")
-        self.label_vault = QtWidgets.QLabel(self.centralwidget)
-        self.label_vault.setGeometry(QtCore.QRect( round((self.stackedWidget.width() - 560) / 2 ), 30, 560, 150))
-        self.label_vault.setPixmap(QtGui.QPixmap("../images/ezPassLogo.PNG"))
-        self.label_vault.setScaledContents(True)
-        self.label_vault.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_vault.setObjectName("label_vault")
-        self.label_vault.setProperty("class", "label_logo")
-
-        self.layoutWidget_1_vault = QtWidgets.QWidget(self.page_vault)
-        self.layoutWidget_1_vault.setGeometry(QtCore.QRect(0, self.logoBackground_vault.height() - 30, self.stackedWidget.width(), 100)) 
-        self.layoutWidget_1_vault.setProperty("class", "navBar_genPas")
-
-        self.HomeBtn_vault = QtWidgets.QPushButton(self.layoutWidget_1_vault)
-        self.HomeBtn_vault.setProperty("class", "navBar_btn")
+        self.groupBox_logoBackground_vault = QtWidgets.QGroupBox(self.scrollAreaWidgetContents_vault)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_logoBackground_vault.sizePolicy().hasHeightForWidth())
+        self.groupBox_logoBackground_vault.setSizePolicy(sizePolicy)
+        self.groupBox_logoBackground_vault.setMinimumSize(QtCore.QSize(0, 250))
+        self.groupBox_logoBackground_vault.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.groupBox_logoBackground_vault.setStyleSheet("background-color: #454547;")
+        self.groupBox_logoBackground_vault.setTitle("")
+        self.groupBox_logoBackground_vault.setObjectName("groupBox")
+        self.label_audit = QtWidgets.QLabel(self.groupBox_logoBackground_vault)
+        self.label_audit.setGeometry(QtCore.QRect(round((MainWindow.width() - 500) / 2), round((self.groupBox_logoBackground_vault.height() - 150)/2), 500, 150))
+        self.label_audit.setStyleSheet("")
+        self.label_audit.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
+        self.label_audit.setScaledContents(True)
+        self.label_audit.setObjectName("label_audit")
+        self.verticalLayout_vault.addWidget(self.groupBox_logoBackground_vault)
+        
+        self.groupBox_2_vault = QtWidgets.QGroupBox(self.scrollAreaWidgetContents_vault)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_2_vault.sizePolicy().hasHeightForWidth())
+        self.groupBox_2_vault.setSizePolicy(sizePolicy)
+        self.groupBox_2_vault.setMinimumSize(QtCore.QSize(0, 125))
+        self.groupBox_2_vault.setStyleSheet("background-color: #d2c15d;")
+        self.groupBox_2_vault.setTitle("")
+        self.groupBox_2_vault.setObjectName("groupBox_2_vault")
+        self.widget_vault = QtWidgets.QWidget(self.groupBox_2_vault)
+        self.widget_vault.setGeometry(QtCore.QRect(10, 20, 800, 71))
+        self.widget_vault.setStyleSheet("")
+        self.widget_vault.setObjectName("widget_vault")
+        self.horizontalLayout_vault = QtWidgets.QHBoxLayout(self.widget_vault)
+        self.horizontalLayout_vault.setContentsMargins(10, 0, 0, 0)
+        self.horizontalLayout_vault.setSpacing(0)
+        self.horizontalLayout_vault.setObjectName("horizontalLayout_vault")
+        self.HomeBtn_vault = QtWidgets.QPushButton(self.widget_vault)
+        
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.HomeBtn_vault.sizePolicy().hasHeightForWidth())      
+       
+        self.HomeBtn_vault.setSizePolicy(sizePolicy)
+        self.HomeBtn_vault.setStyleSheet("background-color: #d2c15d;")
+        self.HomeBtn_vault.setObjectName("HomeBtn_vault")
+        self.HomeBtn_vault.setProperty("class", "navBarBtn")
         self.HomeBtn_vault.clicked.connect(self.homePg)
-        self.SettingsBtn_vault = QtWidgets.QPushButton(self.layoutWidget_1_vault)
-        self.SettingsBtn_vault.setProperty("class", "navBar_btn")
-        self.AboutUsBtn_vault = QtWidgets.QPushButton(self.layoutWidget_1_vault)
-        self.AboutUsBtn_vault.setProperty("class", "navBar_btn")
-        self.dummyLabel_3_vault = QtWidgets.QLabel(self.layoutWidget_1_vault)
-        self.dummyLabel_3_vault.setProperty("class", "QLabel_genPas")
-        self.dummyLabel_4_vault = QtWidgets.QLabel(self.layoutWidget_1_vault)
-        self.dummyLabel_4_vault.setProperty("class", "QLabel_genPas")
+        self.horizontalLayout_vault.addWidget(self.HomeBtn_vault)
+        self.SettingsBtn_vault = QtWidgets.QPushButton(self.widget_vault)
+      
+        sizePolicy.setHeightForWidth(self.SettingsBtn_vault.sizePolicy().hasHeightForWidth())
+        self.SettingsBtn_vault.setSizePolicy(sizePolicy)
+        self.SettingsBtn_vault.setStyleSheet("")
+        self.SettingsBtn_vault.setObjectName("SettingsBtn_vault")
+        self.SettingsBtn_vault.setProperty("class", "navBarBtn")
+        self.horizontalLayout_vault.addWidget(self.SettingsBtn_vault)
+        self.AboutUsBtn_vault = QtWidgets.QPushButton(self.widget_vault)
+    
+        sizePolicy.setHeightForWidth(self.AboutUsBtn_vault.sizePolicy().hasHeightForWidth())
+        self.AboutUsBtn_vault.setSizePolicy(sizePolicy)
+        self.AboutUsBtn_vault.setStyleSheet("")
+        self.AboutUsBtn_vault.setObjectName("AboutUsBtn_vault")
+        self.AboutUsBtn_vault.setProperty("class", "navBarBtn")
+        self.horizontalLayout_vault.addWidget(self.AboutUsBtn_vault)
+        self.verticalLayout_vault.addWidget(self.groupBox_2_vault)
 
-        self.navBar_vault = QtWidgets.QHBoxLayout(self.layoutWidget_1_vault)
-        self.navBar_vault.addWidget(self.HomeBtn_vault)
-        self.navBar_vault.addWidget(self.SettingsBtn_vault)
-        self.navBar_vault.addWidget(self.AboutUsBtn_vault)
-        self.navBar_vault.addWidget(self.dummyLabel_3_vault)
-        self.navBar_vault.addWidget(self.dummyLabel_4_vault)
+        self.groupBox_searchbar_vault = QtWidgets.QGroupBox(self.scrollAreaWidgetContents_vault)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_searchbar_vault.sizePolicy().hasHeightForWidth())
+        self.groupBox_searchbar_vault.setSizePolicy(sizePolicy)
+        self.groupBox_searchbar_vault.setMinimumSize(QtCore.QSize(0,70))
+        self.groupBox_searchbar_vault.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.groupBox_searchbar_vault.setStyleSheet(""" background-color: grey; border-style: none;""")
+        self.searchbar = QtWidgets.QLineEdit(self.groupBox_searchbar_vault)
+        self.searchbar.setGeometry(QtCore.QRect(0,0, MainWindow.width() - 28, 70))
+        self.searchbar.textChanged.connect(self.update_display)
+        self.searchbar.setPlaceholderText("Search the vault")
+        self.searchbar.setStyleSheet(""" background-color: rgba(255, 255, 255, 50); font-size: 30px;
+        border-style: none; padding-left: 10px;
+        """)
+        sizePolicy.setHeightForWidth(self.searchbar.sizePolicy().hasHeightForWidth())      
+
+        spacer_vault = QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        
+        self.verticalLayout_vault.addWidget(self.groupBox_searchbar_vault)
+
+        #list of names, widgets are stored in a dictionary
+        widget_names = [
+            "Facebook", "Twitter", "Instagram", "Telegram", "Snapchat"
+        ]
+        self.widgets = []
+
+        #Iterate the names, creating a new OnOffWidget for
+        #each one, adding it to the layout and 
+        #storing a reference in the 'self.widgets' dict
+        for name in widget_names:
+            item = OnOffWidget(name)
+            self.verticalLayout_vault.addWidget(item)
+            self.widgets.append(item)
+
+         #to maintain the positions of each items inside the layout
+        self.verticalLayout_vault.addItem(spacer_vault)
+
+        self.completer_vault = QtWidgets.QCompleter(widget_names)
+        self.completer_vault.setCaseSensitivity(QtCore.Qt.CaseInsensitive)        
+        self.searchbar.setCompleter(self.completer_vault)
+        
+        self.scrollArea_vault.setWidget(self.scrollAreaWidgetContents_vault)
 
         self.stackedWidget.addWidget(self.page_vault)
-
+###############################################################################################
         self.page_audit = QtWidgets.QWidget()
         self.page_audit.setObjectName("page_audit")
         self.groupBox_audit = QtWidgets.QGroupBox(self.page_audit)
@@ -398,13 +478,7 @@ class Ui_MainWindow(object):
         self.groupBox_audit.setProperty("class", "QGroupBox_genPas")
         self.verticalLayout_audit = QtWidgets.QVBoxLayout(self.groupBox_audit)
         self.verticalLayout_audit.setObjectName("verticalLayout_audit")
-        self.container_1_audit = QtWidgets.QWidget()
-        self.container_1_audit.setProperty("class", "containers_genPas")
-        self.gridLayout_audit = QtWidgets.QGridLayout(self.container_1_audit)
-        self.gridLayout_audit.setContentsMargins(25, 10, 15, 10)
-        self.gridLayout_audit.setHorizontalSpacing(30)
-        self.gridLayout_audit.setVerticalSpacing(10)
-        self.gridLayout_audit.setObjectName("gridLayout_audit")
+        
         self.label_Title_audit = QtWidgets.QLabel(self.page_audit)
         self.label_Title_audit.setProperty("class", "label_Title_genPas")
         self.label_Title_audit.setGeometry(QtCore.QRect(self.groupBox_audit.x() + 20, self.groupBox_audit.y() - 70, 300, 70))
@@ -412,9 +486,9 @@ class Ui_MainWindow(object):
         self.logoBackground_audit = QtWidgets.QLabel(self.page_audit)
         self.logoBackground_audit.setGeometry(QtCore.QRect(0, 0, self.stackedWidget.width(), 250))
         self.logoBackground_audit.setProperty("class", "logoBackground_genPas")
-        self.label_audit = QtWidgets.QLabel(self.centralwidget)
+        self.label_audit = QtWidgets.QLabel(self.page_audit)
         self.label_audit.setGeometry(QtCore.QRect( round((self.stackedWidget.width() - 560) / 2 ), 30, 560, 150))
-        self.label_audit.setPixmap(QtGui.QPixmap("../images/ezPassLogo.PNG"))
+        self.label_audit.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
         self.label_audit.setScaledContents(True)
         self.label_audit.setAlignment(QtCore.Qt.AlignCenter)
         self.label_audit.setObjectName("label_audit")
@@ -502,9 +576,12 @@ class Ui_MainWindow(object):
         self.label_Title_genPas.setText(_translate("MainWindow", "Generate Passphrase"))
         self.label_genPas.setText(_translate("MainWindow", ""))
 
+        self.label_audit.setText(_translate("MainWindow", ""))
         self.HomeBtn_vault.setText(_translate("MainWindow", "Home"))
         self.SettingsBtn_vault.setText(_translate("MainWindow", "Settings"))
         self.AboutUsBtn_vault.setText(_translate("MainWindow", "About Us"))
+       
+
 
         self.HomeBtn_audit.setText(_translate("MainWindow", "Home"))
         self.VaultBtn_audit.setText(_translate("MainWindow", "Vault"))
@@ -522,6 +599,25 @@ class Ui_MainWindow(object):
 
     def auditPg(self):
         self.stackedWidget.setCurrentIndex(3)
+
+    def update_display(self, text):
+
+        for widget_vault in self.widgets:
+            if text.lower() in widget_vault.name.lower():
+                widget_vault.show()
+            else:
+                widget_vault.hide()
+
+
+class Test(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        super(Test, self).__init__(parent)
+
+        self.pBTest = QtWidgets.QPushButton("I am in test widget")
+
+        layout_test = QtWidgets.QHBoxLayout()
+        layout_test.addWidget(self.pBTest)
+        self.setLayout(layout_test)
 
 if __name__ == "__main__":
     import sys
@@ -674,6 +770,10 @@ if __name__ == "__main__":
 
         .navBar_genPas {
             background-color: #d2c15d;
+        }
+
+        QGroupBox {
+            border-style: none;
         }
 
     """
