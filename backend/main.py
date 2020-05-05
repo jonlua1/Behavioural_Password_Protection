@@ -13,7 +13,7 @@ def main():
 
     #preferences of alphabets, numbers and symbols
     #eg a, &, 1
-    preferences = ['a', '&', '1']
+    preferences = ['a', 'b', 'c', 'd', '1', '2','#','%']
 
     #when user clicks generate password button
     #requires which browser is selected and 

@@ -2,7 +2,6 @@ import os
 import sqlite3
 from browser import Browser
 from check_running_process import check_running_process
-from generator import keywords_to_freq_dict, add_keywords_to_dict, sort_freq_dict
 
 class Opera(Browser):
     def __init__(self):
@@ -175,10 +174,10 @@ class Opera(Browser):
         #obtain past keywords and freq list
         self.get_keywords_from_file()
 
-        dictionary = keywords_to_freq_dict(self._keywords)
-        updated_dict = add_keywords_to_dict(self._past_keywords, dictionary)
+        freq_dict = self.keywords_to_freq_dict(self._keywords)
+        updated_dict = self.add_keywords_to_dict(self._past_keywords, freq_dict)
 
-        sorted_dict = sort_freq_dict(updated_dict)
+        sorted_dict = self.sort_freq_dict(updated_dict)
 
         #update opera keywords file with updated keywords and freq list
         self.write_keyword_freq_to_file(sorted_dict)
@@ -189,11 +188,3 @@ class Opera(Browser):
                 keywords_for_password.append(tup[1])
         
         return keywords_for_password
-
-
-    def print_words(self):
-        str1 = ""
-        with open("opera_words.txt", "w", encoding="utf-8") as f:
-            for ele in self._keywords:
-                str1 += ele[1] + " "
-            f.write(str1)
