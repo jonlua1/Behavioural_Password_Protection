@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 #import prototype3 as p3
 from customWidget import OnOffWidget
 from dialogBox import Ui_Dialog
+from generator import generate_password
 
 
 class Ui_MainWindow(object):
@@ -939,11 +940,14 @@ class Ui_MainWindow(object):
 
     def genPassword(self):
 
+        self.preferencesList = ['x', 'y', 'z', 'w', '1', '2','#','%']
+
         if (len(self.btnList) == 0 or self.comboBox_wordNo == "" ):
             print("Please try again.")
         else:     
             print(self.btnList)     
             print(self.comboBox_wordNo)
+            generate_password(self.btnList, int(self.comboBox_wordNo), self.preferencesList)
                
 
 if __name__ == "__main__":
