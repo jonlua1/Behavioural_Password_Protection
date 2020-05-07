@@ -3,9 +3,8 @@ from firefox import Firefox
 from edge import Edge
 from opera import Opera
 
-from generator import keywords_to_freq_dict, sort_freq_dict
-
-# google = Chrome()
+google = Chrome()
+google.generate_keywords()
 # print(google.locate_history())
 # google.get_keyword_search_terms()
 # google.get_title()
@@ -23,9 +22,9 @@ from generator import keywords_to_freq_dict, sort_freq_dict
 # edge.process_keywords()
 # edge.print_words()
 
-opera = Opera()
-opera.generate_keywords()
-print(opera.locate_history())
+# opera = Opera()
+# opera.generate_keywords()
+# print(opera.locate_history())
 # opera.get_keyword_search_terms()
 # opera.get_title()
 # opera.process_keywords()

@@ -92,7 +92,7 @@ def generate_password(browsers_selected = [], passphrase_length = 4, preferences
     keywords = list(dict.fromkeys(keywords))
 
     generated_wordlist = get_generated_wordlist(keywords)
-    
+
     #from preferences list get alphabets
     alphabets = []
     for preference in preferences:

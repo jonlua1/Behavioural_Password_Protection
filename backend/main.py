@@ -5,7 +5,7 @@ def main():
     #list to store user's selection of browser
     #eg chrome, firefox, opera, edge
     # browsers_selected = ['chrome', 'firefox', 'opera', 'edge']
-    browsers_selected = ['opera']
+    browsers_selected = ['chrome', 'opera', 'edge', 'firefox']
 
     #length of browser
     #e.g length is 4
@@ -13,7 +13,7 @@ def main():
 
     #preferences of alphabets, numbers and symbols
     #eg a, &, 1
-    preferences = ['a', 'b', 'c', 'd', '1', '2','#','%']
+    preferences = ['x', 'y', 'z', 'w', '1', '2','#','%']
 
     #when user clicks generate password button
     #requires which browser is selected and 
