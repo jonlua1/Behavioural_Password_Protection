@@ -66,19 +66,19 @@ def generate_password(browsers_selected = [], passphrase_length = 4, preferences
     browsers_list = []
 
     for browser in browsers_selected:
-        if browser == "chrome":
+        if browser == "chrome": 
             chrome = Chrome()
             browsers_list.append(chrome)
             print("1")
-        if browser == "firefox":
+        if browser == "firefox": 
             firefox = Firefox()
             browsers_list.append(firefox)
             print("2")
-        if browser == "opera":
+        if browser == "opera": 
             opera = Opera()
             browsers_list.append(opera)
             print("3")
-        if browser == "edge":
+        if browser == "edge": 
             edge = Edge()
             browsers_list.append(edge)
             print("4")
@@ -86,7 +86,10 @@ def generate_password(browsers_selected = [], passphrase_length = 4, preferences
     #get all keywords generated from all browsers
     keywords = []
     for browser in browsers_list:
-        keywords.extend(browser.generate_keywords())
+        browserKeyword = browser.generate_keywords()
+
+        if browserKeyword is not None:
+            keywords.extend(browserKeyword)
     
     #remove duplicate words in the keywords list
     keywords = list(dict.fromkeys(keywords))
