@@ -4,8 +4,7 @@ def main():
 
     #list to store user's selection of browser
     #eg chrome, firefox, opera, edge
-    # browsers_selected = ['chrome', 'firefox', 'opera', 'edge']
-    browsers_selected = ['chrome', 'opera', 'edge', 'firefox']
+    browsers_selected = ['chrome', 'firefox', 'opera', 'edge']
 
     #length of browser
     #e.g length is 4
