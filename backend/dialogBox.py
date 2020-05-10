@@ -11,7 +11,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Dialog(object):
-    def setupUi(self, Dialog):
+    def setupUi(self, Dialog, displayText):
+        self.displayText = displayText
         Dialog.setObjectName("Dialog")
         Dialog.resize(500, 324)
         Dialog.setWindowOpacity(1.0)
@@ -33,8 +34,6 @@ class Ui_Dialog(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         
-
-
         self.retranslateUi(Dialog)
         self.dialogBox.accepted.connect(Dialog.accept)
         self.dialogBox.rejected.connect(Dialog.reject)
@@ -43,7 +42,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.label.setText(_translate("Dialog", "Confirm Deletion of Account?"))
+        self.label.setText(_translate("Dialog", self.displayText))
 
 
 if __name__ == "__main__":
