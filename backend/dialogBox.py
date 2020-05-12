@@ -21,6 +21,8 @@ class Ui_Dialog(object):
         self.dialogBox.setGeometry(QtCore.QRect(40, 210, 341, 32))
         self.dialogBox.setOrientation(QtCore.Qt.Horizontal)
         self.dialogBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonOk = self.dialogBox.button(QtWidgets.QDialogButtonBox.Ok)
+        self.buttonOk.setText("Ok")
         self.dialogBox.setObjectName("dialogBox")
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 70, 450, 91))
@@ -39,17 +41,13 @@ class Ui_Dialog(object):
         self.dialogBox.rejected.connect(Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
+        
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.label.setText(_translate("Dialog", self.displayText))
 
+    
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
-    sys.exit(app.exec_())
+

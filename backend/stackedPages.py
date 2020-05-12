@@ -8,18 +8,17 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-#import prototype3 as p3
-from customWidget import OnOffWidget
+from customWidget import customForm
 from dialogBox import Ui_Dialog
 from generator import generate_password
 from customCB import customComboBox
 from customCB_symbol import customComboBox_symbol
-
+from createNewAccount import createAccountForm
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.setFixedSize(1500, 900)
+        MainWindow.setFixedSize(1500, 930)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("images/lock_icon.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -199,12 +198,12 @@ class Ui_MainWindow(object):
 
         self.settings_Home = QtWidgets.QPushButton(self.groupBox_Home)
         self.settings_Home.setGeometry(QtCore.QRect(
-            MainWindow.width() - 370, 565, 160, 35))
+            MainWindow.width() - 370, 575, 160, 35))
         self.settings_Home.setStyleSheet(
             "color: #34363a; background-color: #d2c15d; font-size: 20px")
         self.aboutUs_Home = QtWidgets.QPushButton(self.groupBox_Home)
         self.aboutUs_Home.setGeometry(QtCore.QRect(
-            MainWindow.width() - 210, 565, 160, 35))
+            MainWindow.width() - 210, 575, 160, 35))
         self.aboutUs_Home.setStyleSheet(
             "color: #34363a; background-color: #d2c15d; font-size: 20px")
 
@@ -528,7 +527,7 @@ class Ui_MainWindow(object):
         self.comboBox_Number_2_genPas.setGeometry(QtCore.QRect(
             round((self.scrollArea_genPas.width()-400)/2), 100, 400, 60))
         self.comboBox_Number_2_genPas.setMinimumHeight(50)
-        self.comboBox_Number_2_genPas.setEnabled(True)
+        self.comboBox_Number_2_genPas.setEnabled(False)
         self.comboBox_Number_2_genPas.setObjectName("comboBox_Number_2_genPas")
         self.comboBox_Number_2_genPas.setStyleSheet(self.styleSheet)
         self.comboBox_Number_2_genPas.addItem("")
@@ -538,7 +537,7 @@ class Ui_MainWindow(object):
         self.comboBox_Number_2_genPas.addItem("")
         self.comboBox_Number_2_genPas.addItem("")
         self.comboBox_Number_2_genPas.currentIndexChanged.connect(
-            self.appendToCBList_wordNo)
+            self.showExtraCB)
 
         self.comboBox_Number_2_genPas.setStyleSheet("""
             background-color: #34363a;
@@ -690,6 +689,23 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_vault.addWidget(self.layoutWidget_vault)
 
+        self.styleSheet = """
+            font-size: 30px;
+            color: #d2c15d;
+        """
+
+        self.welcomeSign = QtWidgets.QWidget()
+        self.wcs_layout = QtWidgets.QHBoxLayout(self.welcomeSign)
+        self.welcome = QtWidgets.QLabel("Welcome to the vault!")
+        self.welcome.setStyleSheet(self.styleSheet)
+        self.addNewAcc = QtWidgets.QPushButton("Add New Account")
+        self.addNewAcc.setObjectName("addNewAcc")
+        self.addNewAcc.setStyleSheet(self.styleSheet)
+        self.addNewAcc.clicked.connect(self.createAcc)
+        self.wcs_layout.addWidget(self.welcome)
+        self.wcs_layout.addWidget(self.addNewAcc)
+        self.verticalLayout_vault.addWidget(self.welcomeSign)
+
         self.groupBox_searchbar_vault = QtWidgets.QGroupBox(
             self.scrollAreaWidgetContents_vault)
         sizePolicy = QtWidgets.QSizePolicy(
@@ -721,7 +737,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_vault.addWidget(self.groupBox_searchbar_vault)
 
         # list of names, widgets are stored in a dictionary
-        widget_names = [
+        self.widget_names = [
             "Facebook", "Twitter", "Instagram", "Telegram", "Snapchat"
         ]
 
@@ -735,14 +751,14 @@ class Ui_MainWindow(object):
 
         self.widgets = []
 
-        # Iterate the names, creating a new OnOffWidget for
+        # Iterate the names, creating a new customForm for
         # each one, adding it to the layout and
         # storing a reference in the 'self.widgets' dict
         for x in parameters:
             website = x["website"]
             username = x["username"]
             password = x["password"]
-            item = OnOffWidget(website, username, password)
+            item = customForm(website, username, password)
             item.viewDetails(self.viewAccountPwd)
             item.setContentsMargins(0, 10, 0, 20)
             self.verticalLayout_vault.addWidget(item)
@@ -751,7 +767,7 @@ class Ui_MainWindow(object):
          # to maintain the positions of each items inside the layout
         self.verticalLayout_vault.addItem(spacer_vault)
 
-        self.completer_vault = QtWidgets.QCompleter(widget_names)
+        self.completer_vault = QtWidgets.QCompleter(self.widget_names)
         self.completer_vault.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
         self.searchbar.setCompleter(self.completer_vault)
 
@@ -1044,7 +1060,7 @@ class Ui_MainWindow(object):
         self.delBtn_dynamic.setStyleSheet(self.styleSheet)
         self.delBtn_dynamic.setGeometry(QtCore.QRect(
             self.groupBox_dynamic.width() - 200, self.groupBox_dynamic.height() - 80, 180, 60))
-        self.delBtn_dynamic.clicked.connect(self.deleteAcc)
+        self.delBtn_dynamic.clicked.connect(lambda: self.deleteAcc(username, account))
         self.editBtn_dynamic = QtWidgets.QPushButton(
             "Edit", self.groupBox_dynamic)
         self.editBtn_dynamic.setStyleSheet(self.styleSheet)
@@ -1097,19 +1113,32 @@ class Ui_MainWindow(object):
         self.editBtn_dynamic.setDisabled(False)
         self.saveBtn_dynamic.setDisabled(True)
 
-    def deleteAcc(self):
+    def deleteAcc(self, username, account):
         Dialog = QtWidgets.QDialog()
         ui = Ui_Dialog()
         ui.setupUi(Dialog, "Confirm deletion of account?")
         Dialog.show()
-        Dialog.exec_()
 
+        if Dialog.exec_():
+            for i in self.widgets:
+                if (i.uname == username.text() and i.name == account):
+                    i.delete()
+                    self.widgets.pop(self.widgets.index(i))
+                    self.verticalLayout_vault.removeWidget(i)
+            self.stackedWidget.setCurrentIndex(2)
+
+        else:
+            print("Cancel!")
+
+            
+    # useless function 
     def showButton(self, btn):
         return btn.text()
 
+    # a button will be append to the button list (self.btnList) when it is clicked 
     def appendToBtnList(self):
         sender_button = MainWindow.sender()
-
+        self.comboBox_Number_2_genPas.setEnabled(True) 
         # provide a check to see if the browser is already
         # selected
         if sender_button.text() not in self.btnList:
@@ -1117,8 +1146,16 @@ class Ui_MainWindow(object):
 
         else:
             self.btnList.remove(sender_button.text())
+            if (len(self.btnList) == 0):
+                self.comboBox_Number_2_genPas.setDisabled(True)
 
-    def appendToCBList_wordNo(self):
+
+    def showExtraCB(self):
+
+        self.MicrosoftEdgeButton_genPas.setDisabled(True)
+        self.FireFoxButton_genPas.setDisabled(True)
+        self.chromeButton_genPas.setDisabled(True)
+        self.OperaButton_genPas.setDisabled(True)
 
         selectedNumber = self.comboBox_Number_2_genPas.currentText()
         self.generalPreferenceList = []
@@ -1165,7 +1202,7 @@ class Ui_MainWindow(object):
             }
         
         """
-        self.cancelPreferenceButton = QtWidgets.QPushButton("Re-select Preferences")
+        self.cancelPreferenceButton = QtWidgets.QPushButton("Re-select All")
         self.cancelPreferenceButton.setDisabled(True)
         self.cancelPreferenceButton.setStyleSheet(self.styleSheet)
         self.cancelPreferenceButton.setMinimumHeight(70)
@@ -1175,7 +1212,7 @@ class Ui_MainWindow(object):
         self.confirmPreferenceButton.setStyleSheet(self.styleSheet)  
         self.confirmPreferenceButton.setMinimumHeight(70)
         self.confirmPreferenceButton.setMaximumWidth(350)
-        self.confirmPreferenceButton.clicked.connect(self.setCB_disable)
+        self.confirmPreferenceButton.clicked.connect(self.confirm_selections)
         self.generatePasswordButton = QtWidgets.QPushButton("Generate Passphrase")
         self.generatePasswordButton.setStyleSheet(self.styleSheet)
         self.generatePasswordButton.setDisabled(True)
@@ -1269,7 +1306,9 @@ class Ui_MainWindow(object):
 
 
         """
-
+        self.generatePasswordButton.setDisabled(True)
+        self.cancelPreferenceButton.setDisabled(True)
+    
         self.resultLayoutWidget = QtWidgets.QWidget()
         self.resultLayoutWidget.setMinimumHeight(300)
         self.resultLayoutWidget.setStyleSheet("""
@@ -1317,11 +1356,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_genPas.removeWidget(self.genPasRowLayout_widget)
 
         if (self.comboBox_wordNo > 4):
-            self.cb_2_dynamic.setHidden(True)
+            self.cb_2_dynamic.setHidden(True) 
             self.cb_2_dynamic_symbol.setHidden(True)
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic)
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic_symbol)
 
+    #set the buttons to be editable / clickable again 
     def cancelPreference(self):
         self.confirmPreferenceButton.setDisabled(False)
         self.cancelPreferenceButton.setDisabled(True)
@@ -1330,13 +1370,28 @@ class Ui_MainWindow(object):
         self.MicrosoftEdgeButton_genPas.setDisabled(False)
         self.FireFoxButton_genPas.setDisabled(False)
         self.OperaButton_genPas.setDisabled(False)
+
+        self.cb_dynamic.setHidden(True)
+        self.verticalLayout_genPas.removeWidget(self.cb_dynamic)
+        self.cb_dynamic_symbol.setHidden(True)
+        self.verticalLayout_genPas.removeWidget(self.cb_dynamic_symbol)
+        self.verticalLayout_genPas.removeWidget(self.genPasRowLayout_widget)
+
+        if (self.comboBox_wordNo > 4):
+            self.cb_2_dynamic.setHidden(True) 
+            self.cb_2_dynamic_symbol.setHidden(True)
+            self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic)
+            self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic_symbol)
+       
         self.chromeButton_genPas.setDisabled(False)
 
         for i in self.generalPreferenceList:
             i.setDisabled(False)
 
-    def setCB_disable(self):
+    #set the buttons to be disabled and append the selected once to a list
+    def confirm_selections(self):
         self.confirmPreferenceButton.setDisabled(True)
+        self.comboBox_Number_2_genPas.setDisabled(True)
         self.cancelPreferenceButton.setDisabled(False)
         self.generatePasswordButton.setDisabled(False)
         self.resetComboBox_genPas.setDisabled(True)
@@ -1350,8 +1405,9 @@ class Ui_MainWindow(object):
             i.setDisabled(True)
             self.preferenceList.append(i.currentText())
 
+    # this function will be used to enable the corresponding 
+    # buttons & combo boxes to be editable again
     def resetAll(self):
-        self.comboBox_Number_2_genPas.setEnabled(True)
         self.resetComboBox_genPas.setEnabled(False)
         self.cb_dynamic.setHidden(True)
         self.verticalLayout_genPas.removeWidget(self.cb_dynamic)
@@ -1371,6 +1427,36 @@ class Ui_MainWindow(object):
             self.cb_2_dynamic_symbol.setHidden(True)
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic)
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic_symbol)
+
+    def createAcc(self):
+        login = createAccountForm()
+        spacer_vault = QtWidgets.QSpacerItem(
+            1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        
+        if login.exec_():
+            website = login.website.text()
+            username = login.username.text()
+            password = login.password.text()
+            if ( website != "" and username != "" and password != ""):
+                item = customForm(website, username, password)
+                item.viewDetails(self.viewAccountPwd)
+                item.setContentsMargins(0, 10, 0, 20)
+                self.verticalLayout_vault.addWidget(item)
+                self.widgets.append(item)
+                self.verticalLayout_vault.addItem(spacer_vault)
+                if website not in self.widget_names:
+                    self.widget_names.append(website)
+
+            else: 
+                Dialog = QtWidgets.QDialog()
+                ui = Ui_Dialog()
+                ui.setupUi(Dialog, "Information insufficient!")
+                Dialog.show()
+                Dialog.exec_()
+
+      
+    
+        
 
 
 if __name__ == "__main__":

@@ -5,10 +5,10 @@ from PyQt5.QtGui import (QClipboard)
 
 
 
-class OnOffWidget(QGroupBox):
+class customForm(QGroupBox):
 
     def __init__(self, name, uname, password):
-        super(OnOffWidget, self).__init__()
+        super(customForm, self).__init__()
 
         self.name = name
         self.uname = uname
@@ -69,6 +69,13 @@ class OnOffWidget(QGroupBox):
     def hide(self):
         """
         Hide this widget, and all child widgets.
+        """
+        for w in [self, self.lbl]:
+            w.setVisible(False)
+
+    def delete(self):
+        """
+        delete this widget, and all child widgets.
         """
         for w in [self, self.lbl]:
             w.setVisible(False)
