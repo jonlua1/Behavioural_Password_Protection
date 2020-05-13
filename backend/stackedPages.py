@@ -1202,7 +1202,7 @@ class Ui_MainWindow(object):
             }
         
         """
-        self.cancelPreferenceButton = QtWidgets.QPushButton("Re-select All")
+        self.cancelPreferenceButton = QtWidgets.QPushButton("Reselect All")
         self.cancelPreferenceButton.setDisabled(True)
         self.cancelPreferenceButton.setStyleSheet(self.styleSheet)
         self.cancelPreferenceButton.setMinimumHeight(70)
