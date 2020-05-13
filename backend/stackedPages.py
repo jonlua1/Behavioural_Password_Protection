@@ -6,14 +6,17 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
+import os
 from PyQt5 import QtCore, QtGui, QtWidgets
-from customWidget import customForm
+from customWidget import customGroupBox
 from dialogBox import Ui_Dialog
 from generator import generate_password
 from customCB import customComboBox
 from customCB_symbol import customComboBox_symbol
 from createNewAccount import createAccountForm
+from setupPassword import setupPasForm
+from enterVaultPass import vaultPassword
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -694,6 +697,7 @@ class Ui_MainWindow(object):
             color: #d2c15d;
         """
 
+##################################### VAULT RELEVANT DEFINITION ######################################
         self.welcomeSign = QtWidgets.QWidget()
         self.wcs_layout = QtWidgets.QHBoxLayout(self.welcomeSign)
         self.welcome = QtWidgets.QLabel("Welcome to the vault!")
@@ -751,18 +755,20 @@ class Ui_MainWindow(object):
 
         self.widgets = []
 
-        # Iterate the names, creating a new customForm for
+        # Iterate the names, creating a new customGroupBox for
         # each one, adding it to the layout and
         # storing a reference in the 'self.widgets' dict
         for x in parameters:
             website = x["website"]
             username = x["username"]
             password = x["password"]
-            item = customForm(website, username, password)
+            item = customGroupBox(website, username, password)
             item.viewDetails(self.viewAccountPwd)
             item.setContentsMargins(0, 10, 0, 20)
             self.verticalLayout_vault.addWidget(item)
             self.widgets.append(item)
+            if website not in self.widget_names:
+                self.widget_names.append(website)
 
          # to maintain the positions of each items inside the layout
         self.verticalLayout_vault.addItem(spacer_vault)
@@ -822,6 +828,34 @@ class Ui_MainWindow(object):
         self.navBar_audit.addWidget(self.AboutUsBtn_audit)
         self.navBar_audit.addWidget(self.dummyLabel_3_audit)
         self.navBar_audit.addWidget(self.dummyLabel_4_audit)
+
+        self.securityAuditWidget = QtWidgets.QWidget(self.page_audit)
+        self.saWidgetLayout = QtWidgets.QVBoxLayout(self.securityAuditWidget)
+        self.securityAuditWidget.setGeometry(QtCore.QRect(
+            round((self.stackedWidget.width() - 570) / 2), 600, 500, 300))
+        self.securityAuditWidget.setStyleSheet("""
+            border: 2px dashed white;
+        """)
+        font.setPointSize(14)
+        self.resultLabel = QtWidgets.QLabel(self.page_audit)
+        self.resultLabel.setText("Your password strength:" )     
+        self.resultLabel.setMaximumHeight(60)      
+        self.resultLabel.setStyleSheet("""
+        
+            border: 0px solid white;
+        
+        """)
+        self.passwordStrengthAuditLE = QtWidgets.QLineEdit(self.page_audit)
+        self.passwordStrengthAuditLE.setMaximumHeight(60)
+        self.passwordStrengthAuditLE.setFont(font)
+        self.saWidgetLayout.addWidget(self.passwordStrengthAuditLE)
+        self.saWidgetLayout.addWidget(self.resultLabel)
+        
+        self.imageLabel = QtWidgets.QLabel(self.page_audit)
+        self.imageLabel.setPixmap(QtGui.QPixmap("images/security_Audit_adjust.jpg"))
+        self.imageLabel.setGeometry(QtCore.QRect(
+            round((self.stackedWidget.width() - 500) / 2), 400, 500, 200))
+
 
         self.stackedWidget.addWidget(self.page_audit)
 
@@ -915,11 +949,95 @@ class Ui_MainWindow(object):
         self.stackedWidget.setCurrentIndex(1)
 
     def vaultPg(self):
-        self.stackedWidget.setCurrentIndex(2)
+        # check if the passwords are identical while setting up  
+        checkPassword = False      
+        popWindow = True 
+        # check if the passwords are identical while entering vault
+        checkEnterPassword = False 
+        popEnterPass = True
+
+        #ezPass folder path
+        folder_path = os.path.expanduser(r'~\Documents\ezPass\UserKey')
+
+
+        if (not os.path.isdir(folder_path) and not os.path.isfile(r'~\Documents\ezPass\UserKey\userkey.txt')):
+            print("test")
+            if (not os.path.isdir(folder_path)):
+                #create ezPass user password folder
+                os.mkdir(folder_path)
+                #change directory to folder path
+                os.chdir(folder_path)
+               
+                
+            setupPassword = setupPasForm()
+            
+            # while the passwords entered are not the same and the user 
+            # did not cancel the setup
+            while (checkPassword != True and popWindow): 
+                # if user clicked submit get both of the entered password
+                if setupPassword.exec_():
+                    password = setupPassword.password.text()
+                    confirmPass = setupPassword.confirmPass.text()
+                    #check if they are the same
+                    if (password == confirmPass and password != ""):
+                        #open a file to record the password
+                        with open('userkey.txt', "w") as f:
+                            f.write(password) 
+                        f.close()
+                        checkPassword = True
+
+                    else:
+                        Dialog = QtWidgets.QDialog()
+                        ui = Ui_Dialog()
+                        ui.setupUi(Dialog, "Please retry!")
+                        Dialog.show()
+                        Dialog.exec_()
+                
+                #user cancel the setup 
+                else:
+                    popWindow = False
+
+        if (checkPassword):
+            self.stackedWidget.setCurrentIndex(2)  
+
+        else:
+            
+            #created a enter vault password window
+            enterVault = vaultPassword()
+
+            while ( checkEnterPassword == False and popEnterPass):
+
+                if enterVault.exec_():
+                    enteredPassword = enterVault.password.text()
+                    #open userkey.txt to read the password
+                    with open('userkey.txt', "r") as f:
+                        createdPassword = f.read() 
+                    f.close()
+                    if (createdPassword == enteredPassword):
+                        checkEnterPassword = True
+
+                    else:
+                        Dialog = QtWidgets.QDialog()
+                        ui = Ui_Dialog()
+                        ui.setupUi(Dialog, "Incorrect Password!")
+                        Dialog.show()
+                        Dialog.exec_()
+
+                else:
+                    popEnterPass = False
+        
+        if(checkEnterPassword):
+            self.stackedWidget.setCurrentIndex(2)
+            
+                  
+
+            
 
     def auditPg(self):
         self.stackedWidget.setCurrentIndex(3)
 
+    #if user input can be found inside the list
+    #show the widget (groupbox)
     def update_display(self, text):
 
         for widget in self.widgets:
@@ -1113,6 +1231,9 @@ class Ui_MainWindow(object):
         self.editBtn_dynamic.setDisabled(False)
         self.saveBtn_dynamic.setDisabled(True)
 
+    # a function that create Pop up windows when user deletes an
+    # account from vault page, and remove the related groupbox 
+    # from vault page
     def deleteAcc(self, username, account):
         Dialog = QtWidgets.QDialog()
         ui = Ui_Dialog()
@@ -1293,7 +1414,6 @@ class Ui_MainWindow(object):
             pass
 
         
-
     def genPassword(self):
 
         self.styleSheet = """ 
@@ -1438,7 +1558,7 @@ class Ui_MainWindow(object):
             username = login.username.text()
             password = login.password.text()
             if ( website != "" and username != "" and password != ""):
-                item = customForm(website, username, password)
+                item = customGroupBox(website, username, password)
                 item.viewDetails(self.viewAccountPwd)
                 item.setContentsMargins(0, 10, 0, 20)
                 self.verticalLayout_vault.addWidget(item)
@@ -1453,7 +1573,7 @@ class Ui_MainWindow(object):
                 ui.setupUi(Dialog, "Information insufficient!")
                 Dialog.show()
                 Dialog.exec_()
-
+                ##testing
       
     
         

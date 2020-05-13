@@ -14,18 +14,24 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog, displayText):
         self.displayText = displayText
         Dialog.setObjectName("Dialog")
-        Dialog.resize(500, 324)
+        Dialog.resize(700, 324)
+ 
         Dialog.setWindowOpacity(1.0)
         Dialog.setSizeGripEnabled(False)
         self.dialogBox = QtWidgets.QDialogButtonBox(Dialog)
-        self.dialogBox.setGeometry(QtCore.QRect(40, 210, 341, 32))
+        self.dialogBox.setGeometry(QtCore.QRect(0, 210, 341, 32))
         self.dialogBox.setOrientation(QtCore.Qt.Horizontal)
         self.dialogBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonOk = self.dialogBox.button(QtWidgets.QDialogButtonBox.Ok)
         self.buttonOk.setText("Ok")
+        self.buttonCancel = self.dialogBox.button(QtWidgets.QDialogButtonBox.Cancel)
+        self.buttonCancel.setMinimumWidth(100)
+        
+
         self.dialogBox.setObjectName("dialogBox")
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 70, 450, 91))
+        
         flags = QtCore.Qt.WindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
         Dialog.setWindowFlags(flags)
         font = QtGui.QFont()
@@ -36,6 +42,7 @@ class Ui_Dialog(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         
+
         self.retranslateUi(Dialog)
         self.dialogBox.accepted.connect(Dialog.accept)
         self.dialogBox.rejected.connect(Dialog.reject)

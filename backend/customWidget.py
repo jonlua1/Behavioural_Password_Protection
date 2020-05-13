@@ -5,10 +5,10 @@ from PyQt5.QtGui import (QClipboard)
 
 
 
-class customForm(QGroupBox):
+class customGroupBox(QGroupBox):
 
     def __init__(self, name, uname, password):
-        super(customForm, self).__init__()
+        super(customGroupBox, self).__init__()
 
         self.name = name
         self.uname = uname
@@ -80,6 +80,9 @@ class customForm(QGroupBox):
         for w in [self, self.lbl]:
             w.setVisible(False)
 
+    # call mainwindow fucntion when view button is clicked
+    # so that mainwindow receives the username, password and website
+    # of this particular object
     def viewDetails(self, function):
         """
         calling function from MainWindow 
