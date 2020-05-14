@@ -3,8 +3,8 @@ from firefox import Firefox
 from edge import Edge
 from opera import Opera
 
-google = Chrome()
-google.generate_keywords()
+# google = Chrome()
+# google.generate_keywords()
 # print(google.locate_history())
 # google.get_keyword_search_terms()
 # google.get_title()

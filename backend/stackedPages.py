@@ -13,7 +13,6 @@ from customWidget import OnOffWidget
 from dialogBox import Ui_Dialog
 from generator import generate_password
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
