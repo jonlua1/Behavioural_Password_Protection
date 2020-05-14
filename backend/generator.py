@@ -66,19 +66,19 @@ def generate_password(browsers_selected = [], passphrase_length = 4, preferences
     browsers_list = []
 
     for browser in browsers_selected:
-        if browser == "chrome": 
+        if browser == "Google Chrome": 
             chrome = Chrome()
             browsers_list.append(chrome)
             print("1")
-        if browser == "firefox": 
+        if browser == "Firefox": 
             firefox = Firefox()
             browsers_list.append(firefox)
             print("2")
-        if browser == "opera": 
+        if browser == "Opera": 
             opera = Opera()
             browsers_list.append(opera)
             print("3")
-        if browser == "edge": 
+        if browser == "Microsoft Edge": 
             edge = Edge()
             browsers_list.append(edge)
             print("4")
@@ -115,3 +115,5 @@ def generate_password(browsers_selected = [], passphrase_length = 4, preferences
         passphrase = str(passphrase[0]) + str(sym_and_num[i]) + str(passphrase[1])
 
     print("FINAL: " + passphrase)
+
+    return passphrase
