@@ -17,7 +17,6 @@ from createNewAccount import createAccountForm
 from setupPassword import setupPasForm
 from enterVaultPass import vaultPassword
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
