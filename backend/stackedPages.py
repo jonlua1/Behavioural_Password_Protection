@@ -552,6 +552,7 @@ class Ui_MainWindow(object):
             font-size: 20px;  
         """)
 
+        #number of word comboBox selected value
         self.comboBox_wordNo = 0
 
         self.resetComboBox_genPas = QtWidgets.QPushButton(
@@ -950,25 +951,32 @@ class Ui_MainWindow(object):
 
     def vaultPg(self):
         # check if the passwords are identical while setting up  
-        checkPassword = False      
+        checkPassword = False    
+        # check if user clicked cancel button on the setup window
         popWindow = True 
         # check if the passwords are identical while entering vault
         checkEnterPassword = False 
+        # check if user clicked cancel button on the enter password
+        # window
         popEnterPass = True
 
         #ezPass folder path
         folder_path = os.path.expanduser(r'~\Documents\ezPass\UserKey')
 
+        #userkey.txt file path
+        userkey_file = os.path.expanduser(r'~\Documents\ezPass\UserKey\userkey.txt')
 
-        if (not os.path.isdir(folder_path) and not os.path.isfile(r'~\Documents\ezPass\UserKey\userkey.txt')):
+        #if ezPass folder is not exist or userkey.txt is not exist
+        if (not os.path.isdir(folder_path) or not os.path.isfile(userkey_file)):
             print("test")
+            checkPassword = False
             if (not os.path.isdir(folder_path)):
                 #create ezPass user password folder
                 os.mkdir(folder_path)
-                #change directory to folder path
-                os.chdir(folder_path)
                
-                
+               
+            #change directory to folder path
+            os.chdir(folder_path)    
             setupPassword = setupPasForm()
             
             # while the passwords entered are not the same and the user 
@@ -996,38 +1004,46 @@ class Ui_MainWindow(object):
                 #user cancel the setup 
                 else:
                     popWindow = False
+                
 
-        if (checkPassword):
-            self.stackedWidget.setCurrentIndex(2)  
+            if (checkPassword):
+                self.stackedWidget.setCurrentIndex(2)  
+
+            
 
         else:
             
             #created a enter vault password window
             enterVault = vaultPassword()
 
-            while ( checkEnterPassword == False and popEnterPass):
+            #change directory to folder path
+            os.chdir(folder_path) 
 
+            while ( checkEnterPassword == False and popEnterPass):
+                createdPassword = ""
                 if enterVault.exec_():
                     enteredPassword = enterVault.password.text()
                     #open userkey.txt to read the password
-                    with open('userkey.txt', "r") as f:
-                        createdPassword = f.read() 
-                    f.close()
-                    if (createdPassword == enteredPassword):
-                        checkEnterPassword = True
+                    if(os.path.isfile(userkey_file)):
+                        with open('userkey.txt', "r") as f:
+                            createdPassword = f.read() 
+                            print(createdPassword)
+                        f.close()
+                        if (createdPassword == enteredPassword):
+                            checkEnterPassword = True
 
-                    else:
-                        Dialog = QtWidgets.QDialog()
-                        ui = Ui_Dialog()
-                        ui.setupUi(Dialog, "Incorrect Password!")
-                        Dialog.show()
-                        Dialog.exec_()
+                        else:
+                            Dialog = QtWidgets.QDialog()
+                            ui = Ui_Dialog()
+                            ui.setupUi(Dialog, "Incorrect Password!")
+                            Dialog.show()
+                            Dialog.exec_()
 
                 else:
                     popEnterPass = False
         
-        if(checkEnterPassword):
-            self.stackedWidget.setCurrentIndex(2)
+            if(checkEnterPassword):
+                self.stackedWidget.setCurrentIndex(2)
             
                   
 
@@ -1270,7 +1286,8 @@ class Ui_MainWindow(object):
             if (len(self.btnList) == 0):
                 self.comboBox_Number_2_genPas.setDisabled(True)
 
-
+    #show the preferences comboboxes including starting alphabets
+    # and number/symbols at the bottom of genPas page
     def showExtraCB(self):
 
         self.MicrosoftEdgeButton_genPas.setDisabled(True)
@@ -1279,6 +1296,8 @@ class Ui_MainWindow(object):
         self.OperaButton_genPas.setDisabled(True)
 
         selectedNumber = self.comboBox_Number_2_genPas.currentText()
+
+        # a list that stores the comboboxes of preferences 
         self.generalPreferenceList = []
 
         self.cb_dynamic = QtWidgets.QGroupBox()
@@ -1346,6 +1365,7 @@ class Ui_MainWindow(object):
         self.gpHLayout.addWidget(self.generatePasswordButton)
 
 
+        #if number of words combo box
         if (len(selectedNumber) == 1):
             self.comboBox_Number_2_genPas.setEnabled(False)
             self.resetComboBox_genPas.setEnabled(True)
@@ -1358,7 +1378,8 @@ class Ui_MainWindow(object):
                     
                 else:
                     self.cb_dynamic_2_Hlayout.addWidget(cbox)
-                
+                #append all the comboBoxes that stores 
+                #starting alphabets to a list
                 self.generalPreferenceList.append(cbox)
 
             self.cb_dynamic_Vlayout.addLayout(self.cb_dynamic_Hlayout)
@@ -1382,13 +1403,13 @@ class Ui_MainWindow(object):
 
                 self.verticalLayout_genPas.addWidget(self.cb_2_dynamic)
 
-                ###############
             for i in range(self.comboBox_wordNo):
                 cbox_symbol = customComboBox_symbol()
                 if i < 4:
                     self.cb_dynamic_symbol_Hlayout.addWidget(cbox_symbol)
                 else:
                     self.cb_dynamic_2_symbol_Hlayout.addWidget(cbox_symbol)
+
 
                 self.generalPreferenceList.append(cbox_symbol)
 
@@ -1524,6 +1545,7 @@ class Ui_MainWindow(object):
         for i in self.generalPreferenceList:
             i.setDisabled(True)
             self.preferenceList.append(i.currentText())
+
 
     # this function will be used to enable the corresponding 
     # buttons & combo boxes to be editable again
