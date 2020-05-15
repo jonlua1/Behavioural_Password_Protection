@@ -24,6 +24,7 @@ class vaultPassword(QtWidgets.QDialog):
         self.layout.setFieldGrowthPolicy(QtWidgets.QFormLayout.AllNonFixedFieldsGrow)
         
         self.password = QtWidgets.QLineEdit()
+        self.password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password.setMinimumHeight(60)
         self.password.setStyleSheet("""background-color: #d2c15d;
             color: black;
@@ -59,5 +60,5 @@ class vaultPassword(QtWidgets.QDialog):
         self.layout.addRow('Password : ', self.password)
  
         self.widget.setLayout(self.layout)
-        self.setWindowTitle("Login")
+        self.setWindowTitle("Please enter password")
         self.setMinimumWidth(350)

@@ -24,25 +24,26 @@ class createAccountForm(QtWidgets.QDialog):
         self.layout.setFieldGrowthPolicy(QtWidgets.QFormLayout.AllNonFixedFieldsGrow)
         
         self.password = QtWidgets.QLineEdit()
+        self.password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password.setMinimumHeight(60)
         self.password.setStyleSheet("""background-color: #d2c15d;
             color: black;
             border: none;
-            
+            padding-left: 20px;
             """)
         self.website = QtWidgets.QLineEdit()
         self.website.setMinimumHeight(60)
         self.website.setStyleSheet("""background-color: #d2c15d;
             color: black;
             border: none;
-           
+            padding-left: 20px;
             """)
         self.username = QtWidgets.QLineEdit()
         self.username.setMinimumHeight(60)
         self.username.setStyleSheet("""background-color: #d2c15d;
             color: black;
             border: none;
-            
+            padding-left: 20px;
             """)
 
     
@@ -71,5 +72,5 @@ class createAccountForm(QtWidgets.QDialog):
 
 
         self.widget.setLayout(self.layout)
-        self.setWindowTitle("Login")
+        self.setWindowTitle("Add New Account")
         self.setMinimumWidth(350)

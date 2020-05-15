@@ -16,6 +16,7 @@ from customCB_symbol import customComboBox_symbol
 from createNewAccount import createAccountForm
 from setupPassword import setupPasForm
 from enterVaultPass import vaultPassword
+from vault import Vault
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -705,7 +706,7 @@ class Ui_MainWindow(object):
         self.addNewAcc = QtWidgets.QPushButton("Add New Account")
         self.addNewAcc.setObjectName("addNewAcc")
         self.addNewAcc.setStyleSheet(self.styleSheet)
-        self.addNewAcc.clicked.connect(self.createAcc)
+        self.addNewAcc.clicked.connect(self.ADD_Account)
         self.wcs_layout.addWidget(self.welcome)
         self.wcs_layout.addWidget(self.addNewAcc)
         self.verticalLayout_vault.addWidget(self.welcomeSign)
@@ -744,6 +745,8 @@ class Ui_MainWindow(object):
         self.widget_names = [
             "Facebook", "Twitter", "Instagram", "Telegram", "Snapchat"
         ]
+
+        self.viewVault()
 
         parameters = [
             {"website": "Snapchat", "username": "user01", "password": "12345"},
@@ -959,23 +962,25 @@ class Ui_MainWindow(object):
         # window
         popEnterPass = True
 
-        #ezPass folder path
-        folder_path = os.path.expanduser(r'~\Documents\ezPass\UserKey')
+        vault_db = Vault()
 
-        #userkey.txt file path
-        userkey_file = os.path.expanduser(r'~\Documents\ezPass\UserKey\userkey.txt')
+        vault_db_filename = os.path.expanduser('~\Documents\ezPass\\vault')
 
-        #if ezPass folder is not exist or userkey.txt is not exist
-        if (not os.path.isdir(folder_path) or not os.path.isfile(userkey_file)):
+         #ezPass logs folder path
+        folder_path = os.path.expanduser('~\Documents\ezPass')
+
+        #if ezPass folder is not exist or vault file is not exist
+        if (not os.path.isdir(folder_path) or not os.path.isfile(vault_db_filename)):
             print("test")
             checkPassword = False
+
             if (not os.path.isdir(folder_path)):
                 #create ezPass user password folder
                 os.mkdir(folder_path)
                
-               
             #change directory to folder path
-            os.chdir(folder_path)    
+            os.chdir(folder_path)   
+            #create a setup master password form 
             setupPassword = setupPasForm()
             
             # while the passwords entered are not the same and the user 
@@ -986,17 +991,18 @@ class Ui_MainWindow(object):
                     password = setupPassword.password.text()
                     confirmPass = setupPassword.confirmPass.text()
                     #check if they are the same
-                    if (password == confirmPass and password != ""):
+                    if (password == confirmPass and password != "" and len(password) >= 8):
                         #open a file to record the password
-                        with open('userkey.txt', "w") as f:
-                            f.write(password) 
-                        f.close()
+                        vault_db.create_vault(password, vault_db_filename)
                         checkPassword = True
 
                     else:
                         Dialog = QtWidgets.QDialog()
                         ui = Ui_Dialog()
-                        ui.setupUi(Dialog, "Please retry!")
+                        if(len(password) < 8):
+                            ui.setupUi(Dialog, "Password must be longer than 8 characters!")
+                        else:
+                            ui.setupUi(Dialog, "Please try again!")    
                         Dialog.show()
                         Dialog.exec_()
                 
@@ -1012,42 +1018,51 @@ class Ui_MainWindow(object):
 
         else:
             
-            #created a enter vault password window
-            enterVault = vaultPassword()
-
-            #change directory to folder path
-            os.chdir(folder_path) 
-
-            while ( checkEnterPassword == False and popEnterPass):
-                createdPassword = ""
-                if enterVault.exec_():
-                    enteredPassword = enterVault.password.text()
-                    #open userkey.txt to read the password
-                    if(os.path.isfile(userkey_file)):
-                        with open('userkey.txt', "r") as f:
-                            createdPassword = f.read() 
-                            print(createdPassword)
-                        f.close()
-                        if (createdPassword == enteredPassword):
-                            checkEnterPassword = True
-
-                        else:
-                            Dialog = QtWidgets.QDialog()
-                            ui = Ui_Dialog()
-                            ui.setupUi(Dialog, "Incorrect Password!")
-                            Dialog.show()
-                            Dialog.exec_()
-
-                else:
-                    popEnterPass = False
-        
-            if(checkEnterPassword):
+            if(self.authenticateActionVault() is not None):
                 self.stackedWidget.setCurrentIndex(2)
-            
-                  
+
+    #authenticate user when they wants to perform user privacy related
+    # action  
+    def authenticateActionVault(self):
+        #create a enter vault password window
+        enterVault = vaultPassword()
+        checkEnterPassword = False
+        popEnterPass = True
+
+        vault_db = Vault()
+
+        #vault db file path
+        vault_db_filename = os.path.expanduser('~\Documents\ezPass\\vault')
+
+        #ezPass logs folder path
+        folder_path = os.path.expanduser('~\Documents\ezPass')
+        os.chdir(folder_path)
+
+        while ( checkEnterPassword == False and popEnterPass):
+            createdPassword = ""
+            if enterVault.exec_():
+                enteredPassword = enterVault.password.text()
+                
+                #open userkey.txt to read the password
+                if(os.path.isfile(vault_db_filename)):
+                        
+                    if (vault_db.authenticate_user(enteredPassword)):
+                        checkEnterPassword = True
+                        #return the entered password if it matches
+                        return enteredPassword
+
+                    else:
+                        Dialog = QtWidgets.QDialog()
+                        ui = Ui_Dialog()
+                        ui.setupUi(Dialog, "Incorrect Password!")
+                        Dialog.show()
+                        Dialog.exec_()
+
+            else:
+                popEnterPass = False
+                return None
 
             
-
     def auditPg(self):
         self.stackedWidget.setCurrentIndex(3)
 
@@ -1246,6 +1261,14 @@ class Ui_MainWindow(object):
         self.editBtn_dynamic.setDisabled(False)
         self.saveBtn_dynamic.setDisabled(True)
 
+    def viewVault(self):
+        vault = Vault()
+
+        parameters = vault.get_accounts()
+
+        for i in parameters:
+            print(i)
+
     # a function that create Pop up windows when user deletes an
     # account from vault page, and remove the related groupbox 
     # from vault page
@@ -1254,8 +1277,10 @@ class Ui_MainWindow(object):
         ui = Ui_Dialog()
         ui.setupUi(Dialog, "Confirm deletion of account?")
         Dialog.show()
+        vault = Vault()
 
         if Dialog.exec_():
+            vault.delete_account(account, username)
             for i in self.widgets:
                 if (i.uname == username.text() and i.name == account):
                     i.delete()
@@ -1569,32 +1594,45 @@ class Ui_MainWindow(object):
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic)
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic_symbol)
 
-    def createAcc(self):
-        login = createAccountForm()
+    def ADD_Account(self):
+        addAccount = createAccountForm()
         spacer_vault = QtWidgets.QSpacerItem(
             1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        
-        if login.exec_():
-            website = login.website.text()
-            username = login.username.text()
-            password = login.password.text()
-            if ( website != "" and username != "" and password != ""):
-                item = customGroupBox(website, username, password)
-                item.viewDetails(self.viewAccountPwd)
-                item.setContentsMargins(0, 10, 0, 20)
-                self.verticalLayout_vault.addWidget(item)
-                self.widgets.append(item)
-                self.verticalLayout_vault.addItem(spacer_vault)
-                if website not in self.widget_names:
-                    self.widget_names.append(website)
+        vault = Vault()
 
-            else: 
-                Dialog = QtWidgets.QDialog()
-                ui = Ui_Dialog()
-                ui.setupUi(Dialog, "Information insufficient!")
-                Dialog.show()
-                Dialog.exec_()
-                ##testing
+
+        #get the masterPassword from authentication process
+        masterPassword = self.authenticateActionVault()
+
+        if(masterPassword is not None):
+
+            if addAccount.exec_():
+                website = addAccount.website.text()
+                username = addAccount.username.text()
+                password = addAccount.password.text()
+                if ( website != "" and username != "" and password != ""):
+
+                    #add an account to database
+                    vault.add_account(website, password, username, masterPassword)
+
+                    #create a groupbox to display on gui
+                    item = customGroupBox(website, username, password)
+                    item.viewDetails(self.viewAccountPwd)
+                    item.setContentsMargins(0, 10, 0, 20)
+                    self.verticalLayout_vault.addWidget(item)
+                    self.widgets.append(item)
+                    self.verticalLayout_vault.addItem(spacer_vault)
+                    if website not in self.widget_names:
+                        self.widget_names.append(website)
+                    
+
+                else: 
+                    Dialog = QtWidgets.QDialog()
+                    ui = Ui_Dialog()
+                    ui.setupUi(Dialog, "Information insufficient!")
+                    Dialog.show()
+                    Dialog.exec_()
+                    ##testing
       
     
         

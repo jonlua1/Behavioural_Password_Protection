@@ -19,7 +19,7 @@ class Ui_Dialog(object):
         Dialog.setWindowOpacity(1.0)
         Dialog.setSizeGripEnabled(False)
         self.dialogBox = QtWidgets.QDialogButtonBox(Dialog)
-        self.dialogBox.setGeometry(QtCore.QRect(0, 210, 341, 32))
+        self.dialogBox.setGeometry(QtCore.QRect(round((Dialog.width()- 340) / 2), 210, 340, 32))
         self.dialogBox.setOrientation(QtCore.Qt.Horizontal)
         self.dialogBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonOk = self.dialogBox.button(QtWidgets.QDialogButtonBox.Ok)
@@ -30,15 +30,18 @@ class Ui_Dialog(object):
 
         self.dialogBox.setObjectName("dialogBox")
         self.label = QtWidgets.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(10, 70, 450, 91))
-        
+        if (len(self.displayText) < 20):    
+            self.label.setGeometry(QtCore.QRect(round((Dialog.width()- 450) / 2), 70, 450, 91))
+        else:
+            self.label.setGeometry(QtCore.QRect(round((Dialog.width()- 700) / 2), 70, 700, 91))
+
         flags = QtCore.Qt.WindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
         Dialog.setWindowFlags(flags)
         font = QtGui.QFont()
         font.setFamily("Trebuchet MS")
-        font.setPointSize(16)
+        font.setPointSize(13)
         self.label.setFont(font)
-        self.label.setScaledContents(False)
+        self.label.setScaledContents(True)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         

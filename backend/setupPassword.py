@@ -24,6 +24,7 @@ class setupPasForm(QtWidgets.QDialog):
         self.layout.setFieldGrowthPolicy(QtWidgets.QFormLayout.AllNonFixedFieldsGrow)
         
         self.password = QtWidgets.QLineEdit()
+        self.password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password.setMinimumHeight(60)
         self.password.setStyleSheet("""background-color: #d2c15d;
             color: black;
@@ -39,6 +40,7 @@ class setupPasForm(QtWidgets.QDialog):
             """)
         self.setupPasLabel.setFont(font)
         self.confirmPass = QtWidgets.QLineEdit()
+        self.confirmPass.setEchoMode(QtWidgets.QLineEdit.Password)
         self.confirmPass.setMinimumHeight(60)
         self.confirmPass.setStyleSheet("""background-color: #d2c15d;
             color: black;
@@ -74,5 +76,5 @@ class setupPasForm(QtWidgets.QDialog):
 
 
         self.widget.setLayout(self.layout)
-        self.setWindowTitle("Login")
+        self.setWindowTitle("Setup master password")
         self.setMinimumWidth(350)

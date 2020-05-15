@@ -10,52 +10,44 @@ class Vault():
         pass
 
     #create vault db
-    def create_vault(self, master_password):
-        #vault db file path
-        vault_db = os.path.expanduser('~\Documents\ezPass\\vault')
+    def create_vault(self, master_password, vault_db):
+       
+        sql_create_accounts_table = """CREATE TABLE IF NOT EXISTS accounts (
+                                        id INTEGER PRIMARY KEY,
+                                        account VARCHAR NOT NULL,
+                                        user_name VARCHAR NOT NULL,
+                                        password BLOB NOT NULL
+                                    );"""
 
-        #ezPass logs folder path
-        folder_path = os.path.expanduser('~\Documents\ezPass')
-        os.chdir(folder_path)
+        sql_create_master_table = """CREATE TABLE IF NOT EXISTS master (
+                                        hash BLOB NOT NULL
+                                    );"""
 
-        #if vault db does not exist
-        if not os.path.isfile(vault_db):
-            sql_create_accounts_table = """CREATE TABLE IF NOT EXISTS accounts (
-                                            id INTEGER PRIMARY KEY,
-                                            account VARCHAR NOT NULL,
-                                            user_name VARCHAR NOT NULL,
-                                            password BLOB NOT NULL
-                                        );"""
+        data = generate_hash(master_password)
 
-            sql_create_master_table = """CREATE TABLE IF NOT EXISTS master (
-                                            hash BLOB NOT NULL
-                                        );"""
-
-            data = generate_hash(master_password)
-
-            insert_data = """INSERT INTO master(hash)
-                                VALUES(?)"""
-            
-            #create a database connection
-            conn = self.create_connection(vault_db)
-            
-            #create tables
-            if conn is not None:
-                #create accounts table
-                try:
-                    cur = conn.cursor()
-                    cur.execute(sql_create_accounts_table)
-                    cur.execute(sql_create_master_table)
-                    cur.execute(insert_data, (data,))
-                    conn.commit()
-                    conn.close()
-                except Error as e:
-                    print(e)
-            else:
-                print("Cannot create the database connection.")
+        insert_data = """INSERT INTO master(hash)
+                            VALUES(?)"""
+        
+        #create a database connection
+        conn = self.create_connection(vault_db)
+        
+        #create tables
+        if conn is not None:
+            #create accounts table
+            try:
+                cur = conn.cursor()
+                cur.execute(sql_create_accounts_table)
+                cur.execute(sql_create_master_table)
+                cur.execute(insert_data, (data,))
+                conn.commit()
+                conn.close()
+            except Error as e:
+                print(e)
+        else:
+            print("Cannot create the database connection.")
 
     #add account to vault
-    def add_account(self, account, master_password):
+    def add_account(self, website, password, user_name, master_password):
         #vault db file path
         vault_db = os.path.expanduser('~\Documents\ezPass\\vault')
 
@@ -66,16 +58,16 @@ class Vault():
         add_account_sql = """INSERT INTO accounts(account, user_name, password)
                             VALUES(?,?,?)"""
         
-        encrypted_password = encrypt(account.password, master_password)
+        encrypted_password = encrypt(password, master_password)
 
         #create a database connection
         conn = self.create_connection(vault_db)
         with conn:
             cur = conn.cursor()
-            cur.execute(add_account_sql, (account.account_name, account.user_name, encrypted_password))
+            cur.execute(add_account_sql, (website, user_name, encrypted_password))
 
-    #delete account based on account id in vault
-    def delete_account(self, id):
+    #delete account based on website and user_name in vault
+    def delete_account(self, website, user_name):
         #vault db file path
         vault_db = os.path.expanduser('~\Documents\ezPass\\vault')
 
@@ -83,13 +75,13 @@ class Vault():
         folder_path = os.path.expanduser('~\Documents\ezPass')
         os.chdir(folder_path)
 
-        delete_account_sql = """DELETE FROM accounts WHERE id = ? """
+        delete_account_sql = """DELETE FROM accounts WHERE account = ? AND user_name = ?"""
 
         #create a database connection
         conn = self.create_connection(vault_db)
         with conn:
             cur = conn.cursor()
-            cur.execute(delete_account_sql, (id,))
+            cur.execute(delete_account_sql, (website, user_name))
             conn.commit()
  
     #get account data from database 
