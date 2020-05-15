@@ -17,6 +17,7 @@ from createNewAccount import createAccountForm
 from setupPassword import setupPasForm
 from enterVaultPass import vaultPassword
 from vault import Vault
+from zxcvbn import zxcvbn
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -756,7 +757,7 @@ class Ui_MainWindow(object):
         self.label_audit = QtWidgets.QLabel(self.page_audit)
         self.label_audit.setGeometry(QtCore.QRect(
             round((self.stackedWidget.width() - 560) / 2), 30, 560, 150))
-        self.label_audit.setPixmap(QtGui.QPixmap("../images/ezPassLogo.PNG"))
+        self.label_audit.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
         self.label_audit.setScaledContents(True)
         self.label_audit.setAlignment(QtCore.Qt.AlignCenter)
         self.label_audit.setObjectName("label_audit")
@@ -800,6 +801,14 @@ class Ui_MainWindow(object):
             border: 2px dashed white;
         """)
         font.setPointSize(14)
+        
+        self.passwordStrengthAuditLE = QtWidgets.QLineEdit(self.page_audit)
+        self.passwordStrengthAuditLE.setMaximumHeight(60)
+        self.passwordStrengthAuditLE.setFont(font)
+        self.passwordStrengthAuditLE.textChanged.connect(self.checkPwdStrength)
+        self.saWidgetLayout.addWidget(self.passwordStrengthAuditLE)
+        
+        
         self.resultLabel = QtWidgets.QLabel(self.page_audit)
         self.resultLabel.setText("Your password strength:" )     
         self.resultLabel.setMaximumHeight(60)      
@@ -808,12 +817,7 @@ class Ui_MainWindow(object):
             border: 0px solid white;
         
         """)
-        self.passwordStrengthAuditLE = QtWidgets.QLineEdit(self.page_audit)
-        self.passwordStrengthAuditLE.setMaximumHeight(60)
-        self.passwordStrengthAuditLE.setFont(font)
-        self.saWidgetLayout.addWidget(self.passwordStrengthAuditLE)
         self.saWidgetLayout.addWidget(self.resultLabel)
-        
         self.imageLabel = QtWidgets.QLabel(self.page_audit)
         self.imageLabel.setPixmap(QtGui.QPixmap("images/security_Audit_adjust.jpg"))
         self.imageLabel.setGeometry(QtCore.QRect(
@@ -1119,12 +1123,12 @@ class Ui_MainWindow(object):
                 self.layoutWidget_1_dynamic)
             self.dummyLabel_4_dynamic.setProperty("class", "QLabel_genPas")
 
-            self.navBar_audit = QtWidgets.QHBoxLayout(self.layoutWidget_1_dynamic)
-            self.navBar_audit.addWidget(self.HomeBtn_dynamic)
-            self.navBar_audit.addWidget(self.SettingsBtn_dynamic)
-            self.navBar_audit.addWidget(self.AboutUsBtn_dynamic)
-            self.navBar_audit.addWidget(self.dummyLabel_3_dynamic)
-            self.navBar_audit.addWidget(self.dummyLabel_4_dynamic)
+            self.navBar_dynamic = QtWidgets.QHBoxLayout(self.layoutWidget_1_dynamic)
+            self.navBar_dynamic.addWidget(self.HomeBtn_dynamic)
+            self.navBar_dynamic.addWidget(self.SettingsBtn_dynamic)
+            self.navBar_dynamic.addWidget(self.AboutUsBtn_dynamic)
+            self.navBar_dynamic.addWidget(self.dummyLabel_3_dynamic)
+            self.navBar_dynamic.addWidget(self.dummyLabel_4_dynamic)
 
             self.groupBox_dynamic = QtWidgets.QGroupBox(self.page_dynamic)
             self.groupBox_dynamic.setGeometry(QtCore.QRect(round
@@ -1647,8 +1651,9 @@ class Ui_MainWindow(object):
                     Dialog.exec_()
                     ##testing
       
-    
-        
+    def checkPwdStrength(self):
+        result = zxcvbn(self.passwordStrengthAuditLE.text())
+        print(result)
 
 
 if __name__ == "__main__":
