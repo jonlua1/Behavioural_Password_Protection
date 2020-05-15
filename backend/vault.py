@@ -67,7 +67,7 @@ class Vault():
             cur.execute(add_account_sql, (website, user_name, encrypted_password))
 
     #delete account based on website and user_name in vault
-    def delete_account(self, website, user_name):
+    def delete_account(self, id):
         #vault db file path
         vault_db = os.path.expanduser('~\Documents\ezPass\\vault')
 
@@ -75,13 +75,13 @@ class Vault():
         folder_path = os.path.expanduser('~\Documents\ezPass')
         os.chdir(folder_path)
 
-        delete_account_sql = """DELETE FROM accounts WHERE account = ? AND user_name = ?"""
+        delete_account_sql = """DELETE FROM accounts WHERE id = ? """
 
         #create a database connection
         conn = self.create_connection(vault_db)
         with conn:
             cur = conn.cursor()
-            cur.execute(delete_account_sql, (website, user_name))
+            cur.execute(delete_account_sql, (id,))
             conn.commit()
  
     #get account data from database 

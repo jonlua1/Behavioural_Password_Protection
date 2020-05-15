@@ -23,6 +23,7 @@ class customComboBox_symbol(QComboBox):
             font-size: 20px;
             """
         self.setStyleSheet(self.styleSheet)
+        self.addItem(" ")
         self.addItem("0")
         self.addItem("1")
         self.addItem("2")

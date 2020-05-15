@@ -7,12 +7,11 @@ from PyQt5.QtGui import (QClipboard)
 
 class customGroupBox(QGroupBox):
 
-    def __init__(self, name, uname, password):
+    def __init__(self, name, uname, id):
         super(customGroupBox, self).__init__()
-
+        self.id = id
         self.name = name
         self.uname = uname
-        self.password = password
 
         self.styleSheet = """ 
         QPushButton {
@@ -92,7 +91,7 @@ class customGroupBox(QGroupBox):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.viewBtn.setSizePolicy(sizePolicy)
         self.viewBtn.setMinimumSize(QSize(0, 150))
-        self.viewBtn.clicked.connect(lambda: function(self.password, self.userName, self.name))
+        self.viewBtn.clicked.connect(lambda: function(self.userName, self.name, self.id))
         self.btns_vault.addWidget(self.viewBtn)
 
     @pyqtSlot()

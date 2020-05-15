@@ -217,6 +217,7 @@ class Ui_MainWindow(object):
         self.label_14_Home.setAlignment(QtCore.Qt.AlignCenter)
         self.label_14_Home.setObjectName("label_14_Home")
 
+        
         self.stackedWidget.addWidget(self.page_Home)
 #################################################### Generator page #############################################################
         self.page_genPas = QtWidgets.QWidget()
@@ -330,8 +331,6 @@ class Ui_MainWindow(object):
         self.navBar_vault.addWidget(self.dummyLabel_2_genPas)
 
         self.verticalLayout_genPas.addWidget(self.layoutWidget_genPas)
-
-        #############################
 
         self.groupBox_genPas = QtWidgets.QGroupBox(
             self.scrollAreaWidgetContents_genPas)
@@ -530,7 +529,7 @@ class Ui_MainWindow(object):
         self.comboBox_Number_2_genPas.setGeometry(QtCore.QRect(
             round((self.scrollArea_genPas.width()-400)/2), 100, 400, 60))
         self.comboBox_Number_2_genPas.setMinimumHeight(50)
-        self.comboBox_Number_2_genPas.setEnabled(False)
+        self.comboBox_Number_2_genPas.setEnabled(True)
         self.comboBox_Number_2_genPas.setObjectName("comboBox_Number_2_genPas")
         self.comboBox_Number_2_genPas.setStyleSheet(self.styleSheet)
         self.comboBox_Number_2_genPas.addItem("")
@@ -741,45 +740,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_vault.addWidget(self.groupBox_searchbar_vault)
 
-        # list of names, widgets are stored in a dictionary
-        self.widget_names = [
-            "Facebook", "Twitter", "Instagram", "Telegram", "Snapchat"
-        ]
-
-        self.viewVault()
-
-        parameters = [
-            {"website": "Snapchat", "username": "user01", "password": "12345"},
-            {"website": "Twitter", "username": "user02", "password": "2345"},
-            {"website": "Instagram", "username": "user03", "password": "45678"},
-            {"website": "Facebook", "username": "user04", "password": "9alsdjf1"},
-            {"website": "Steam", "username": "user05", "password": "L8nL77s"}
-        ]
-
-        self.widgets = []
-
-        # Iterate the names, creating a new customGroupBox for
-        # each one, adding it to the layout and
-        # storing a reference in the 'self.widgets' dict
-        for x in parameters:
-            website = x["website"]
-            username = x["username"]
-            password = x["password"]
-            item = customGroupBox(website, username, password)
-            item.viewDetails(self.viewAccountPwd)
-            item.setContentsMargins(0, 10, 0, 20)
-            self.verticalLayout_vault.addWidget(item)
-            self.widgets.append(item)
-            if website not in self.widget_names:
-                self.widget_names.append(website)
-
-         # to maintain the positions of each items inside the layout
-        self.verticalLayout_vault.addItem(spacer_vault)
-
-        self.completer_vault = QtWidgets.QCompleter(self.widget_names)
-        self.completer_vault.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
-        self.searchbar.setCompleter(self.completer_vault)
-
         self.scrollArea_vault.setWidget(self.scrollAreaWidgetContents_vault)
 
         self.stackedWidget.addWidget(self.page_vault)
@@ -796,7 +756,7 @@ class Ui_MainWindow(object):
         self.label_audit = QtWidgets.QLabel(self.page_audit)
         self.label_audit.setGeometry(QtCore.QRect(
             round((self.stackedWidget.width() - 560) / 2), 30, 560, 150))
-        self.label_audit.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
+        self.label_audit.setPixmap(QtGui.QPixmap("../images/ezPassLogo.PNG"))
         self.label_audit.setScaledContents(True)
         self.label_audit.setAlignment(QtCore.Qt.AlignCenter)
         self.label_audit.setObjectName("label_audit")
@@ -1012,13 +972,46 @@ class Ui_MainWindow(object):
                 
 
             if (checkPassword):
+                self.viewVault()
                 self.stackedWidget.setCurrentIndex(2)  
-
+                
             
 
         else:
             
             if(self.authenticateActionVault() is not None):
+                 # list of website names
+                self.widget_names = []
+
+                self.parameters = self.viewVault()
+                spacer_vault = QtWidgets.QSpacerItem(
+                 1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+
+                # an array of created custom group box
+                self.widgets = []
+
+                # Iterate the names, creating a new customGroupBox for
+                # each one, adding it to the layout and
+                # storing a reference in the 'self.widgets' dict
+                for x in self.parameters:
+                    id = x[0]
+                    website = x[1]
+                    username = x[2]
+                    item = customGroupBox(website, username, id)
+                    item.viewDetails(self.viewAccountPwd)
+                    item.setContentsMargins(0, 10, 0, 20)
+                    self.verticalLayout_vault.addWidget(item)
+                    self.widgets.append(item)
+                    if website not in self.widget_names:
+                        self.widget_names.append(website)
+
+
+                # to maintain the positions of each items inside the layout
+                self.verticalLayout_vault.addItem(spacer_vault)
+
+                self.completer_vault = QtWidgets.QCompleter(self.widget_names)
+                self.completer_vault.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
+                self.searchbar.setCompleter(self.completer_vault)
                 self.stackedWidget.setCurrentIndex(2)
 
     #authenticate user when they wants to perform user privacy related
@@ -1076,164 +1069,175 @@ class Ui_MainWindow(object):
             else:
                 widget.hide()
 
-    def viewAccountPwd(self, pwd, username, account):
-        self.page_dynamic = QtWidgets.QWidget()
-        self.logoBackground_dynamic = QtWidgets.QLabel(self.page_dynamic)
-        self.logoBackground_dynamic.setGeometry(
-            QtCore.QRect(0, 0, self.stackedWidget.width(), 250))
-        self.logoBackground_dynamic.setProperty(
-            "class", "logoBackground_genPas")
-        self.label_dynamic = QtWidgets.QLabel(self.page_dynamic)
-        self.label_dynamic.setGeometry(QtCore.QRect(
-            round((self.stackedWidget.width() - 560) / 2), 30, 560, 150))
-        self.label_dynamic.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
-        self.label_dynamic.setScaledContents(True)
-        self.label_dynamic.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_dynamic.setObjectName("label_dynamic")
-        self.label_dynamic.setProperty("class", "label_logo")
-
-        self.layoutWidget_1_dynamic = QtWidgets.QWidget(self.page_dynamic)
-        self.layoutWidget_1_dynamic.setGeometry(QtCore.QRect(
-            0, self.logoBackground_dynamic.height() - 30, self.stackedWidget.width(), 100))
-        self.layoutWidget_1_dynamic.setProperty("class", "navBar_genPas")
-
-        self.HomeBtn_dynamic = QtWidgets.QPushButton(
-            self.layoutWidget_1_dynamic)
-        self.HomeBtn_dynamic.setProperty("class", "navBar_btn")
-        self.HomeBtn_dynamic.setText("Home")
-        self.HomeBtn_dynamic.clicked.connect(self.homePg)
-        self.VaultBtn_dynamic = QtWidgets.QPushButton(
-            self.layoutWidget_1_dynamic)
-        self.VaultBtn_dynamic.setProperty("class", "navBar_btn")
-        self.VaultBtn_dynamic.setText("Vault")
-        self.VaultBtn_dynamic.clicked.connect(self.vaultPg)
-        self.SettingsBtn_dynamic = QtWidgets.QPushButton(
-            self.layoutWidget_1_dynamic)
-        self.SettingsBtn_dynamic.setProperty("class", "navBar_btn")
-        self.SettingsBtn_dynamic.setText("Settings")
-        self.AboutUsBtn_dynamic = QtWidgets.QPushButton(
-            self.layoutWidget_1_dynamic)
-        self.AboutUsBtn_dynamic.setProperty("class", "navBar_btn")
-        self.AboutUsBtn_dynamic.setText("About Us")
-        self.dummyLabel_3_dynamic = QtWidgets.QLabel(
-            self.layoutWidget_1_dynamic)
-        self.dummyLabel_3_dynamic.setProperty("class", "QLabel_genPas")
-        self.dummyLabel_4_dynamic = QtWidgets.QLabel(
-            self.layoutWidget_1_dynamic)
-        self.dummyLabel_4_dynamic.setProperty("class", "QLabel_genPas")
-
-        self.navBar_audit = QtWidgets.QHBoxLayout(self.layoutWidget_1_dynamic)
-        self.navBar_audit.addWidget(self.HomeBtn_dynamic)
-        self.navBar_audit.addWidget(self.VaultBtn_dynamic)
-        self.navBar_audit.addWidget(self.SettingsBtn_dynamic)
-        self.navBar_audit.addWidget(self.AboutUsBtn_dynamic)
-        self.navBar_audit.addWidget(self.dummyLabel_3_dynamic)
-        self.navBar_audit.addWidget(self.dummyLabel_4_dynamic)
-
-        self.groupBox_dynamic = QtWidgets.QGroupBox(self.page_dynamic)
-        self.groupBox_dynamic.setGeometry(QtCore.QRect(round
-                                                       ((self.stackedWidget.width(
-                                                       ) - 1300) / 2), self.layoutWidget_1_dynamic.y()
-                                                       + self.layoutWidget_1_dynamic.height() + 20, 1300, 500))
-        self.groupBox_dynamic.setStyleSheet(
-            """ border: 3px solid white; border-radius: 20px""")
-        self.gridLayout_dynamic = QtWidgets.QGridLayout(self.groupBox_dynamic)
-        self.gridLayout_dynamic.setContentsMargins(50, 25, 50, 100)
-        self.gridLayout_dynamic.setHorizontalSpacing(50)
-        self.gridLayout_dynamic.setVerticalSpacing(0)
-
-        self.accountLabel_dynamic = QtWidgets.QLabel()
-        self.accountLabel_dynamic.setText(account)
-        self.accountLabel_dynamic.setStyleSheet("border-style: none;")
-        self.accountLabel_dynamic.setProperty("class", "labels_dynamic")
-        self.accountLabel_dynamic.setMaximumSize(QtCore.QSize(16777215, 50))
-        self.userNameLabel_dynamic = QtWidgets.QLabel()
-        self.userNameLabel_dynamic.setStyleSheet("border-style: none;")
-        self.userNameLabel_dynamic.setProperty("class", "labels_dynamic")
-        self.userNameLabel_dynamic.setText("User name:")
-        self.pwdLabel_dynamic = QtWidgets.QLabel()
-        self.pwdLabel_dynamic.setStyleSheet("border-style: none;")
-        self.pwdLabel_dynamic.setProperty("class", "labels_dynamic")
-        self.pwdLabel_dynamic.setText("Password / Passphrase:")
-
-        self.userNameLE_dynamic = QtWidgets.QLineEdit(username.text())
-        self.userNameLE_dynamic.setMaximumWidth(400)
-        self.userNameLE_dynamic.setDisabled(True)
-        self.userNameLE_dynamic.setStyleSheet("border-style: none;")
-        self.userNameLE_dynamic.setProperty("class", "LE_dynamic")
-        self.pwdLE_dynamic = QtWidgets.QLineEdit(pwd)
-        self.pwdLE_dynamic.setMaximumWidth(400)
-        self.pwdLE_dynamic.setStyleSheet("border-style: none;")
-        self.pwdLE_dynamic.setProperty("class", "LE_dynamic")
-        self.pwdLE_dynamic.setDisabled(True)
-        self.copyBtn_dynamic = QtWidgets.QPushButton()
-        self.copyBtn_dynamic.setText("Copy")
-        self.copyBtn_dynamic.setMaximumWidth(200)
-        self.copyBtn_dynamic.setStyleSheet("""
-        QPushButton {
-            font-size: 30px;
-        }
-
-        QPushButton:hover {
-            border: 5px solid #6da4fc;
-        }
-
-        QPushButton:pressed {
-            background-color: #6da4fc;
-        }
+    def viewAccountPwd(self, username, account, id):
+        masterpwd = self.authenticateActionVault()
+        if (masterpwd is not None):
+            self.page_dynamic = QtWidgets.QWidget()
+            self.logoBackground_dynamic = QtWidgets.QLabel(self.page_dynamic)
+            self.logoBackground_dynamic.setGeometry(
+                QtCore.QRect(0, 0, self.stackedWidget.width(), 250))
+            self.logoBackground_dynamic.setProperty(
+                "class", "logoBackground_genPas")
         
-        """)
-        self.copyBtn_dynamic.setObjectName("copyButton_dynmaic")
-        self.copyBtn_dynamic.clicked.connect(
-            lambda: self.copyText(self.pwdLE_dynamic.text()))
-        self.delBtn_dynamic = QtWidgets.QPushButton(
-            "Delete", self.groupBox_dynamic)
-        self.styleSheet = """  
-        QPushButton {
-            font-size: 30px;
-            background-color: #34363a;
-            color: #ffffff;
-            border-style: none;
-        }
+            self.label_dynamic = QtWidgets.QLabel(MainWindow)
+            self.label_dynamic.setGeometry(QtCore.QRect(
+                round((self.stackedWidget.width() - 560) / 2), 30, 560, 150))
+            pixmapLogo = QtGui.QPixmap(":/images/ezPassLogo.PNG")
+            self.label_dynamic.setPixmap(pixmapLogo)
+            self.label_dynamic.setScaledContents(True)
+            self.label_dynamic.setAlignment(QtCore.Qt.AlignCenter)
+            self.label_dynamic.setObjectName("label_dynamic")
+            self.label_dynamic.setProperty("class", "label_logo")
 
-        QPushButton:hover {
-            color: #d2c15d;
-        }
+            self.backButton = QtWidgets.QPushButton(" <-- Back to vault", self.page_dynamic)
+            self.backButton.setGeometry(QtCore.QRect(round((self.stackedWidget.width() - 300) / 2), 840, 300, 60))
+            self.backButton.clicked.connect(self.backToVault)
+            self.backButton.setObjectName("backVaultBtn")    
+            self.layoutWidget_1_dynamic = QtWidgets.QWidget(self.page_dynamic)
+            self.layoutWidget_1_dynamic.setGeometry(QtCore.QRect(
+                0, self.logoBackground_dynamic.height() - 30, self.stackedWidget.width(), 100))
+            self.layoutWidget_1_dynamic.setProperty("class", "navBar_genPas")
 
-        QPushButton:disabled {
-            color: grey;
-        }
-        
-        """
-        self.delBtn_dynamic.setStyleSheet(self.styleSheet)
-        self.delBtn_dynamic.setGeometry(QtCore.QRect(
-            self.groupBox_dynamic.width() - 200, self.groupBox_dynamic.height() - 80, 180, 60))
-        self.delBtn_dynamic.clicked.connect(lambda: self.deleteAcc(username, account))
-        self.editBtn_dynamic = QtWidgets.QPushButton(
-            "Edit", self.groupBox_dynamic)
-        self.editBtn_dynamic.setStyleSheet(self.styleSheet)
-        self.editBtn_dynamic.setGeometry(QtCore.QRect(
-            self.groupBox_dynamic.width() - 420, self.groupBox_dynamic.height() - 80, 180, 60))
-        self.editBtn_dynamic.clicked.connect(self.editInfo)
-        self.saveBtn_dynamic = QtWidgets.QPushButton(
-            "Save", self.groupBox_dynamic)
-        self.saveBtn_dynamic.setStyleSheet(self.styleSheet)
-        self.saveBtn_dynamic.setGeometry(QtCore.QRect(
-            self.groupBox_dynamic.width() - 640, self.groupBox_dynamic.height() - 80, 180, 60))
-        self.saveBtn_dynamic.setDisabled(True)
-        self.saveBtn_dynamic.clicked.connect(self.saveInfo)
-        self.gridLayout_dynamic.addWidget(
-            self.accountLabel_dynamic, 0, 0, 1, 1)
-        self.gridLayout_dynamic.addWidget(
-            self.userNameLabel_dynamic, 1, 0, 1, 1)
-        self.gridLayout_dynamic.addWidget(self.userNameLE_dynamic, 1, 1, 1, 1)
-        self.gridLayout_dynamic.addWidget(self.pwdLabel_dynamic, 2, 0, 1, 1)
-        self.gridLayout_dynamic.addWidget(self.pwdLE_dynamic, 2, 1, 1, 1)
-        self.gridLayout_dynamic.addWidget(self.copyBtn_dynamic, 2, 2, 1, 1)
+            self.HomeBtn_dynamic = QtWidgets.QPushButton(
+                self.layoutWidget_1_dynamic)
+            self.HomeBtn_dynamic.setProperty("class", "navBar_btn")
+            self.HomeBtn_dynamic.setText("Home")
+            self.HomeBtn_dynamic.clicked.connect(self.homePg)
+            
+            self.SettingsBtn_dynamic = QtWidgets.QPushButton(
+                self.layoutWidget_1_dynamic)
+            self.SettingsBtn_dynamic.setProperty("class", "navBar_btn")
+            self.SettingsBtn_dynamic.setText("Settings")
+            self.AboutUsBtn_dynamic = QtWidgets.QPushButton(
+                self.layoutWidget_1_dynamic)
+            self.AboutUsBtn_dynamic.setProperty("class", "navBar_btn")
+            self.AboutUsBtn_dynamic.setText("About Us")
+            self.dummyLabel_3_dynamic = QtWidgets.QLabel(
+                self.layoutWidget_1_dynamic)
+            self.dummyLabel_3_dynamic.setProperty("class", "QLabel_genPas")
+            self.dummyLabel_4_dynamic = QtWidgets.QLabel(
+                self.layoutWidget_1_dynamic)
+            self.dummyLabel_4_dynamic.setProperty("class", "QLabel_genPas")
 
-        
-        self.stackedWidget.addWidget(self.page_dynamic)
-        self.stackedWidget.setCurrentWidget(self.page_dynamic)
+            self.navBar_audit = QtWidgets.QHBoxLayout(self.layoutWidget_1_dynamic)
+            self.navBar_audit.addWidget(self.HomeBtn_dynamic)
+            self.navBar_audit.addWidget(self.SettingsBtn_dynamic)
+            self.navBar_audit.addWidget(self.AboutUsBtn_dynamic)
+            self.navBar_audit.addWidget(self.dummyLabel_3_dynamic)
+            self.navBar_audit.addWidget(self.dummyLabel_4_dynamic)
+
+            self.groupBox_dynamic = QtWidgets.QGroupBox(self.page_dynamic)
+            self.groupBox_dynamic.setGeometry(QtCore.QRect(round
+                                                        ((self.stackedWidget.width(
+                                                        ) - 1300) / 2), self.layoutWidget_1_dynamic.y()
+                                                        + self.layoutWidget_1_dynamic.height() + 20, 1300, 500))
+            self.groupBox_dynamic.setStyleSheet(
+                """ border: 3px solid white; border-radius: 20px""")
+            self.gridLayout_dynamic = QtWidgets.QGridLayout(self.groupBox_dynamic)
+            self.gridLayout_dynamic.setContentsMargins(50, 25, 50, 100)
+            self.gridLayout_dynamic.setHorizontalSpacing(50)
+            self.gridLayout_dynamic.setVerticalSpacing(0)
+
+            
+            self.accountLabel_dynamic = QtWidgets.QLabel()
+            self.accountLabel_dynamic.setText(account)
+            self.accountLabel_dynamic.setStyleSheet("""
+                border-style: none;
+                font-size: 40px;
+                font-weight: bold;
+                color: #ffffff;
+            """)
+            #self.accountLabel_dynamic.setProperty("class", "labels_dynamic")
+            self.accountLabel_dynamic.setMaximumSize(QtCore.QSize(16777215, 50))
+            self.userNameLabel_dynamic = QtWidgets.QLabel()
+            self.userNameLabel_dynamic.setStyleSheet("border-style: none;")
+            self.userNameLabel_dynamic.setProperty("class", "labels_dynamic")
+            self.userNameLabel_dynamic.setText("User name:")
+            self.pwdLabel_dynamic = QtWidgets.QLabel()
+            self.pwdLabel_dynamic.setStyleSheet("border-style: none;")
+            self.pwdLabel_dynamic.setProperty("class", "labels_dynamic")
+            self.pwdLabel_dynamic.setText("Password / Passphrase:")
+
+            self.userNameLE_dynamic = QtWidgets.QLineEdit(username.text())
+            self.userNameLE_dynamic.setMaximumWidth(400)
+            self.userNameLE_dynamic.setDisabled(True)
+            self.userNameLE_dynamic.setStyleSheet("border-style: none;")
+            self.userNameLE_dynamic.setProperty("class", "LE_dynamic")
+
+            vault = Vault()
+            self.pwdLE_dynamic = QtWidgets.QLineEdit(vault.view_password(id, masterpwd))
+            self.pwdLE_dynamic.setMaximumWidth(400)
+            self.pwdLE_dynamic.setStyleSheet("border-style: none;")
+            self.pwdLE_dynamic.setProperty("class", "LE_dynamic")
+            self.pwdLE_dynamic.setDisabled(True)
+            self.copyBtn_dynamic = QtWidgets.QPushButton()
+            self.copyBtn_dynamic.setText("Copy")
+            self.copyBtn_dynamic.setMaximumWidth(200)
+            self.copyBtn_dynamic.setStyleSheet("""
+            QPushButton {
+                font-size: 30px;
+            }
+
+            QPushButton:hover {
+                border: 5px solid #6da4fc;
+            }
+
+            QPushButton:pressed {
+                background-color: #6da4fc;
+            }
+            
+            """)
+            self.copyBtn_dynamic.setObjectName("copyButton_dynmaic")
+            self.copyBtn_dynamic.clicked.connect(
+                lambda: self.copyText(self.pwdLE_dynamic.text()))
+            self.delBtn_dynamic = QtWidgets.QPushButton(
+                "Delete", self.groupBox_dynamic)
+            self.styleSheet = """  
+            QPushButton {
+                font-size: 30px;
+                background-color: #34363a;
+                color: #ffffff;
+                border-style: none;
+            }
+
+            QPushButton:hover {
+                color: #d2c15d;
+            }
+
+            QPushButton:disabled {
+                color: grey;
+            }
+            
+            """
+            self.delBtn_dynamic.setStyleSheet(self.styleSheet)
+            self.delBtn_dynamic.setGeometry(QtCore.QRect(
+                self.groupBox_dynamic.width() - 200, self.groupBox_dynamic.height() - 80, 180, 60))
+            self.delBtn_dynamic.clicked.connect(lambda: self.deleteAcc(id))
+            self.editBtn_dynamic = QtWidgets.QPushButton(
+                "Edit", self.groupBox_dynamic)
+            self.editBtn_dynamic.setStyleSheet(self.styleSheet)
+            self.editBtn_dynamic.setGeometry(QtCore.QRect(
+                self.groupBox_dynamic.width() - 420, self.groupBox_dynamic.height() - 80, 180, 60))
+            self.editBtn_dynamic.clicked.connect(self.editInfo)
+            self.saveBtn_dynamic = QtWidgets.QPushButton(
+                "Save", self.groupBox_dynamic)
+            self.saveBtn_dynamic.setStyleSheet(self.styleSheet)
+            self.saveBtn_dynamic.setGeometry(QtCore.QRect(
+                self.groupBox_dynamic.width() - 640, self.groupBox_dynamic.height() - 80, 180, 60))
+            self.saveBtn_dynamic.setDisabled(True)
+            self.saveBtn_dynamic.clicked.connect(lambda: self.saveInfo(id, account, masterpwd))
+            self.gridLayout_dynamic.addWidget(
+                self.accountLabel_dynamic, 0, 0, 1, 1)
+            self.gridLayout_dynamic.addWidget(
+                self.userNameLabel_dynamic, 1, 0, 1, 1)
+            self.gridLayout_dynamic.addWidget(self.userNameLE_dynamic, 1, 1, 1, 1)
+            self.gridLayout_dynamic.addWidget(self.pwdLabel_dynamic, 2, 0, 1, 1)
+            self.gridLayout_dynamic.addWidget(self.pwdLE_dynamic, 2, 1, 1, 1)
+            self.gridLayout_dynamic.addWidget(self.copyBtn_dynamic, 2, 2, 1, 1)
+
+            
+            self.stackedWidget.addWidget(self.page_dynamic)
+            self.stackedWidget.setCurrentWidget(self.page_dynamic)
 
     @QtCore.pyqtSlot()
     def copyText(self, pwd):
@@ -1250,7 +1254,10 @@ class Ui_MainWindow(object):
         self.editBtn_dynamic.setDisabled(True)
         self.saveBtn_dynamic.setDisabled(False)
 
-    def saveInfo(self):
+       
+
+    def saveInfo(self, id, account, masterpwd):
+        vault = Vault
         self.copyBtn_dynamic.setDisabled(False)
         self.pwdLE_dynamic.setDisabled(True)
         self.userNameLE_dynamic.setDisabled(True)
@@ -1261,18 +1268,21 @@ class Ui_MainWindow(object):
         self.editBtn_dynamic.setDisabled(False)
         self.saveBtn_dynamic.setDisabled(True)
 
+        vault = Vault()
+        vault.edit_account(id, account, self.userNameLE_dynamic.text())
+        vault.edit_account_password(id, self.pwdLE_dynamic.text(), masterpwd)
+
     def viewVault(self):
         vault = Vault()
 
         parameters = vault.get_accounts()
 
-        for i in parameters:
-            print(i)
+        return parameters
 
     # a function that create Pop up windows when user deletes an
     # account from vault page, and remove the related groupbox 
     # from vault page
-    def deleteAcc(self, username, account):
+    def deleteAcc(self, id):
         Dialog = QtWidgets.QDialog()
         ui = Ui_Dialog()
         ui.setupUi(Dialog, "Confirm deletion of account?")
@@ -1280,9 +1290,9 @@ class Ui_MainWindow(object):
         vault = Vault()
 
         if Dialog.exec_():
-            vault.delete_account(account, username)
+            vault.delete_account(id)
             for i in self.widgets:
-                if (i.uname == username.text() and i.name == account):
+                if (i.id == id):
                     i.delete()
                     self.widgets.pop(self.widgets.index(i))
                     self.verticalLayout_vault.removeWidget(i)
@@ -1307,8 +1317,8 @@ class Ui_MainWindow(object):
 
         else:
             self.btnList.remove(sender_button.text())
-            if (len(self.btnList) == 0):
-                self.comboBox_Number_2_genPas.setDisabled(True)
+            #if (len(self.btnList) == 0):
+            #    self.comboBox_Number_2_genPas.setDisabled(True)
 
     #show the preferences comboboxes including starting alphabets
     # and number/symbols at the bottom of genPas page
@@ -1494,7 +1504,7 @@ class Ui_MainWindow(object):
         self.copyPassPhrasebtn.clicked.connect( lambda: self.copyText(self.finalResult.text()))
         self.displayText = QtWidgets.QLabel("Generated passphrase: ")
 
-        if (len(self.btnList) == 0 or self.comboBox_wordNo == ""):
+        if (self.comboBox_wordNo == ""):
             print("Please try again.")
         else:
             self.finalResult.setText(generate_password(self.btnList, int(
@@ -1593,6 +1603,9 @@ class Ui_MainWindow(object):
             self.cb_2_dynamic_symbol.setHidden(True)
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic)
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic_symbol)
+
+    def backToVault(self):
+        self.stackedWidget.setCurrentIndex(2)
 
     def ADD_Account(self):
         addAccount = createAccountForm()
@@ -1755,6 +1768,7 @@ if __name__ == "__main__":
             border-style: none;
             font-size: 28px;
             color: #ffffff;
+            
         }
 
         .LE_dynamic {
@@ -1763,7 +1777,17 @@ if __name__ == "__main__":
             font-size: 40px;
             color: #ffffff;
         }
-        
+    
+        QPushButton#backVaultBtn  {
+            background-color: #34363a;
+            font-size: 25px;
+            color: white;
+            border-style: none;
+        }
+
+        QPushButton#backVaultBtn:hover {
+            color: red;
+        }
 
     """
     ui = Ui_MainWindow()
