@@ -693,12 +693,21 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_vault.addWidget(self.layoutWidget_vault)
 
+        #list of website names
+        self.widget_names = []
+        
+        #an array of created custom group box
+        self.widgets = []
+
+        #bool to check if user change info
+        self.infoChanged = False
+
+       
         self.styleSheet = """
             font-size: 30px;
             color: #d2c15d;
         """
 
-##################################### VAULT RELEVANT DEFINITION ######################################
         self.welcomeSign = QtWidgets.QWidget()
         self.wcs_layout = QtWidgets.QHBoxLayout(self.welcomeSign)
         self.welcome = QtWidgets.QLabel("Welcome to the vault!")
@@ -736,10 +745,13 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(
             self.searchbar.sizePolicy().hasHeightForWidth())
 
+
+        self.verticalLayout_vault.addWidget(self.groupBox_searchbar_vault)
+
         spacer_vault = QtWidgets.QSpacerItem(
             1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
 
-        self.verticalLayout_vault.addWidget(self.groupBox_searchbar_vault)
+        self.verticalLayout_vault.addItem(spacer_vault)
 
         self.scrollArea_vault.setWidget(self.scrollAreaWidgetContents_vault)
 
@@ -976,24 +988,21 @@ class Ui_MainWindow(object):
                 
 
             if (checkPassword):
-                self.viewVault()
                 self.stackedWidget.setCurrentIndex(2)  
                 
             
 
         else:
-            
             if(self.authenticateActionVault() is not None):
-                 # list of website names
-                self.widget_names = []
-
-                self.parameters = self.viewVault()
+                 
+                self.parameters = vault_db.get_accounts()
+                #print(self.parameters)
                 spacer_vault = QtWidgets.QSpacerItem(
-                 1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+                1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
 
-                # an array of created custom group box
-                self.widgets = []
-
+                 # to maintain the positions of each items inside the layout
+                self.verticalLayout_vault.addItem(spacer_vault)
+                
                 # Iterate the names, creating a new customGroupBox for
                 # each one, adding it to the layout and
                 # storing a reference in the 'self.widgets' dict
@@ -1004,14 +1013,12 @@ class Ui_MainWindow(object):
                     item = customGroupBox(website, username, id)
                     item.viewDetails(self.viewAccountPwd)
                     item.setContentsMargins(0, 10, 0, 20)
-                    self.verticalLayout_vault.addWidget(item)
-                    self.widgets.append(item)
+                #print(x)
+                    if (len(self.widgets) != len(self.parameters)):
+                        self.verticalLayout_vault.addWidget(item)
+                        self.widgets.append(item)
                     if website not in self.widget_names:
                         self.widget_names.append(website)
-
-
-                # to maintain the positions of each items inside the layout
-                self.verticalLayout_vault.addItem(spacer_vault)
 
                 self.completer_vault = QtWidgets.QCompleter(self.widget_names)
                 self.completer_vault.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
@@ -1040,7 +1047,7 @@ class Ui_MainWindow(object):
             if enterVault.exec_():
                 enteredPassword = enterVault.password.text()
                 
-                #open userkey.txt to read the password
+                #open db file to read the password
                 if(os.path.isfile(vault_db_filename)):
                         
                     if (vault_db.authenticate_user(enteredPassword)):
@@ -1107,7 +1114,9 @@ class Ui_MainWindow(object):
             self.HomeBtn_dynamic.setProperty("class", "navBar_btn")
             self.HomeBtn_dynamic.setText("Home")
             self.HomeBtn_dynamic.clicked.connect(self.homePg)
-            
+            self.VaultBtn_dynamic = QtWidgets.QPushButton('Vault', self.layoutWidget_1_dynamic)
+            self.VaultBtn_dynamic.setProperty("class", "navBar_btn")
+            self.VaultBtn_dynamic.clicked.connect(self.vaultPg)
             self.SettingsBtn_dynamic = QtWidgets.QPushButton(
                 self.layoutWidget_1_dynamic)
             self.SettingsBtn_dynamic.setProperty("class", "navBar_btn")
@@ -1258,8 +1267,6 @@ class Ui_MainWindow(object):
         self.editBtn_dynamic.setDisabled(True)
         self.saveBtn_dynamic.setDisabled(False)
 
-       
-
     def saveInfo(self, id, account, masterpwd):
         vault = Vault
         self.copyBtn_dynamic.setDisabled(False)
@@ -1275,6 +1282,20 @@ class Ui_MainWindow(object):
         vault = Vault()
         vault.edit_account(id, account, self.userNameLE_dynamic.text())
         vault.edit_account_password(id, self.pwdLE_dynamic.text(), masterpwd)
+        
+        for x in self.widgets:
+            if x.id == id:
+                #update object attributes in self.widgets
+                x.name = self.userNameLE_dynamic.text()
+                #remove the widget from vault page (update display)
+                self.verticalLayout_vault.removeWidget(x)
+                item = customGroupBox(account, x.name, id)
+                item.viewDetails(self.viewAccountPwd)
+                self.verticalLayout_vault.addWidget(item)
+                print(x.name)
+                
+        self.infoChanged = True
+        
 
     def viewVault(self):
         vault = Vault()
@@ -1609,6 +1630,13 @@ class Ui_MainWindow(object):
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic_symbol)
 
     def backToVault(self):
+        #if (self.infoChanged):
+         #   for x in self.widgets:
+          #      self.verticalLayout_vault.removeWidget(x)
+           #     self.verticalLayout_vault.addWidget(x)
+            #self.infoChanged = False
+        
+        #else:    
         self.stackedWidget.setCurrentIndex(2)
 
     def ADD_Account(self):
