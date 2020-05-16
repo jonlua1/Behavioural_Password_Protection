@@ -35,6 +35,8 @@ class Ui_MainWindow(object):
             0, 0, MainWindow.width(), MainWindow.height()))
         self.page_Home = QtWidgets.QWidget()
         self.page_Home.setObjectName("home page")
+
+        self.logoPixmap = QtGui.QPixmap("images/ezPassLogo.PNG")
         self.groupBox_Home = QtWidgets.QGroupBox(self.page_Home)
         self.groupBox_Home.setGeometry(QtCore.QRect(0, round(self.stackedWidget.height(
         ) * 0.3), self.stackedWidget.width(), round(self.stackedWidget.height() * 0.7)))
@@ -194,7 +196,7 @@ class Ui_MainWindow(object):
         self.label_Home = QtWidgets.QLabel(self.page_Home)
         self.label_Home.setGeometry(QtCore.QRect(
             round((MainWindow.width() - 560) / 2), 30, 560, 150))
-        self.label_Home.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
+        self.label_Home.setPixmap(self.logoPixmap)
         self.label_Home.setScaledContents(True)
         self.label_Home.setAlignment(QtCore.Qt.AlignCenter)
         self.label_Home.setObjectName("label_Home")
@@ -271,7 +273,7 @@ class Ui_MainWindow(object):
         self.label_genPas.setGeometry(QtCore.QRect(round((MainWindow.width(
         ) - 500) / 2), round((self.groupBox_logoBackground_genPas.height() - 150)/2), 500, 150))
         self.label_genPas.setStyleSheet("")
-        self.label_genPas.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
+        self.label_genPas.setPixmap(self.logoPixmap)
         self.label_genPas.setScaledContents(True)
         self.label_genPas.setObjectName("label_genPas")
         self.verticalLayout_genPas.addWidget(
@@ -640,13 +642,13 @@ class Ui_MainWindow(object):
             "background-color: #454547;")
         self.groupBox_logoBackground_vault.setTitle("")
         self.groupBox_logoBackground_vault.setObjectName("groupBox")
-        self.label_audit = QtWidgets.QLabel(self.groupBox_logoBackground_vault)
-        self.label_audit.setGeometry(QtCore.QRect(round((MainWindow.width(
+        self.label_vault = QtWidgets.QLabel(self.groupBox_logoBackground_vault)
+        self.label_vault.setGeometry(QtCore.QRect(round((MainWindow.width(
         ) - 500) / 2), round((self.groupBox_logoBackground_vault.height() - 150)/2), 500, 150))
-        self.label_audit.setStyleSheet("")
-        self.label_audit.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
-        self.label_audit.setScaledContents(True)
-        self.label_audit.setObjectName("label_audit")
+        self.label_vault.setStyleSheet("")
+        self.label_vault.setPixmap(self.logoPixmap)
+        self.label_vault.setScaledContents(True)
+        self.label_vault.setObjectName("label_vault")
         self.verticalLayout_vault.addWidget(self.groupBox_logoBackground_vault)
 
         self.layoutWidget_vault = QtWidgets.QWidget(
@@ -769,7 +771,7 @@ class Ui_MainWindow(object):
         self.label_audit = QtWidgets.QLabel(self.page_audit)
         self.label_audit.setGeometry(QtCore.QRect(
             round((self.stackedWidget.width() - 560) / 2), 30, 560, 150))
-        self.label_audit.setPixmap(QtGui.QPixmap("images/ezPassLogo.PNG"))
+        self.label_audit.setPixmap(self.logoPixmap)
         self.label_audit.setScaledContents(True)
         self.label_audit.setAlignment(QtCore.Qt.AlignCenter)
         self.label_audit.setObjectName("label_audit")
@@ -808,34 +810,53 @@ class Ui_MainWindow(object):
         self.securityAuditWidget = QtWidgets.QWidget(self.page_audit)
         self.saWidgetLayout = QtWidgets.QVBoxLayout(self.securityAuditWidget)
         self.securityAuditWidget.setGeometry(QtCore.QRect(
-            round((self.stackedWidget.width() - 570) / 2), 600, 500, 300))
+            round((self.stackedWidget.width() - 500) / 2), 350, 500, 500))
         self.securityAuditWidget.setStyleSheet("""
-            border: 2px dashed white;
+            QWidget{
+                border: 2px dashed white;
+            }
         """)
         font.setPointSize(14)
-        
+
+        self.passwordStrengthAuditLabel = QtWidgets.QLabel("Please enter a password below: ", self.page_audit)
+        self.passwordStrengthAuditLabel.setMaximumHeight(60)
+        self.passwordStrengthAuditLabel.setFont(font)
+        self.saWidgetLayout.addWidget(self.passwordStrengthAuditLabel)
+
         self.passwordStrengthAuditLE = QtWidgets.QLineEdit(self.page_audit)
-        self.passwordStrengthAuditLE.setMaximumHeight(60)
+        self.passwordStrengthAuditLE.setMinimumHeight(60)
         self.passwordStrengthAuditLE.setFont(font)
-        self.passwordStrengthAuditLE.textChanged.connect(self.checkPwdStrength)
+        
         self.saWidgetLayout.addWidget(self.passwordStrengthAuditLE)
         
-        
-        self.resultLabel = QtWidgets.QLabel(self.page_audit)
-        self.resultLabel.setText("Your password strength:" )     
-        self.resultLabel.setMaximumHeight(60)      
-        self.resultLabel.setStyleSheet("""
-        
-            border: 0px solid white;
+        self.submitBtn = QtWidgets.QPushButton("Submit", self.page_audit)
+        self.submitBtn.clicked.connect(self.checkPwdStrength)
+        self.submitBtn.setMinimumHeight(60)
+        self.submitBtn.setMaximumWidth(240)
+        self.submitBtn.setStyleSheet("""
+            QPushButton {
+                background-color: #d2c15d;
+            }
+
+            QPushButton:hover{
+                background-color: #476e9e;
+            }
         
         """)
-        self.saWidgetLayout.addWidget(self.resultLabel)
-        self.imageLabel = QtWidgets.QLabel(self.page_audit)
-        self.imageLabel.setPixmap(QtGui.QPixmap("images/security_Audit_adjust.jpg"))
-        self.imageLabel.setGeometry(QtCore.QRect(
-            round((self.stackedWidget.width() - 500) / 2), 400, 500, 200))
+        self.saWidgetLayout.addWidget(self.submitBtn)
 
-
+        self.displayResultArea  = QtWidgets.QPlainTextEdit(self.page_audit)
+        self.displayResultArea.setGeometry(QtCore.QRect(560, 350, 850, 500))
+        self.displayResultArea.setReadOnly(True)
+        self.displayResultArea.setFont(font)
+        self.displayResultArea.insertPlainText("")
+        self.displayResultArea.setHidden(True)
+        self.displayResultArea.setStyleSheet("""
+            background-color: #d2c15d;
+            border: 10px outset #d2c15d;
+            padding-left: 5px;
+        """)
+    
         self.stackedWidget.addWidget(self.page_audit)
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -1114,9 +1135,6 @@ class Ui_MainWindow(object):
             self.HomeBtn_dynamic.setProperty("class", "navBar_btn")
             self.HomeBtn_dynamic.setText("Home")
             self.HomeBtn_dynamic.clicked.connect(self.homePg)
-            self.VaultBtn_dynamic = QtWidgets.QPushButton('Vault', self.layoutWidget_1_dynamic)
-            self.VaultBtn_dynamic.setProperty("class", "navBar_btn")
-            self.VaultBtn_dynamic.clicked.connect(self.vaultPg)
             self.SettingsBtn_dynamic = QtWidgets.QPushButton(
                 self.layoutWidget_1_dynamic)
             self.SettingsBtn_dynamic.setProperty("class", "navBar_btn")
@@ -1239,6 +1257,10 @@ class Ui_MainWindow(object):
                 self.groupBox_dynamic.width() - 640, self.groupBox_dynamic.height() - 80, 180, 60))
             self.saveBtn_dynamic.setDisabled(True)
             self.saveBtn_dynamic.clicked.connect(lambda: self.saveInfo(id, account, masterpwd))
+            self.checkPasswordStrengthBtn = QtWidgets.QPushButton("Audit password", self.groupBox_dynamic)
+            self.checkPasswordStrengthBtn.setGeometry(QtCore.QRect(self.groupBox_dynamic.width() - 900, self.groupBox_dynamic.height() - 80, 240, 60))
+            self.checkPasswordStrengthBtn.clicked.connect(lambda: self.auditPasswordfromVault(self.pwdLE_dynamic.text()))
+            self.checkPasswordStrengthBtn.setStyleSheet(self.styleSheet)
             self.gridLayout_dynamic.addWidget(
                 self.accountLabel_dynamic, 0, 0, 1, 1)
             self.gridLayout_dynamic.addWidget(
@@ -1629,14 +1651,7 @@ class Ui_MainWindow(object):
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic)
             self.verticalLayout_genPas.removeWidget(self.cb_2_dynamic_symbol)
 
-    def backToVault(self):
-        #if (self.infoChanged):
-         #   for x in self.widgets:
-          #      self.verticalLayout_vault.removeWidget(x)
-           #     self.verticalLayout_vault.addWidget(x)
-            #self.infoChanged = False
-        
-        #else:    
+    def backToVault(self):  
         self.stackedWidget.setCurrentIndex(2)
 
     def ADD_Account(self):
@@ -1680,8 +1695,49 @@ class Ui_MainWindow(object):
                     ##testing
       
     def checkPwdStrength(self):
-        result = zxcvbn(self.passwordStrengthAuditLE.text())
-        print(result)
+        userInput = self.passwordStrengthAuditLE.text()
+        resultString = ''
+        tempFeedback = ''
+
+        self.securityAuditWidget.setGeometry(QtCore.QRect(
+            30, 350, 500, 500))
+
+        self.displayResultArea.setHidden(False)
+        refreshString = self.displayResultArea.toPlainText()
+        
+        if refreshString != "":
+            self.displayResultArea.clear()
+
+        if (userInput != ''):
+            result = zxcvbn(self.passwordStrengthAuditLE.text())
+    
+            scoreResult = "Your password score: " + str(result['score']) + " / 4 \n"  
+            guessesResult = "Guesses: " + str(result['guesses']) + "\n"
+            for i in result['feedback']['suggestions']:
+                tempFeedback = str(i) + " "
+            
+            feedback = "Feedback: " + tempFeedback
+
+
+            if tempFeedback != '': 
+                resultString = scoreResult + guessesResult + feedback
+                self.displayResultArea.insertPlainText(resultString)
+            else:
+                resultString = scoreResult + guessesResult
+                self.displayResultArea.insertPlainText(resultString)
+
+        else:
+            self.displayResultArea.insertPlainText("Please enter a password.")
+
+        
+    def auditPasswordfromVault(self, password):
+        self.stackedWidget.setCurrentIndex(3)
+
+        self.passwordStrengthAuditLE.setText(password)
+
+        self.checkPwdStrength()
+
+
 
 
 if __name__ == "__main__":
