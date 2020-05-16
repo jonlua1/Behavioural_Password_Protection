@@ -10,7 +10,7 @@ import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 from customWidget import customGroupBox
 from dialogBox import Ui_Dialog
-from generator import generate_password
+from generator import Generator
 from customCB import customComboBox
 from customCB_symbol import customComboBox_symbol
 from createNewAccount import createAccountForm
@@ -1472,7 +1472,8 @@ class Ui_MainWindow(object):
         if (len(self.btnList) == 0 or self.comboBox_wordNo == ""):
             print("Please try again.")
         else:
-            self.finalResult.setText(generate_password(self.btnList, int(
+            generator = Generator()
+            self.finalResult.setText(generator.generate_password(self.btnList, int(
                 self.comboBox_wordNo), self.preferenceList))
             self.resultWidget_HLayout.addWidget(self.displayText)
             self.resultWidget_HLayout.addWidget(self.finalResult)

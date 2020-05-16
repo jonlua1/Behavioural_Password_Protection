@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from text_processing import clean_text
+from text_processor import Text_Processor
 
 class Browser(ABC):
     def __init__(self):
@@ -34,7 +34,8 @@ class Browser(ABC):
 
     #clean the keywords list generated to get a list of possible keywords
     def process_keywords(self):
-        self._keywords = clean_text(self._keywords)
+        text_processor = Text_Processor()
+        self._keywords = text_processor.clean_text(self._keywords)
 
     #from a list of words, return a dictionary of word-frequency pairs
     def keywords_to_freq_dict(self, keywords):
