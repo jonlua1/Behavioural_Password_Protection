@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 import os
+import resource
 from PyQt5 import QtCore, QtGui, QtWidgets
 from customWidget import customGroupBox
 from dialogBox import Ui_Dialog
@@ -18,13 +19,16 @@ from setupPassword import setupPasForm
 from enterVaultPass import vaultPassword
 from vault import Vault
 from zxcvbn import zxcvbn
+from aboutUs import Ui_AboutUs
+from settings import Ui_Settings
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setFixedSize(1500, 930)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("images/lock_icon.png"),
+        icon.addPixmap(QtGui.QPixmap(":/images/images/lock_icon.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -36,7 +40,7 @@ class Ui_MainWindow(object):
         self.page_Home = QtWidgets.QWidget()
         self.page_Home.setObjectName("home page")
 
-        self.logoPixmap = QtGui.QPixmap("images/ezPassLogo.PNG")
+        self.logoPixmap = QtGui.QPixmap(":/images/images/ezPassLogo.PNG")
         self.groupBox_Home = QtWidgets.QGroupBox(self.page_Home)
         self.groupBox_Home.setGeometry(QtCore.QRect(0, round(self.stackedWidget.height(
         ) * 0.3), self.stackedWidget.width(), round(self.stackedWidget.height() * 0.7)))
@@ -207,9 +211,11 @@ class Ui_MainWindow(object):
             MainWindow.width() - 370, 575, 160, 35))
         self.settings_Home.setStyleSheet(
             "color: #34363a; background-color: #d2c15d; font-size: 20px")
+        self.settings_Home.clicked.connect(self.settingsPg)
         self.aboutUs_Home = QtWidgets.QPushButton(self.groupBox_Home)
         self.aboutUs_Home.setGeometry(QtCore.QRect(
             MainWindow.width() - 210, 575, 160, 35))
+        self.aboutUs_Home.clicked.connect(self.aboutUsPg)
         self.aboutUs_Home.setStyleSheet(
             "color: #34363a; background-color: #d2c15d; font-size: 20px")
 
@@ -309,6 +315,7 @@ class Ui_MainWindow(object):
         self.SettingsBtn_genPas.setStyleSheet("")
         self.SettingsBtn_genPas.setObjectName("SettingsBtn_genPas")
         self.SettingsBtn_genPas.setProperty("class", "navBar_btn")
+        self.SettingsBtn_genPas.clicked.connect(self.settingsPg)
 
         self.AboutUsBtn_genPas = QtWidgets.QPushButton(
             self.layoutWidget_genPas)
@@ -316,6 +323,7 @@ class Ui_MainWindow(object):
         self.AboutUsBtn_genPas.setStyleSheet("")
         self.AboutUsBtn_genPas.setObjectName("AboutUsBtn_genPas")
         self.AboutUsBtn_genPas.setProperty("class", "navBar_btn")
+        self.AboutUsBtn_genPas.clicked.connect(self.aboutUsPg)
         self.dummyLabel_1_genPas = QtWidgets.QLabel(self.layoutWidget_genPas)
         self.dummyLabel_1_genPas.setProperty("class", "QLabel_genPas")
         self.dummyLabel_1_genPas.setStyleSheet("border-style: none;")
@@ -557,6 +565,9 @@ class Ui_MainWindow(object):
         #number of word comboBox selected value
         self.comboBox_wordNo = 0
 
+        #a list of created widgets that displays the generated passphrase
+        self.resultWidgetList = []
+
         self.resetComboBox_genPas = QtWidgets.QPushButton(
             self.container_2_genPas)
         self.resetComboBox_genPas.setText("Reset number of words")
@@ -673,12 +684,14 @@ class Ui_MainWindow(object):
         self.SettingsBtn_vault.setStyleSheet("")
         self.SettingsBtn_vault.setObjectName("SettingsBtn_vault")
         self.SettingsBtn_vault.setProperty("class", "navBar_btn")
+        self.SettingsBtn_vault.clicked.connect(self.settingsPg)
         self.AboutUsBtn_vault = QtWidgets.QPushButton(self.layoutWidget_vault)
 
         self.AboutUsBtn_vault.setSizePolicy(sizePolicy)
         self.AboutUsBtn_vault.setStyleSheet("")
         self.AboutUsBtn_vault.setObjectName("AboutUsBtn_vault")
         self.AboutUsBtn_vault.setProperty("class", "navBar_btn")
+        self.AboutUsBtn_vault.clicked.connect(self.aboutUsPg)
         self.dummyLabel_1_vault = QtWidgets.QLabel(self.layoutWidget_vault)
         self.dummyLabel_1_vault.setProperty("class", "QLabel_genPas")
         self.dummyLabel_2_vault = QtWidgets.QLabel(self.layoutWidget_vault)
@@ -791,9 +804,11 @@ class Ui_MainWindow(object):
         self.SettingsBtn_audit = QtWidgets.QPushButton(
             self.layoutWidget_1_audit)
         self.SettingsBtn_audit.setProperty("class", "navBar_btn")
+        self.SettingsBtn_audit.clicked.connect(self.settingsPg)
         self.AboutUsBtn_audit = QtWidgets.QPushButton(
             self.layoutWidget_1_audit)
         self.AboutUsBtn_audit.setProperty("class", "navBar_btn")
+        self.AboutUsBtn_audit.clicked.connect(self.aboutUsPg)
         self.dummyLabel_3_audit = QtWidgets.QLabel(self.layoutWidget_1_audit)
         self.dummyLabel_3_audit.setProperty("class", "QLabel_genPas")
         self.dummyLabel_4_audit = QtWidgets.QLabel(self.layoutWidget_1_audit)
@@ -859,6 +874,24 @@ class Ui_MainWindow(object):
     
         self.stackedWidget.addWidget(self.page_audit)
 
+################################# AboutUs page ####################################
+        self.page_aboutUs = QtWidgets.QWidget()
+        self.page_aboutUs.setObjectName("page_aboutUs")
+
+        pageAU = Ui_AboutUs()
+        pageAU.setupUi(self.page_aboutUs, self.homePg, self.vaultPg, self.settingsPg) 
+    
+        self.stackedWidget.addWidget(self.page_aboutUs)
+
+################################# Settings page ####################################
+        self.page_settings = QtWidgets.QWidget()
+        self.page_settings.setObjectName("page_settings")
+
+        pageSettings = Ui_Settings()
+        pageSettings.setupUi(self.page_settings, self.homePg, self.vaultPg, self.aboutUsPg, self.resetVault)
+
+        self.stackedWidget.addWidget(self.page_settings)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 18))
@@ -871,6 +904,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -1091,6 +1126,12 @@ class Ui_MainWindow(object):
     def auditPg(self):
         self.stackedWidget.setCurrentIndex(3)
 
+    def aboutUsPg(self):
+        self.stackedWidget.setCurrentIndex(4)
+
+    def settingsPg(self):
+        self.stackedWidget.setCurrentIndex(5)
+
     #if user input can be found inside the list
     #show the widget (groupbox)
     def update_display(self, text):
@@ -1111,11 +1152,10 @@ class Ui_MainWindow(object):
             self.logoBackground_dynamic.setProperty(
                 "class", "logoBackground_genPas")
         
-            self.label_dynamic = QtWidgets.QLabel(MainWindow)
+            self.label_dynamic = QtWidgets.QLabel(self.page_dynamic)
             self.label_dynamic.setGeometry(QtCore.QRect(
                 round((self.stackedWidget.width() - 560) / 2), 30, 560, 150))
-            pixmapLogo = QtGui.QPixmap(":/images/ezPassLogo.PNG")
-            self.label_dynamic.setPixmap(pixmapLogo)
+            self.label_dynamic.setPixmap(self.logoPixmap)
             self.label_dynamic.setScaledContents(True)
             self.label_dynamic.setAlignment(QtCore.Qt.AlignCenter)
             self.label_dynamic.setObjectName("label_dynamic")
@@ -1528,7 +1568,7 @@ class Ui_MainWindow(object):
 
 
         """
-        self.generatePasswordButton.setDisabled(True)
+        # self.generatePasswordButton.setDisabled(True)
         self.cancelPreferenceButton.setDisabled(True)
     
         self.resultLayoutWidget = QtWidgets.QWidget()
@@ -1561,10 +1601,17 @@ class Ui_MainWindow(object):
             self.resultWidget_HLayout.addWidget(self.copyPassPhrasebtn)
             self.resultWidget_HLayout.addWidget(self.resetAllbtn)
             
+            if (len(self.resultWidgetList) == 0):
+                self.resultWidgetList.append(self.resultLayoutWidget)
+                self.verticalLayout_genPas.addWidget(self.resultWidgetList[0])
+                
 
-            self.verticalLayout_genPas.addWidget(self.resultLayoutWidget)
+            else:
+                self.verticalLayout_genPas.removeWidget(self.resultWidgetList[0])
+                self.resultWidgetList.pop(0)
+                self.resultWidgetList.append(self.resultLayoutWidget)
+                self.verticalLayout_genPas.addWidget(self.resultWidgetList[0])
             
-
     def resetNumber(self):
         selectedNumber = self.comboBox_Number_2_genPas.currentText()
 
@@ -1631,6 +1678,7 @@ class Ui_MainWindow(object):
     # this function will be used to enable the corresponding 
     # buttons & combo boxes to be editable again
     def resetAll(self):
+        self.comboBox_Number_2_genPas.setEnabled(True)
         self.resetComboBox_genPas.setEnabled(False)
         self.cb_dynamic.setHidden(True)
         self.verticalLayout_genPas.removeWidget(self.cb_dynamic)
@@ -1737,7 +1785,19 @@ class Ui_MainWindow(object):
 
         self.checkPwdStrength()
 
+    def resetVault(self):
+        folder_path = os.path.expanduser('~\Documents\ezPass')
+        if(os.path.isdir(folder_path)):
+            vault = "vault"
+            file_path = os.path.join(folder_path, vault)
+            os.remove(file_path)
 
+    def resetWordlist(self):
+        folder_path = os.path.expanduser('~\Documents\ezPass')
+        if(os.path.isdir(folder_path)):
+            vault = "vault"
+            file_path = os.path.join(folder_path, vault)
+            os.remove(file_path)
 
 
 if __name__ == "__main__":
