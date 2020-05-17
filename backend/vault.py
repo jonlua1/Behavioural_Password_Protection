@@ -66,6 +66,7 @@ class Vault():
             cur = conn.cursor()
             cur.execute(add_account_sql, (website, user_name, encrypted_password))
 
+
     #delete account based on website and user_name in vault
     def delete_account(self, id):
         #vault db file path

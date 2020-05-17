@@ -1,4 +1,5 @@
 import sys
+import resource
 from PyQt5 import QtWidgets, QtCore, QtGui
 
 
@@ -9,7 +10,7 @@ class createAccountForm(QtWidgets.QDialog):
 
 
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("images/lock_icon.png"),
+        icon.addPixmap(QtGui.QPixmap(":images/images/lock_icon.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         font = QtGui.QFont()
         font.setFamily("Trebuchet MS")

@@ -828,7 +828,7 @@ class Ui_MainWindow(object):
             round((self.stackedWidget.width() - 500) / 2), 350, 500, 500))
         self.securityAuditWidget.setStyleSheet("""
             QWidget{
-                border: 2px dashed white;
+                border: 2px solid white;
             }
         """)
         font.setPointSize(14)
@@ -836,6 +836,10 @@ class Ui_MainWindow(object):
         self.passwordStrengthAuditLabel = QtWidgets.QLabel("Please enter a password below: ", self.page_audit)
         self.passwordStrengthAuditLabel.setMaximumHeight(60)
         self.passwordStrengthAuditLabel.setFont(font)
+        self.passwordStrengthAuditLabel.setStyleSheet("""
+            border-style: none;
+            border: 0px;
+        """)
         self.saWidgetLayout.addWidget(self.passwordStrengthAuditLabel)
 
         self.passwordStrengthAuditLE = QtWidgets.QLineEdit(self.page_audit)
@@ -851,6 +855,8 @@ class Ui_MainWindow(object):
         self.submitBtn.setStyleSheet("""
             QPushButton {
                 background-color: #d2c15d;
+                border-style: none;
+                border: 0px;
             }
 
             QPushButton:hover{
@@ -888,7 +894,7 @@ class Ui_MainWindow(object):
         self.page_settings.setObjectName("page_settings")
 
         pageSettings = Ui_Settings()
-        pageSettings.setupUi(self.page_settings, self.homePg, self.vaultPg, self.aboutUsPg, self.resetVault)
+        pageSettings.setupUi(self.page_settings, self.homePg, self.vaultPg, self.aboutUsPg, self.resetVault, self.resetWordlist)
 
         self.stackedWidget.addWidget(self.page_settings)
 
@@ -1605,7 +1611,6 @@ class Ui_MainWindow(object):
                 self.resultWidgetList.append(self.resultLayoutWidget)
                 self.verticalLayout_genPas.addWidget(self.resultWidgetList[0])
                 
-
             else:
                 self.verticalLayout_genPas.removeWidget(self.resultWidgetList[0])
                 self.resultWidgetList.pop(0)
@@ -1707,39 +1712,47 @@ class Ui_MainWindow(object):
         spacer_vault = QtWidgets.QSpacerItem(
             1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         vault = Vault()
+        continueCreateAcc = True
 
-
+        popWindow = True
         #get the masterPassword from authentication process
         masterPassword = self.authenticateActionVault()
 
         if(masterPassword is not None):
+            
+            while (continueCreateAcc and popWindow):
+                if addAccount.exec_():
+                    website = addAccount.website.text()
+                    username = addAccount.username.text()
+                    password = addAccount.password.text()
+                    if ( website != "" and username != "" and password != ""):
 
-            if addAccount.exec_():
-                website = addAccount.website.text()
-                username = addAccount.username.text()
-                password = addAccount.password.text()
-                if ( website != "" and username != "" and password != ""):
+                        #add an account to database
+                        vault.add_account(website, password, username, masterPassword)
 
-                    #add an account to database
-                    vault.add_account(website, password, username, masterPassword)
+                        #create a groupbox to display on gui
+                        item = customGroupBox(website, username, password)
+                        item.viewDetails(self.viewAccountPwd)
+                        item.setContentsMargins(0, 10, 0, 20)
+                        self.verticalLayout_vault.addWidget(item)
+                        self.widgets.append(item)
+                        self.verticalLayout_vault.addItem(spacer_vault)
+                        if website not in self.widget_names:
+                            self.widget_names.append(website)
+                        
 
-                    #create a groupbox to display on gui
-                    item = customGroupBox(website, username, password)
-                    item.viewDetails(self.viewAccountPwd)
-                    item.setContentsMargins(0, 10, 0, 20)
-                    self.verticalLayout_vault.addWidget(item)
-                    self.widgets.append(item)
-                    self.verticalLayout_vault.addItem(spacer_vault)
-                    if website not in self.widget_names:
-                        self.widget_names.append(website)
-                    
+                    else: 
+                        Dialog = QtWidgets.QDialog()
+                        ui = Ui_Dialog()
+                        ui.setupUi(Dialog, "Information insufficient!")
+                        Dialog.show()
+                        if Dialog.exec_():
+                            pass
+                        else:
+                            popWindow = False
 
-                else: 
-                    Dialog = QtWidgets.QDialog()
-                    ui = Ui_Dialog()
-                    ui.setupUi(Dialog, "Information insufficient!")
-                    Dialog.show()
-                    Dialog.exec_()
+                else:
+                    continueCreateAcc = False
                     ##testing
       
     def checkPwdStrength(self):
@@ -1787,17 +1800,42 @@ class Ui_MainWindow(object):
 
     def resetVault(self):
         folder_path = os.path.expanduser('~\Documents\ezPass')
-        if(os.path.isdir(folder_path)):
-            vault = "vault"
-            file_path = os.path.join(folder_path, vault)
-            os.remove(file_path)
+        vault_db_filename = os.path.expanduser('~\Documents\ezPass\\vault')
+        Dialog = QtWidgets.QDialog()
+        ui = Ui_Dialog()
+        ui.setupUi(Dialog, "Confirm deletion of database?")
+        Dialog.show()
+        if Dialog.exec_():
+            if(os.path.isdir(folder_path) and os.path.isfile(vault_db_filename)):
+                vault = "vault"
+                file_path = os.path.join(folder_path, vault)
+                os.remove(file_path)
+
+            else:
+                Dialog_noFileFound = QtWidgets.QDialog()
+                ui_noFileFound = Ui_Dialog()
+                ui_noFileFound.setupUi(Dialog_noFileFound, "Vault file does not exist")
+                Dialog_noFileFound.show()
+                Dialog_noFileFound.exec_()
+
+        else: 
+            pass
 
     def resetWordlist(self):
-        folder_path = os.path.expanduser('~\Documents\ezPass')
-        if(os.path.isdir(folder_path)):
-            vault = "vault"
-            file_path = os.path.join(folder_path, vault)
-            os.remove(file_path)
+        # folder_path = os.path.expanduser('~\Documents\ezPass\')
+
+        # if(os.path.isdir(folder_path)):
+        #     vault = "vault"
+        #     file_path = os.path.join(folder_path, vault)
+        #     os.remove(file_path)
+        Dialog = QtWidgets.QDialog()
+        ui = Ui_Dialog()
+        ui.setupUi(Dialog, "Confirm deletion of database?")
+        Dialog.show()
+        if Dialog.exec_():
+            print("ok bye")
+
+
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Settings(object):
-    def setupUi(self, Settings, homeFunc, vaultFunc, aboutUsFunc, resetVaultFunc):
+    def setupUi(self, Settings, homeFunc, vaultFunc, aboutUsFunc, resetVaultFunc, resetWordListFunc):
         
         self.layoutWidget = QtWidgets.QWidget(Settings)
         self.layoutWidget.setGeometry(QtCore.QRect(0,0,1500,900))
@@ -46,11 +46,43 @@ class Ui_Settings(object):
         self.dummylabel_logo_4 = QtWidgets.QLabel(self.layoutWidget_1)
         self.dummylabel_logo_4.setProperty("class", "QLabel_genPas")
 
+        font = QtGui.QFont()
+        font.setPointSize(14)
         self.removeVaultFileBtn = QtWidgets.QPushButton("Reset Vault", self.layoutWidget)
         self.removeVaultFileBtn.setGeometry(QtCore.QRect(round((self.layoutWidget.width() - 400) / 2),
+            500, 400, 100
+        ))
+        self.removeVaultFileBtn.setFont(font)
+        self.removeVaultFileBtn.setStyleSheet("""
+            QPushButton {
+                background-color: #d2c15d;
+                color: #34363a;
+                border-radius: 20px
+            }
+
+            QPushButton:hover{
+                background-color:#476e9e;
+            }
+        """)
+        self.removeVaultFileBtn.clicked.connect(resetVaultFunc)
+
+        self.removeWordListBtn = QtWidgets.QPushButton("Reset Wordlist", self.layoutWidget)
+        self.removeWordListBtn.setGeometry(QtCore.QRect(round((self.layoutWidget.width() - 400) / 2),
             700, 400, 100
         ))
-        self.removeVaultFileBtn.clicked.connect(resetVaultFunc)
+        self.removeWordListBtn.setFont(font)
+        self.removeWordListBtn.setStyleSheet("""
+            QPushButton {
+                background-color: #d2c15d;
+                color: #34363a;
+                border-radius: 20px
+            }
+
+            QPushButton:hover{
+                background-color:#476e9e;
+            }
+        """)
+        self.removeWordListBtn.clicked.connect(resetWordListFunc)
 
         self.navBar = QtWidgets.QHBoxLayout(self.layoutWidget_1)
         self.navBar.addWidget(self.HomeBtn)
