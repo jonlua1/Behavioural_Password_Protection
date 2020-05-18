@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from text_processing import clean_text
+from backend.text_processing import clean_text
 
 class Browser(ABC):
     def __init__(self):

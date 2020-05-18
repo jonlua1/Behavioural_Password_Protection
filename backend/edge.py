@@ -1,7 +1,7 @@
 import os
 import sqlite3
-from browser import Browser
-from check_running_process import check_running_process
+from backend.browser import Browser
+from backend.check_running_process import check_running_process
 
 class Edge(Browser):
     def __init__(self):

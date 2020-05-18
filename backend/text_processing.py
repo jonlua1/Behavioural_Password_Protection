@@ -1,6 +1,6 @@
 import re
 from nltk.tokenize import word_tokenize
-from stopwords import remove_stopwords
+from backend.stopwords import remove_stopwords
 
 #filter keywords list and 
 #extract possible keywords from keywords list

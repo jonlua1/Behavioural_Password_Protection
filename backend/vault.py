@@ -2,8 +2,8 @@ import os
 import sqlite3
 from sqlite3 import Error
 
-from account import Account
-from crypto import encrypt, decrypt, generate_hash, check_hash
+from backend.account import Account
+from backend.crypto import encrypt, decrypt, generate_hash, check_hash
 
 class Vault():
     def __init__(self):

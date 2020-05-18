@@ -1,13 +1,13 @@
 import os
 from random import shuffle
 
-from chrome import Chrome
-from firefox import Firefox
-from edge import Edge
-from opera import Opera
+from backend.chrome import Chrome
+from backend.firefox import Firefox
+from backend.edge import Edge
+from backend.opera import Opera
 
-from default_wordlist import get_generated_wordlist
-from dice_roll import dice_roll
+from backend.default_wordlist import get_generated_wordlist
+from backend.dice_roll import dice_roll
 
 #initialise ezPass folder if it does not exist
 def init_folder():
