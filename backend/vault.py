@@ -65,6 +65,9 @@ class Vault():
         with conn:
             cur = conn.cursor()
             cur.execute(add_account_sql, (website, user_name, encrypted_password))
+            account_id = cur.lastrowid
+
+        return account_id
 
 
     #delete account based on website and user_name in vault

@@ -13,6 +13,8 @@ from dice_roll import dice_roll
 def init_folder():
     #ezPass folder path
     folder_path = os.path.expanduser('~\Documents\ezPass')
+    logs_folder_path = os.path.expanduser('~\Documents\ezPass\Logs')
+    keywords_folder_path = os.path.expanduser('~\Documents\ezPass\Keywords')
     
     #check if ezPass folder has been created
     if(not os.path.isdir(folder_path)):
@@ -24,6 +26,22 @@ def init_folder():
         os.mkdir(".\Logs")
         #create keywords folder
         os.mkdir(".\Keywords")
+
+     #check if logs folder has been created
+    if(not os.path.isdir(logs_folder_path)):
+        #change directory to folder path
+        os.chdir(folder_path)
+        #create logs folder
+        os.mkdir(".\Logs")
+    
+    #check if keywords folder has been created
+    if(not os.path.isdir(keywords_folder_path)):
+        #change directory to folder path
+        os.chdir(folder_path)
+        #create keywords folder
+        os.mkdir(".\Keywords")        
+
+
     else:
         print("FOLDER CREATED")
     

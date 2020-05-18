@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 import os
+import shutil
 import resource
 from PyQt5 import QtCore, QtGui, QtWidgets
 from customWidget import customGroupBox
@@ -21,6 +22,7 @@ from vault import Vault
 from zxcvbn import zxcvbn
 from aboutUs import Ui_AboutUs
 from settings import Ui_Settings
+from check_running_process import check_running_process
 
 
 class Ui_MainWindow(object):
@@ -717,8 +719,6 @@ class Ui_MainWindow(object):
         #bool to check if user change info
         self.infoChanged = False
 
-        self.accountIDtracker = 0
-
         self.styleSheet = """
             font-size: 30px;
             color: #d2c15d;
@@ -1326,6 +1326,8 @@ class Ui_MainWindow(object):
         self.qclip.setText(pwd)
 
     def editInfo(self):
+        self.previousUserName = self.userNameLE_dynamic.text()
+        self.previousPassword = self.pwdLE_dynamic.text()
         self.copyBtn_dynamic.setDisabled(True)
         self.pwdLE_dynamic.setDisabled(False)
         self.userNameLE_dynamic.setDisabled(False)
@@ -1348,22 +1350,35 @@ class Ui_MainWindow(object):
         self.editBtn_dynamic.setDisabled(False)
         self.saveBtn_dynamic.setDisabled(True)
 
-        vault = Vault()
-        vault.edit_account(id, account, self.userNameLE_dynamic.text())
-        vault.edit_account_password(id, self.pwdLE_dynamic.text(), masterpwd)
-        
-        for x in self.widgets:
-            if x.id == id:
-                #update object attributes in self.widgets
-                x.name = self.userNameLE_dynamic.text()
-                #remove the widget from vault page (update display)
-                self.verticalLayout_vault.removeWidget(x)
-                item = customGroupBox(account, x.name, id)
-                item.viewDetails(self.viewAccountPwd)
-                self.verticalLayout_vault.addWidget(item)
-                print(x.name)
-                
-        self.infoChanged = True
+        userName = self.userNameLE_dynamic.text()
+        password = self.pwdLE_dynamic.text()
+
+        if (userName == "" or password == ""):
+            self.userNameLE_dynamic.setText(self.previousUserName)
+            self.pwdLE_dynamic.setText(self.previousPassword)
+            Dialog = QtWidgets.QDialog()
+            ui = Ui_Dialog()
+            ui.setupUi(Dialog, "Username and password cannot be empty")
+            Dialog.show()
+            Dialog.exec_()
+
+        else:
+            vault = Vault()
+            vault.edit_account(id, account, self.userNameLE_dynamic.text())
+            vault.edit_account_password(id, self.pwdLE_dynamic.text(), masterpwd)
+            
+            for x in self.widgets:
+                if x.id == id:
+                    #update object attributes in self.widgets
+                    x.name = self.userNameLE_dynamic.text()
+                    #remove the widget from vault page (update display)
+                    self.verticalLayout_vault.removeWidget(x)
+                    item = customGroupBox(account, x.name, id)
+                    item.viewDetails(self.viewAccountPwd)
+                    self.verticalLayout_vault.addWidget(item)
+                    print(x.name)
+                    
+            self.infoChanged = True
         
 
     def viewVault(self):
@@ -1600,8 +1615,34 @@ class Ui_MainWindow(object):
         self.copyPassPhrasebtn.clicked.connect( lambda: self.copyText(self.finalResult.text()))
         self.displayText = QtWidgets.QLabel("Generated passphrase: ")
 
-        if (self.comboBox_wordNo == ""):
-            print("Please try again.")
+        if(check_running_process('opera')):
+            Dialog = QtWidgets.QDialog()
+            ui = Ui_Dialog()
+            ui.setupUi(Dialog, "Please exit all opera processes and try again.")
+            Dialog.show()
+            Dialog.exec_()
+
+        elif(check_running_process('msedge')):
+            Dialog = QtWidgets.QDialog()
+            ui = Ui_Dialog()
+            ui.setupUi(Dialog, "Please exit all Microsoft Edge processes and try again.")
+            Dialog.show()
+            Dialog.exec_()
+
+        elif(check_running_process('firefox')):
+            Dialog = QtWidgets.QDialog()
+            ui = Ui_Dialog()
+            ui.setupUi(Dialog, "Please exit all firefox processes and try again.")
+            Dialog.show()
+            Dialog.exec_()
+
+        elif(check_running_process('chrome')):
+            Dialog = QtWidgets.QDialog()
+            ui = Ui_Dialog()
+            ui.setupUi(Dialog, "Please exit all chrome processes and try again.")
+            Dialog.show()
+            Dialog.exec_()
+
         else:
             self.finalResult.setText(generate_password(self.btnList, int(
                 self.comboBox_wordNo), self.preferenceList))
@@ -1731,12 +1772,11 @@ class Ui_MainWindow(object):
                     if ( website != "" and username != "" and password != ""):
 
                         #add an account to database
-                        vault.add_account(website, password, username, masterPassword)
+                        account_id = vault.add_account(website, password, username, masterPassword)
 
-                        self.accountIDtracker = self.accountIDtracker + 1
-
+                        
                         #create a groupbox to display on gui
-                        item = customGroupBox(website, username, self.accountIDtracker)
+                        item = customGroupBox(website, username, account_id)
                         item.viewDetails(self.viewAccountPwd)
                         item.setContentsMargins(0, 10, 0, 20)
                         self.verticalLayout_vault.addWidget(item)
@@ -1833,18 +1873,27 @@ class Ui_MainWindow(object):
             pass
 
     def resetWordlist(self):
-        # folder_path = os.path.expanduser('~\Documents\ezPass\')
+        logs_folder_path = os.path.expanduser('~\Documents\ezPass\Logs')
 
-        # if(os.path.isdir(folder_path)):
-        #     vault = "vault"
-        #     file_path = os.path.join(folder_path, vault)
-        #     os.remove(file_path)
+        keywords_folder_path = os.path.expanduser('~\Documents\ezPass\Keywords')
+
         Dialog = QtWidgets.QDialog()
         ui = Ui_Dialog()
-        ui.setupUi(Dialog, "Confirm deletion of database?")
+        ui.setupUi(Dialog, "Confirm deletion of generated wordlist?")
         Dialog.show()
         if Dialog.exec_():
-            print("ok bye")
+            if(os.path.isdir(logs_folder_path) and os.path.isdir(keywords_folder_path)):
+                shutil.rmtree(logs_folder_path)
+                shutil.rmtree(keywords_folder_path)
+        
+        else: 
+            Dialog_noFileFound = QtWidgets.QDialog()
+            ui_noFileFound = Ui_Dialog()
+            ui_noFileFound.setupUi(Dialog_noFileFound, "Wordlist file is already deleted.")
+            Dialog_noFileFound.show()
+            Dialog_noFileFound.exec_()
+
+    
 
 
 
