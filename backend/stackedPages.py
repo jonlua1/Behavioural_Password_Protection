@@ -717,7 +717,8 @@ class Ui_MainWindow(object):
         #bool to check if user change info
         self.infoChanged = False
 
-       
+        self.accountIDtracker = 0
+
         self.styleSheet = """
             font-size: 30px;
             color: #d2c15d;
@@ -1384,11 +1385,13 @@ class Ui_MainWindow(object):
 
         if Dialog.exec_():
             vault.delete_account(id)
+            
             for i in self.widgets:
                 if (i.id == id):
+                    i.setHidden(True)
+                    self.verticalLayout_vault.removeWidget(i)
                     i.delete()
                     self.widgets.pop(self.widgets.index(i))
-                    self.verticalLayout_vault.removeWidget(i)
             self.stackedWidget.setCurrentIndex(2)
 
         else:
@@ -1730,8 +1733,10 @@ class Ui_MainWindow(object):
                         #add an account to database
                         vault.add_account(website, password, username, masterPassword)
 
+                        self.accountIDtracker = self.accountIDtracker + 1
+
                         #create a groupbox to display on gui
-                        item = customGroupBox(website, username, password)
+                        item = customGroupBox(website, username, self.accountIDtracker)
                         item.viewDetails(self.viewAccountPwd)
                         item.setContentsMargins(0, 10, 0, 20)
                         self.verticalLayout_vault.addWidget(item)
@@ -1739,6 +1744,12 @@ class Ui_MainWindow(object):
                         self.verticalLayout_vault.addItem(spacer_vault)
                         if website not in self.widget_names:
                             self.widget_names.append(website)
+
+                        for i in self.widgets:
+                             print(i.id)
+                            
+
+                        continueCreateAcc = False
                         
 
                     else: 
