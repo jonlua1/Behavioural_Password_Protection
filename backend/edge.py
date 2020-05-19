@@ -48,7 +48,6 @@ class Edge(Browser):
     def write_visit_time(self):
         #checks if edge process is running    
         if(check_running_process('msedge')):
-            print("Please exit all edge processes and retry again")    #NEED TO OUTPUT THIS
             return
         else:
             #connect to edge history db
@@ -78,7 +77,6 @@ class Edge(Browser):
     def get_keyword_search_terms(self):
         #checks if edge process is running    
         if(check_running_process('msedge')):
-            print("Please exit all edge processes and retry again")    #NEED TO OUTPUT THIS
             return
         else:
             #connect to edge history db
@@ -103,7 +101,6 @@ class Edge(Browser):
     def get_title(self):
         #checks if edge process is running    
         if(check_running_process('msedge')):
-            print("Please exit all edge processes and retry again")
             return
         else:
             conn = sqlite3.connect(self._history_path)
@@ -162,7 +159,6 @@ class Edge(Browser):
         history_file_path = self.locate_history()
         #if edge history file does not exist
         if(history_file_path == None):
-            print("Edge file not found!")      #NEED TO OUTPUT THIS
             return None
 
         self.get_visit_time_from_file()

@@ -6,15 +6,17 @@ from backend.firefox import Firefox
 from backend.edge import Edge
 from backend.opera import Opera
 
-from wordlist_generator import Wordlist_Generator
-from dice import Dice
+from backend.wordlist_generator import Wordlist_Generator
+from backend.dice import Dice
 
-class Generator():
+class Password_Generator():
     #initialise ezPass folder if it does not exist
     def init_folder(self):
         #ezPass folder path
         folder_path = os.path.expanduser('~\Documents\ezPass')
-        
+        logs_folder_path = os.path.expanduser('~\Documents\ezPass\Logs')
+        keywords_folder_path = os.path.expanduser('~\Documents\ezPass\Keywords')
+
         #check if ezPass folder has been created
         if(not os.path.isdir(folder_path)):
             #create ezPass folder
@@ -25,8 +27,20 @@ class Generator():
             os.mkdir(".\Logs")
             #create keywords folder
             os.mkdir(".\Keywords")
-        else:
-            print("FOLDER CREATED")
+
+        #check if logs folder has been created
+        if(not os.path.isdir(logs_folder_path)):
+            #change directory to folder path
+            os.chdir(folder_path)
+            #create logs folder
+            os.mkdir(".\Logs")
+        
+        #check if keywords folder has been created
+        if(not os.path.isdir(keywords_folder_path)):
+            #change directory to folder path
+            os.chdir(folder_path)
+            #create keywords folder
+            os.mkdir(".\Keywords")  
         
     #generate possible passphrase based on alphabets given
     def generate_passphrase(self, wordlist, passphrase_length, alphabets = []):
@@ -46,56 +60,6 @@ class Generator():
         while len(passphrase_list) < passphrase_length:
             roll = dice.dice_roll()
             word = wordlist[str(roll)]
-            
-from backend.default_wordlist import get_generated_wordlist
-from backend.dice_roll import dice_roll
-
-#initialise ezPass folder if it does not exist
-def init_folder():
-    #ezPass folder path
-    folder_path = os.path.expanduser('~\Documents\ezPass')
-    logs_folder_path = os.path.expanduser('~\Documents\ezPass\Logs')
-    keywords_folder_path = os.path.expanduser('~\Documents\ezPass\Keywords')
-    
-    #check if ezPass folder has been created
-    if(not os.path.isdir(folder_path)):
-        #create ezPass folder
-        os.mkdir(folder_path)
-        #change directory to folder path
-        os.chdir(folder_path)
-        #create logs folder
-        os.mkdir(".\Logs")
-        #create keywords folder
-        os.mkdir(".\Keywords")
-
-     #check if logs folder has been created
-    if(not os.path.isdir(logs_folder_path)):
-        #change directory to folder path
-        os.chdir(folder_path)
-        #create logs folder
-        os.mkdir(".\Logs")
-    
-    #check if keywords folder has been created
-    if(not os.path.isdir(keywords_folder_path)):
-        #change directory to folder path
-        os.chdir(folder_path)
-        #create keywords folder
-        os.mkdir(".\Keywords")        
-
-
-    else:
-        print("FOLDER CREATED")
-    
-#generate possible passphrase based on alphabets given
-def generate_passphrase(wordlist, passphrase_length, alphabets = []):
-    passphrase_list = []
-    alpha_index = 0
-
-    #get words with the given alphabets
-    while len(passphrase_list) < len(alphabets):
-        roll = dice_roll()
-        word = wordlist[str(roll)]
-        if word[0] == alphabets[alpha_index]:
             passphrase_list.append(word)
 
         #shuffle the words placement
@@ -107,7 +71,7 @@ def generate_passphrase(wordlist, passphrase_length, alphabets = []):
             passphrase += passphrase_list[i] + " "
 
         return passphrase
-
+    
     #generate passphrase with preferences 
     #input: browser is selected and 
     #length of passphrase and
@@ -121,19 +85,18 @@ def generate_passphrase(wordlist, passphrase_length, alphabets = []):
             if browser == "Google Chrome": 
                 chrome = Chrome()
                 browsers_list.append(chrome)
-                print("1")
+
             if browser == "Firefox": 
                 firefox = Firefox()
                 browsers_list.append(firefox)
-                print("2")
+
             if browser == "Opera": 
                 opera = Opera()
                 browsers_list.append(opera)
-                print("3")
+
             if browser == "Microsoft Edge": 
                 edge = Edge()
                 browsers_list.append(edge)
-                print("4")
 
         #get all keywords generated from all browsers
         keywords = []
@@ -167,6 +130,5 @@ def generate_passphrase(wordlist, passphrase_length, alphabets = []):
             passphrase = passphrase.split(" ", 1)
             passphrase = str(passphrase[0]) + str(sym_and_num[i]) + str(passphrase[1])
 
-        print("FINAL: " + passphrase)
-
         return passphrase
+

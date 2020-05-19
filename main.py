@@ -22,7 +22,7 @@ from frontend.enterVaultPass import vaultPassword
 
 
 #import from backend folder
-from backend.generator import generate_password
+from backend.password_generator import Password_Generator
 from backend.vault import Vault
 from backend.check_running_process import check_running_process
 
@@ -1710,8 +1710,8 @@ class Ui_MainWindow(object):
 
             self.splash.show()
             
-
-            self.finalResult.setText(generate_password(self.btnList, int(
+            password_generator = Password_Generator()
+            self.finalResult.setText(password_generator.generate_password(self.btnList, int(
                 self.comboBox_wordNo), self.preferenceList))
 
             QtCore.QTimer.singleShot(800, self.splash.close)

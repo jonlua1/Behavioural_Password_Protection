@@ -2,7 +2,6 @@ import os
 import sqlite3
 from sqlite3 import Error
 
-from backend.account import Account
 from backend.crypto import encrypt, decrypt, generate_hash, check_hash
 
 class Vault():
@@ -181,7 +180,6 @@ class Vault():
                             WHERE id = ?"""
                             ,(encrypted_password, id))
         
-        print("Account password successfully updated")
 
     #search vault and return accounts which contains words from user_input
     def search_vault(self, search_input):
@@ -222,5 +220,3 @@ class Vault():
                             SET account = ?, user_name = ?
                             WHERE id = ?"""
                             ,(account_name, user_name, id))
-
-        print("Account successfully updated")

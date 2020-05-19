@@ -47,7 +47,6 @@ class Opera(Browser):
     def write_visit_time(self):
         #checks if opera process is running    
         if(check_running_process('opera')):
-            print("Please exit all opera processes and retry again")    #NEED TO OUTPUT THIS
             return
         else:
             #connect to opera history db
@@ -77,7 +76,6 @@ class Opera(Browser):
     def get_keyword_search_terms(self):
         #checks if opera process is running    
         if(check_running_process('opera')):
-            print("Please exit all opera processes and retry again")    #NEED TO OUTPUT THIS
             return
         else:
             #connect to opera history db
@@ -103,7 +101,6 @@ class Opera(Browser):
     def get_title(self):
         #checks if opera process is running    
         if(check_running_process('opera')):
-            print("Please exit all opera processes and retry again")
             return
         else:
             conn = sqlite3.connect(self._history_path)
@@ -162,7 +159,6 @@ class Opera(Browser):
         history_file_path = self.locate_history()
         #if Opera history file does not exist
         if(history_file_path == None):
-            print("Opera file not found!")      #NEED TO OUTPUT THIS
             return None
 
         self.get_visit_time_from_file()

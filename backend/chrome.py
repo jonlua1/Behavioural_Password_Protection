@@ -47,7 +47,6 @@ class Chrome(Browser):
     def write_visit_time(self):
         #checks if chrome process is running    
         if(check_running_process('chrome')):
-            print("Please exit all chrome processes and retry again")    #NEED TO OUTPUT THIS
             return
         else:
             #connect to chrome history db
@@ -77,7 +76,6 @@ class Chrome(Browser):
     def get_keyword_search_terms(self):
         #checks if chrome process is running    
         if(check_running_process('chrome')):
-            print("Please exit all chrome processes and retry again")    #NEED TO OUTPUT THIS
             return
         else:
             #connect to chrome history db
@@ -102,7 +100,6 @@ class Chrome(Browser):
     def get_title(self):
         #checks if chrome process is running    
         if(check_running_process('chrome')):
-            print("Please exit all chrome processes and retry again")
             return
         else:
             conn = sqlite3.connect(self._history_path)
@@ -161,7 +158,6 @@ class Chrome(Browser):
         history_file_path = self.locate_history()
         #if Chrome history file does not exist
         if(history_file_path == None):
-            print("Chrome file not found!")      #NEED TO OUTPUT THIS
             return None
 
         self.get_visit_time_from_file()

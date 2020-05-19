@@ -60,7 +60,6 @@ class Firefox(Browser):
     def write_visit_time(self):
         #checks if firefox process is running    
         if(check_running_process('firefox')):
-            print("Please exit all firefox processes and retry again")    #NEED TO OUTPUT THIS
             return
         else:
             #connect to firefox history db
@@ -90,7 +89,6 @@ class Firefox(Browser):
     def get_title(self):
         #checks if firefox process is running    
         if(check_running_process('firefox')):
-            print("Please exit all firefox processes and retry again")
             return
         else:
             conn = sqlite3.connect(self._history_path)
@@ -150,7 +148,6 @@ class Firefox(Browser):
         history_file_path = self.locate_history()
         #if firefox history file does not exist
         if(history_file_path == None):
-            print("Firefox file not found!")      #NEED TO OUTPUT THIS
             return None
 
         self.get_visit_time_from_file()
