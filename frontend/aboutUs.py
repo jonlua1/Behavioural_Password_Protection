@@ -22,7 +22,7 @@ class Ui_AboutUs(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 476, 900))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 476, 1000))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -111,7 +111,7 @@ class Ui_AboutUs(object):
         self.verticalLayout.addWidget(self.layoutWidget)
 
         self.textBrowser = QtWidgets.QTextBrowser(self.scrollAreaWidgetContents)
-        self.textBrowser.setMinimumSize(QtCore.QSize(0, 900))
+        self.textBrowser.setMinimumSize(QtCore.QSize(0, 1000))
         self.textBrowser.setStyleSheet("""
             padding-left: 20px;
             padding-top: 20px;
@@ -132,14 +132,14 @@ class Ui_AboutUs(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:16pt; font-weight:600; font-style:italic;\">Welcome to EzPass!</span> </p>\n"
+"<p style=\"color:white; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:16pt; font-weight:600; font-style:italic;\">Welcome to EzPass!</span> </p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:12pt;\">EzPass is a simple application that offers a myriad of password-related services. While the Passphrase Generation is the core feature of our application, EzPass do offer other services like secure password storage and a simple password rating feature. Read on to learn more about the application!</span> </p>\n"
-"<p align=\"center\" style=\" margin-top:20px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:12pt; font-weight:600; font-style:italic;\">Passphrase Generation</span> </p>\n"
+"<p style=\"color:white; margin-top:20px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:12pt; font-weight:600; font-style:italic;\">Passphrase Generation</span> </p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:12pt;\">Our Passphrase Generation feature is the highlight of our product. EzPass generates passphrases instead of passwords as they provide greater security for our users. More importantly, these passphrases are personalised to our users. EzPass extracts, filtesr and processes your browser history to obtain recurring words to add to a wordlist. The application will retrieve words from these wordlists to form your passphrase.</span> </p>\n"
-"<p align=\"center\" style=\" margin-top:20px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:12pt; font-weight:600; font-style:italic;\">Password Vault</span> </p>\n"
+"<p style=\"color:white; margin-top:20px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:12pt; font-weight:600; font-style:italic;\">Password Vault</span> </p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:12pt;\">EzPass offers a vault for the safekeeping of your credentials. You may choose to store both your own passwords as well as the passphrases EzPass generated. Feel free to add, edit and delete any account entries.  EzPass runs entirely on your device and is disconnected from the web. However, we still take measures to ensure your credentials are kept secure and out of the hands of unauthorised personnel.</span> </p>\n"
-"<p align=\"center\" style=\" margin-top:20px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:12pt; font-weight:600; font-style:italic;\">Password Audit</span><span style=\" font-size:12pt; font-style:italic;\"> </span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">Take advantage of our password audit feature to assess the strength of your own passwords. EzPass lets you know the overall strength of your password and the estimated time for someone to guess your password. If the application rates your password poorly, how about giving our secure generated passphrases a try?</span> </p></body></html>"))
+"<p style=\"color:white; margin-top:20px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:12pt; font-weight:600; font-style:italic;\">Password Audit</span><span style=\" font-size:12pt; font-style:italic;\"> </span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:150%;\"><span style=\" font-size:12pt;\">Take advantage of our password audit feature to assess the strength of your own passwords. EzPass lets you know the overall strength of your password and the estimated time for someone to guess your password. If the application rates your password poorly, how about giving our secure generated passphrases a try?</span> </p></body></html>"))
 
     
 

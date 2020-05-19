@@ -81,7 +81,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_7_Home = QtWidgets.QVBoxLayout()
         self.verticalLayout_7_Home.setObjectName("verticalLayout_7_Home")
         self.label_genPwd_Home = QtWidgets.QLabel(self.layoutWidget_2_Home)
-        self.label_genPwd_Home.setStyleSheet("")
+        self.label_genPwd_Home.setStyleSheet("font-size: 35px; font-weight: bold;")
         self.label_genPwd_Home.setObjectName("label_genPwd_Home")
         self.verticalLayout_7_Home.addWidget(self.label_genPwd_Home)
         self.label_genPwdDescription_Home = QtWidgets.QLabel(
@@ -126,7 +126,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2_Home = QtWidgets.QVBoxLayout()
         self.verticalLayout_2_Home.setObjectName("verticalLayout_2_Home")
         self.label_vault_Home = QtWidgets.QLabel(self.layoutWidget_Home)
-        self.label_vault_Home.setStyleSheet("")
+        self.label_vault_Home.setStyleSheet("font-size: 30px; font-weight: bold;")
         self.label_vault_Home.setObjectName("label_vault_Home")
         self.verticalLayout_2_Home.addWidget(self.label_vault_Home)
         self.label_vaultDescription_Home = QtWidgets.QLabel(
@@ -172,7 +172,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3_Home = QtWidgets.QVBoxLayout()
         self.verticalLayout_3_Home.setObjectName("verticalLayout_3_Home")
         self.label_audit_Home = QtWidgets.QLabel(self.layoutWidget_3_Home)
-        self.label_audit_Home.setStyleSheet("")
+        self.label_audit_Home.setStyleSheet("font-size: 30px; font-weight: bold;")
         self.label_audit_Home.setObjectName("label_audit_Home")
         self.verticalLayout_3_Home.addWidget(self.label_audit_Home)
         self.label_auditDescription_Home = QtWidgets.QLabel(
@@ -214,19 +214,19 @@ class Ui_MainWindow(object):
         self.settings_Home.setGeometry(QtCore.QRect(
             MainWindow.width() - 370, 575, 160, 35))
         self.settings_Home.setStyleSheet(
-            "color: #34363a; background-color: #d2c15d; font-size: 20px")
+            "color: #34363a; background-color: #d2c15d; font-size: 20px; font-weight: bold;")
         self.settings_Home.clicked.connect(self.settingsPg)
         self.aboutUs_Home = QtWidgets.QPushButton(self.groupBox_Home)
         self.aboutUs_Home.setGeometry(QtCore.QRect(
             MainWindow.width() - 210, 575, 160, 35))
         self.aboutUs_Home.clicked.connect(self.aboutUsPg)
         self.aboutUs_Home.setStyleSheet(
-            "color: #34363a; background-color: #d2c15d; font-size: 20px")
+            "color: #34363a; background-color: #d2c15d; font-size: 20px; font-weight: bold;")
 
         self.label_14_Home = QtWidgets.QLabel(self.page_Home)
         self.label_14_Home.setGeometry(QtCore.QRect(
             0, self.logoBackground_Home.y() + 215, MainWindow.width(), 55))
-        self.label_14_Home.setStyleSheet("font-size: 30px")
+        self.label_14_Home.setStyleSheet("font-size: 40px; font-weight: bold;")
         self.label_14_Home.setAlignment(QtCore.Qt.AlignCenter)
         self.label_14_Home.setObjectName("label_14_Home")
 
@@ -380,7 +380,7 @@ class Ui_MainWindow(object):
         self.label_Title_genPas = QtWidgets.QLabel(
             self.scrollAreaWidgetContents_genPas)
         self.label_Title_genPas.setStyleSheet("""color:#d2c15d; 
-        font-size: 40px; font-family: Trebuchet MS; margin-left: 20px;""")
+        font-size: 45px; font-family: Trebuchet MS; margin-left: 20px; font-weight: bold;""")
 
         self.label_Title_genPas.setGeometry(QtCore.QRect(
             self.groupBox_genPas.x() + 20, self.groupBox_genPas.y() - 70, 300, 70))
@@ -417,6 +417,7 @@ class Ui_MainWindow(object):
         QLabel {
             border-style: none;
             color:#34363a;
+            font-weight: bold;
         }
 
         
@@ -497,7 +498,7 @@ class Ui_MainWindow(object):
 
         self.label_selectBrowser = QtWidgets.QLabel(self.groupBox_genPas)
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(19)
         self.label_selectBrowser.setFont(font)
         self.label_selectBrowser.setAutoFillBackground(False)
         self.label_selectBrowser.setObjectName("label_selectBrowser")
@@ -526,18 +527,16 @@ class Ui_MainWindow(object):
         self.label_selectPreference_genPas = QtWidgets.QLabel(
             self.container_2_genPas)
         self.label_selectPreference_genPas.setGeometry(
-            QtCore.QRect(23, 10, 400, 80))
+            QtCore.QRect(23, 10, 500, 80))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.label_selectPreference_genPas.setText("Select number of words")
+        self.label_selectPreference_genPas.setText("Select Number of Words in Passphrase")
         self.label_selectPreference_genPas.setMinimumHeight(60)
         self.label_selectPreference_genPas.setFont(font)
         self.label_selectPreference_genPas.setAutoFillBackground(True)
         self.label_selectPreference_genPas.setObjectName(
             "label_selectPreference_genPas")
-        self.label_selectPreference_genPas.setStyleSheet("""color: #34363a;
-        border-style: none;
-        """)
+        self.label_selectPreference_genPas.setStyleSheet(self.styleSheet)
 
         self.comboBox_Number_2_genPas = QtWidgets.QComboBox(
             self.container_2_genPas)
@@ -722,13 +721,14 @@ class Ui_MainWindow(object):
         self.infoChanged = False
 
         self.styleSheet = """
-            font-size: 30px;
+            font-size: 35px;
             color: #d2c15d;
+            font-weight: bold;
         """
 
         self.welcomeSign = QtWidgets.QWidget()
         self.wcs_layout = QtWidgets.QHBoxLayout(self.welcomeSign)
-        self.welcome = QtWidgets.QLabel("Welcome to the vault!")
+        self.welcome = QtWidgets.QLabel("Welcome to The Vault!")
         self.welcome.setStyleSheet(self.styleSheet)
         self.addNewAcc = QtWidgets.QPushButton("Add New Account")
         self.addNewAcc.setObjectName("addNewAcc")
@@ -758,7 +758,7 @@ class Ui_MainWindow(object):
         self.searchbar.setPlaceholderText("Search the vault")
         self.searchbar.setContentsMargins(10, 10, 10, 10)
         self.searchbar.setStyleSheet(""" background-color: rgba(255, 255, 255, 50); font-size: 30px;
-        border-style: none; padding-left: 10px;
+        border-style: none; padding-left: 10px; color: white; font-weight: bold;
         """)
         sizePolicy.setHeightForWidth(
             self.searchbar.sizePolicy().hasHeightForWidth())
@@ -828,13 +828,13 @@ class Ui_MainWindow(object):
         self.securityAuditWidget = QtWidgets.QWidget(self.page_audit)
         self.saWidgetLayout = QtWidgets.QVBoxLayout(self.securityAuditWidget)
         self.securityAuditWidget.setGeometry(QtCore.QRect(
-            round((self.stackedWidget.width() - 500) / 2), 350, 500, 500))
+            round((self.stackedWidget.width() - 600) / 2), 350, 600, 500))
         self.securityAuditWidget.setStyleSheet("""
             QWidget{
                 border: 2px solid white;
             }
         """)
-        font.setPointSize(14)
+        font.setPointSize(18)
 
         self.passwordStrengthAuditLabel = QtWidgets.QLabel("Please enter a password below: ", self.page_audit)
         self.passwordStrengthAuditLabel.setMaximumHeight(60)
@@ -842,6 +842,7 @@ class Ui_MainWindow(object):
         self.passwordStrengthAuditLabel.setStyleSheet("""
             border-style: none;
             border: 0px;
+            font-size: 30px;
         """)
         self.saWidgetLayout.addWidget(self.passwordStrengthAuditLabel)
 
@@ -925,13 +926,13 @@ class Ui_MainWindow(object):
         self.label_genPwdDescription_Home.setText(_translate(
             "MainWindow", "Obtain a password using our simple but secure algorithm "))
         self.label_vault_Home.setText(
-            _translate("MainWindow", "2. Access my vault"))
+            _translate("MainWindow", "2. Access My Vault"))
         self.label_vaultDescription_Home.setText(_translate(
             "MainWindow", "View & add passwords into your vault"))
         self.label_audit_Home.setText(
             _translate("MainWindow", "3. Security Audit"))
         self.label_auditDescription_Home.setText(_translate(
-            "MainWindow", "Assess the security of the passwords in your vault"))
+            "MainWindow", "Assess the security of your passwords and passphrases"))
         self.label_14_Home.setText(_translate(
             "MainWindow", "Welcome, what would you like to do?"))
         self.settings_Home.setText(_translate("MainWindow", "Settings"))
@@ -948,9 +949,8 @@ class Ui_MainWindow(object):
         self.SettingsBtn_genPas.setText(_translate("MainWindow", "Settings"))
         self.AboutUsBtn_genPas.setText(_translate("MainWindow", "About Us"))
         self.label_selectBrowser.setText(
-            _translate("MainWindow", "Select browser"))
-        # self.genPwd_genPas.setText(_translate(
-        #    "MainWindow", "Generate Password"))
+            _translate("MainWindow", "Select browser(s)"))
+     
         self.comboBox_Number_2_genPas.setItemText(
             0, _translate("MainWindow", "Number of words"))
         self.comboBox_Number_2_genPas.setItemText(
@@ -963,14 +963,11 @@ class Ui_MainWindow(object):
             4, _translate("MainWindow", "7"))
         self.comboBox_Number_2_genPas.setItemText(
             5, _translate("MainWindow", "8"))
-        # self.comboBox_Number_3_genPas.setItemText(
-        #    0, _translate("MainWindow", "Preference(s)"))
+     
         self.dummyLabel_1_genPas.setText(_translate("MainWindow", ""))
-        # self.label_selectPreference_genPas.setText(_translate(
-        #    "MainWindow", "2. Select number of words & Preferences"))
+     
         self.dummyLabel_2_genPas.setText(_translate("MainWindow", ""))
-        #self.dummyLabel_3_genPas.setText(_translate("MainWindow", ""))
-        #self.dummyLabel_4_genPas.setText(_translate("MainWindow", ""))
+    
         self.label_Title_genPas.setText(
             _translate("MainWindow", "Generate Passphrase"))
 
@@ -1478,26 +1475,41 @@ class Ui_MainWindow(object):
         self.cb_dynamic = QtWidgets.QGroupBox()
         self.cb_dynamic_layoutWidget = QtWidgets.QWidget()
         self.cb_dynamic_Vlayout = QtWidgets.QVBoxLayout(self.cb_dynamic)
+        self.generalLabel_genPas = QtWidgets.QWidget()
+        self.generalLabel_Hlayout_genPas = QtWidgets.QHBoxLayout(self.generalLabel_genPas)
         self.preference_Label_genPas = QtWidgets.QLabel()
-        self.preference_Label_genPas.setText("Select Preferred Alphabets")
-        self.cb_2_dynamic = QtWidgets.QGroupBox()
-
-        self.cb_dynamic_Vlayout.addWidget(self.preference_Label_genPas)
+        self.preference_Label_genPas.setText("Select Preferred Alphabet")
+        self.preference_Label_genPas.setMaximumWidth(300)
+        self.reminder_1_genPas = QtWidgets.QLabel("(you may leave this blank)")
+        self.reminder_1_genPas.setStyleSheet("font-size: 18px;")
+        self.generalLabel_Hlayout_genPas.addWidget(self.preference_Label_genPas)
+        self.generalLabel_Hlayout_genPas.addWidget(self.reminder_1_genPas)
+        self.cb_dynamic_Vlayout.addWidget(self.generalLabel_genPas)
+        
+        
         self.cb_dynamic_Hlayout = QtWidgets.QHBoxLayout()
+        self.cb_2_dynamic = QtWidgets.QGroupBox()
         self.cb_dynamic_2_Hlayout = QtWidgets.QHBoxLayout(self.cb_2_dynamic)
 
         self.cb_dynamic_symbol = QtWidgets.QGroupBox()
         self.cb_dynamic_symbol_layoutWidget = QtWidgets.QWidget()
         self.cb_dynamic_symbol_Vlayout = QtWidgets.QVBoxLayout(
             self.cb_dynamic_symbol)
+        self.generalLabel_2_genPas = QtWidgets.QWidget()   
+        self.generalLabel_2_Hlayout_genPas = QtWidgets.QHBoxLayout(self.generalLabel_2_genPas)
         self.preference_Label_symbol_genPas = QtWidgets.QLabel()
         self.preference_Label_symbol_genPas.setText(
-            "Select Preferred Symbols / Number")
-        self.cb_2_dynamic_symbol = QtWidgets.QGroupBox()
+            "Select Preferred Symbol / Number")
+        self.preference_Label_symbol_genPas.setMaximumWidth(385)
+        self.reminder_2_genPas = QtWidgets.QLabel("(you may leave this blank)")
+        self.reminder_2_genPas.setStyleSheet("font-size: 18px;")
+        self.generalLabel_2_Hlayout_genPas.addWidget(self.preference_Label_symbol_genPas)
+        self.generalLabel_2_Hlayout_genPas.addWidget(self.reminder_2_genPas)
 
-        self.cb_dynamic_symbol_Vlayout.addWidget(
-            self.preference_Label_symbol_genPas)
+
+        self.cb_dynamic_symbol_Vlayout.addWidget(self.generalLabel_2_genPas)
         self.cb_dynamic_symbol_Hlayout = QtWidgets.QHBoxLayout()
+        self.cb_2_dynamic_symbol = QtWidgets.QGroupBox()
         self.cb_dynamic_2_symbol_Hlayout = QtWidgets.QHBoxLayout(
             self.cb_2_dynamic_symbol)
 
@@ -1540,7 +1552,8 @@ class Ui_MainWindow(object):
         self.gpHLayout.addWidget(self.generatePasswordButton)
 
 
-        #if number of words combo box
+        # if length of number of words combo box == 1
+        # the only option that length != 1 is the display text
         if (len(selectedNumber) == 1):
             self.comboBox_Number_2_genPas.setEnabled(False)
             self.resetComboBox_genPas.setEnabled(True)
@@ -1619,11 +1632,15 @@ class Ui_MainWindow(object):
         self.styleSheet = """ 
             QPushButton {
                 background-color: #d2c15d;
-                font-size: 20px;
+                font-size: 30px;
                 border-radius: 20px;
                 margin-left: 40px;
             }
 
+            QLabel {
+                font-size: 25px;
+                font-weight: bold;
+            }
 
         """
         # self.generatePasswordButton.setDisabled(True)
@@ -1641,14 +1658,14 @@ class Ui_MainWindow(object):
         self.finalResult.setMinimumHeight(60)
         self.resetAllbtn = QtWidgets.QPushButton("Reset all")
         self.resetAllbtn.setStyleSheet(self.styleSheet)
+        self.resetAllbtn.setFixedSize(250, 150)
         self.resetAllbtn.clicked.connect(self.resetAll)
-        self.resetAllbtn.setMinimumHeight(150)
         self.copyPassPhrasebtn = QtWidgets.QPushButton("Copy")
         self.copyPassPhrasebtn.setStyleSheet(self.styleSheet)
-        self.copyPassPhrasebtn.setMinimumHeight(150)
+        self.copyPassPhrasebtn.setFixedSize(180, 150)
         self.copyPassPhrasebtn.clicked.connect( lambda: self.copyText(self.finalResult.text()))
         self.displayText = QtWidgets.QLabel("Generated passphrase: ")
-
+        self.displayText.setStyleSheet("font-size: 30px")
         # if Opera browser is opened and running at the background
         # prompt user to inform them to close the browser
         if(check_running_process('opera') and ('Opera') in self.btnList):
@@ -1873,6 +1890,7 @@ class Ui_MainWindow(object):
         userInput = self.passwordStrengthAuditLE.text()
         resultString = ''
         tempFeedback = ''
+        scoreResult = ''
 
         self.securityAuditWidget.setGeometry(QtCore.QRect(
             30, 350, 500, 500))
@@ -1885,17 +1903,20 @@ class Ui_MainWindow(object):
 
         if (userInput != ''):
             result = zxcvbn(self.passwordStrengthAuditLE.text())
+            if (result['score'] == 0):
+                scoreResult = "Your password score: 0 / 4 Extremely Weak\n"
+
             if (result['score'] == 1):
                 scoreResult = "Your password score: 1 / 4 Poor\n"
 
             elif (result['score'] == 2):
-                scoreResult = "Your password scroe: 2 / 4 \n"   
+                scoreResult = "Your password score: 2 / 4 Moderate\n"   
 
             elif (result['score'] == 3):
-                scoreResult = "Your password scroe: 3 / 4 Moderate \n"
+                scoreResult = "Your password score: 3 / 4 Good\n"
 
             elif (result['score'] == 4):
-                scoreResult = "Your password scroe: 4 / 4 Good \n"
+                scoreResult = "Your password score: 4 / 4 Strong\n"
             
             guessesResult = "Guesses: " + str(result['guesses']) + "\n"
 
@@ -1904,15 +1925,14 @@ class Ui_MainWindow(object):
                 tempFeedback = str(i) + " "
 
             
-            
             feedback = "Feedback: " + tempFeedback
 
 
             if tempFeedback != '': 
-                resultString = scoreResult + guessesResult + feedback
+                resultString = scoreResult + "\n" + guessesResult + "\n" + feedback
                 self.displayResultArea.insertPlainText(resultString)
             else:
-                resultString = scoreResult + guessesResult
+                resultString = scoreResult + "\n" + guessesResult
                 self.displayResultArea.insertPlainText(resultString)
 
         else:
@@ -1934,7 +1954,7 @@ class Ui_MainWindow(object):
         vault_db_filename = os.path.expanduser('~\Documents\ezPass\\vault')
         Dialog = QtWidgets.QDialog()
         ui = Ui_Dialog()
-        ui.setupUi(Dialog, "Confirm deletion of database?")
+        ui.setupUi(Dialog, "Confirm deletion of content of the vault?")
         Dialog.show()
         # if user clicked confirm, the program will delete the file
         if Dialog.exec_():
