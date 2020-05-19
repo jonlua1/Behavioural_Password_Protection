@@ -1996,14 +1996,15 @@ class Ui_MainWindow(object):
                 shutil.rmtree(logs_folder_path)
                 shutil.rmtree(keywords_folder_path)
         
-        else: 
-            Dialog_noFileFound = QtWidgets.QDialog()
-            ui_noFileFound = Ui_Dialog()
-            ui_noFileFound.setupUi(Dialog_noFileFound, "Wordlist file is already deleted.")
-            Dialog_noFileFound.show()
-            Dialog_noFileFound.exec_()
+            else: 
+                Dialog_noFileFound = QtWidgets.QDialog()
+                ui_noFileFound = Ui_Dialog()
+                ui_noFileFound.setupUi(Dialog_noFileFound, "Wordlist file is already deleted.")
+                Dialog_noFileFound.show()
+                Dialog_noFileFound.exec_()
 
-    
+        else:
+            pass
 
 
 
