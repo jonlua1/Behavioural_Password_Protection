@@ -1651,7 +1651,7 @@ class Ui_MainWindow(object):
 
         # if Opera browser is opened and running at the background
         # prompt user to inform them to close the browser
-        if(check_running_process('opera')):
+        if(check_running_process('opera') and ('Opera') in self.btnList):
             Dialog = QtWidgets.QDialog()
             ui = Ui_Dialog()
             ui.setupUi(Dialog, "Please exit all opera processes and try again.")
@@ -1660,7 +1660,7 @@ class Ui_MainWindow(object):
 
         # if Microsoft Edge browser is opened and running at the background
         # prompt user to inform them to close the browser
-        elif(check_running_process('msedge')):
+        elif(check_running_process('msedge') and ('Microsoft Edge') in self.btnList):
             Dialog = QtWidgets.QDialog()
             ui = Ui_Dialog()
             ui.setupUi(Dialog, "Please exit all Microsoft Edge processes and try again.")
@@ -1669,7 +1669,7 @@ class Ui_MainWindow(object):
 
         # if Firefox browser is opened and running at the background
         # prompt user to inform them to close the browser
-        elif(check_running_process('firefox')):
+        elif(check_running_process('firefox') and ('Firefox') in self.btnList):
             Dialog = QtWidgets.QDialog()
             ui = Ui_Dialog()
             ui.setupUi(Dialog, "Please exit all firefox processes and try again.")
@@ -1678,7 +1678,7 @@ class Ui_MainWindow(object):
 
         # if Chrome browser is opened and running at the background
         # prompt user to inform them to close the browser
-        elif(check_running_process('chrome')):
+        elif(check_running_process('chrome') and ('Google Chrome') in self.btnList):
             Dialog = QtWidgets.QDialog()
             ui = Ui_Dialog()
             ui.setupUi(Dialog, "Please exit all chrome processes and try again.")
@@ -1929,6 +1929,10 @@ class Ui_MainWindow(object):
                 vault = "vault"
                 file_path = os.path.join(folder_path, vault)
                 os.remove(file_path)
+                for x in self.widgets:
+                    x.setHidden(True)
+                    self.verticalLayout_vault.removeWidget(x)
+
 
             #else prompt user a window to inform user 
             else:
