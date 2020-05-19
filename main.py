@@ -7,8 +7,17 @@ import shutil
 import resource
 import sys 
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from zxcvbn import zxcvbn
+
+try:
+    
+    from PyQt5.QtWinExtras import QtWin
+    myappid = 'SIM_student.FYP.EzPass.v1.0'
+    QtWin.setCurrentProcessExplicitAppUserModelID(myappid)    
+except ImportError:
+    pass
 
 from frontend.customWidget import customGroupBox
 from frontend.dialogBox import Ui_Dialog
