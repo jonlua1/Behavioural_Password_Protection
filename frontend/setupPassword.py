@@ -56,7 +56,7 @@ class setupPasForm(QtWidgets.QDialog):
         self.button_box.setContentsMargins(0,0,0,80)
         self.button_box.setGeometry(QtCore.QRect(0, 450, 400, 60))
         self.buttonOk = self.button_box.button(QtWidgets.QDialogButtonBox.Ok)
-        self.buttonOk.setText("Submit")
+        self.buttonOk.setText("Create Account")
         self.buttonOk.setMinimumSize(250, 50)
         self.buttonCancel = self.button_box.button(QtWidgets.QDialogButtonBox.Cancel)
         self.buttonCancel.setText("Cancel")
@@ -73,7 +73,7 @@ class setupPasForm(QtWidgets.QDialog):
         self.layout.addItem(spacerItem1)
         self.layout.addRow('Confirm Password  : ', self.confirmPass)
         self.layout.addItem(spacerItem2)
-
+        #self.layout.addWidget(self.button_box)
 
 
         self.widget.setLayout(self.layout)

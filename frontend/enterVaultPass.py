@@ -3,10 +3,10 @@ import resource
 from PyQt5 import QtWidgets, QtCore, QtGui
 
 
-class setupPasForm(QtWidgets.QDialog):
+class vaultPassword(QtWidgets.QDialog):
 
     def __init__(self):
-        super(setupPasForm, self).__init__()
+        super(vaultPassword, self).__init__()
 
 
         icon = QtGui.QIcon()
@@ -32,31 +32,21 @@ class setupPasForm(QtWidgets.QDialog):
             border: none;
             padding-left: 20px;
             """)
-        self.setupPasLabel = QtWidgets.QLabel("Setup a Password before you \ncan access to the vault!")
-        self.setupPasLabel.setMinimumHeight(100)
-        self.setupPasLabel.setStyleSheet("""background-color: #d2c15d;
+        self.PasLabel = QtWidgets.QLabel("Please enter vault password.")
+        self.PasLabel.setMinimumHeight(100)
+        self.PasLabel.setStyleSheet("""background-color: #d2c15d;
             color: black;
             border: none;
             padding-left: 20px;
             """)
-        self.setupPasLabel.setFont(font)
-        self.confirmPass = QtWidgets.QLineEdit()
-        self.confirmPass.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.confirmPass.setMinimumHeight(60)
-        self.confirmPass.setStyleSheet("""background-color: #d2c15d;
-            color: black;
-            border: none;
-            padding-left: 20px;
-            """)
-
-    
+        self.PasLabel.setFont(font)
 
         self.button_box = QtWidgets.QDialogButtonBox(self)
         self.button_box.setStandardButtons(QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel)
         self.button_box.setContentsMargins(0,0,0,80)
         self.button_box.setGeometry(QtCore.QRect(0, 450, 400, 60))
         self.buttonOk = self.button_box.button(QtWidgets.QDialogButtonBox.Ok)
-        self.buttonOk.setText("Submit")
+        self.buttonOk.setText("Log in")
         self.buttonOk.setMinimumSize(250, 50)
         self.buttonCancel = self.button_box.button(QtWidgets.QDialogButtonBox.Cancel)
         self.buttonCancel.setText("Cancel")
@@ -65,17 +55,11 @@ class setupPasForm(QtWidgets.QDialog):
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
         spacerItem = QtWidgets.QSpacerItem(20, 73, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 73, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 100, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.layout.addRow(self.setupPasLabel)
+       
+        self.layout.addRow(self.PasLabel)
         self.layout.addItem(spacerItem)
         self.layout.addRow('Password : ', self.password)
-        self.layout.addItem(spacerItem1)
-        self.layout.addRow('Confirm Password  : ', self.confirmPass)
-        self.layout.addItem(spacerItem2)
-
-
-
+ 
         self.widget.setLayout(self.layout)
-        self.setWindowTitle("Setup master password")
+        self.setWindowTitle("Please enter password")
         self.setMinimumWidth(350)

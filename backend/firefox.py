@@ -2,8 +2,8 @@ import os
 import sqlite3
 import configparser
 
-from browser import Browser
-from check_running_process import check_running_process
+from backend.browser import Browser
+from backend.check_running_process import check_running_process
 
 class Firefox(Browser):
     def __init__(self):

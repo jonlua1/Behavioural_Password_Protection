@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="images">
+    <file>images/splash.png</file>
+    <file>images/ezPassLogo.PNG</file>
+    <file>images/Firefox-icon.png</file>
+    <file>images/generate_password.jpg</file>
+    <file>images/Google-Chrome-icon.png</file>
+    <file>images/icons8-microsoft-edge-144.png</file>
+    <file>images/icons8-sort-down-100.png</file>
+    <file>images/lock_icon.png</file>
+    <file>images/Opera-icon.png</file>
+    <file>images/security_Audit.jpg</file>
+    <file>images/security_Audit_adjust.jpg</file>
+    <file>images/smaller_vault.png</file>
+    <file>images/vault.jpg</file>
+  </qresource>
+</RCC>

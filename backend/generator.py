@@ -1,10 +1,10 @@
 import os
 from random import shuffle
 
-from chrome import Chrome
-from firefox import Firefox
-from edge import Edge
-from opera import Opera
+from backend.chrome import Chrome
+from backend.firefox import Firefox
+from backend.edge import Edge
+from backend.opera import Opera
 
 from wordlist_generator import Wordlist_Generator
 from dice import Dice
@@ -46,6 +46,56 @@ class Generator():
         while len(passphrase_list) < passphrase_length:
             roll = dice.dice_roll()
             word = wordlist[str(roll)]
+            
+from backend.default_wordlist import get_generated_wordlist
+from backend.dice_roll import dice_roll
+
+#initialise ezPass folder if it does not exist
+def init_folder():
+    #ezPass folder path
+    folder_path = os.path.expanduser('~\Documents\ezPass')
+    logs_folder_path = os.path.expanduser('~\Documents\ezPass\Logs')
+    keywords_folder_path = os.path.expanduser('~\Documents\ezPass\Keywords')
+    
+    #check if ezPass folder has been created
+    if(not os.path.isdir(folder_path)):
+        #create ezPass folder
+        os.mkdir(folder_path)
+        #change directory to folder path
+        os.chdir(folder_path)
+        #create logs folder
+        os.mkdir(".\Logs")
+        #create keywords folder
+        os.mkdir(".\Keywords")
+
+     #check if logs folder has been created
+    if(not os.path.isdir(logs_folder_path)):
+        #change directory to folder path
+        os.chdir(folder_path)
+        #create logs folder
+        os.mkdir(".\Logs")
+    
+    #check if keywords folder has been created
+    if(not os.path.isdir(keywords_folder_path)):
+        #change directory to folder path
+        os.chdir(folder_path)
+        #create keywords folder
+        os.mkdir(".\Keywords")        
+
+
+    else:
+        print("FOLDER CREATED")
+    
+#generate possible passphrase based on alphabets given
+def generate_passphrase(wordlist, passphrase_length, alphabets = []):
+    passphrase_list = []
+    alpha_index = 0
+
+    #get words with the given alphabets
+    while len(passphrase_list) < len(alphabets):
+        roll = dice_roll()
+        word = wordlist[str(roll)]
+        if word[0] == alphabets[alpha_index]:
             passphrase_list.append(word)
 
         #shuffle the words placement
