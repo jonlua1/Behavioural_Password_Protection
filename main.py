@@ -1885,11 +1885,25 @@ class Ui_MainWindow(object):
 
         if (userInput != ''):
             result = zxcvbn(self.passwordStrengthAuditLE.text())
-    
-            scoreResult = "Your password score: " + str(result['score']) + " / 4 \n"  
+            if (result['score'] == 1):
+                scoreResult = "Your password score: 1 / 4 Poor\n"
+
+            elif (result['score'] == 2):
+                scoreResult = "Your password scroe: 2 / 4 \n"   
+
+            elif (result['score'] == 3):
+                scoreResult = "Your password scroe: 3 / 4 Moderate \n"
+
+            elif (result['score'] == 4):
+                scoreResult = "Your password scroe: 4 / 4 Good \n"
+            
             guessesResult = "Guesses: " + str(result['guesses']) + "\n"
+
+            
             for i in result['feedback']['suggestions']:
                 tempFeedback = str(i) + " "
+
+            
             
             feedback = "Feedback: " + tempFeedback
 
@@ -1932,7 +1946,8 @@ class Ui_MainWindow(object):
                 for x in self.widgets:
                     x.setHidden(True)
                     self.verticalLayout_vault.removeWidget(x)
-
+                    x.delete()
+                    self.widgets.pop(self.widgets.index(x))
 
             #else prompt user a window to inform user 
             else:
