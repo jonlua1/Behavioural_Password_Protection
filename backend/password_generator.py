@@ -48,6 +48,7 @@ class Password_Generator():
         alpha_index = 0
 
         dice = Dice()
+        count = 0
         #get words with the given alphabets
         while len(passphrase_list) < len(alphabets):
             roll = dice.dice_roll()
@@ -55,6 +56,13 @@ class Password_Generator():
             if word[0] == alphabets[alpha_index]:
                 passphrase_list.append(word)
                 alpha_index += 1
+                count = 0
+            else:
+                count += 1
+                #letter has a chance of not existing in the wordlist
+                #remove that letter and replace it with a random word
+                if count == 7776:
+                    letter = alphabets.pop(alpha_index)
         
         #get words randomly
         while len(passphrase_list) < passphrase_length:
