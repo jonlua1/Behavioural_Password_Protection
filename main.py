@@ -1438,10 +1438,12 @@ class Ui_MainWindow(object):
                 if (i.id == id):
                     i.hide()
                     self.verticalLayout_vault.removeWidget(i)
-    
+                    self.widget_names.remove(i.name)
                     self.widgets.pop(self.widgets.index(i))
-                    
-            
+                    self.completer_vault = QtWidgets.QCompleter(self.widget_names)
+                    self.completer_vault.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
+                    self.searchbar.setCompleter(self.completer_vault)
+                         
             vault.delete_account(id)
 
             #self.parameters = vault.get_accounts()
@@ -1874,6 +1876,9 @@ class Ui_MainWindow(object):
 
                         if website not in self.widget_names:
                             self.widget_names.append(website)
+                            self.completer_vault = QtWidgets.QCompleter(self.widget_names)
+                            self.completer_vault.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
+                            self.searchbar.setCompleter(self.completer_vault)
 
                         continueCreateAcc = False
                         
