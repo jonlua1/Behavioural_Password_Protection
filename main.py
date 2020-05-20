@@ -1072,6 +1072,7 @@ class Ui_MainWindow(object):
         else:
             if(self.authenticateActionVault() is not None):
                  
+                #stores all the accounts and info 
                 self.parameters = vault_db.get_accounts()
             
                 spacer_vault = QtWidgets.QSpacerItem(
@@ -1420,15 +1421,6 @@ class Ui_MainWindow(object):
                     
             self.infoChanged = True
         
-    # get accounts from database when 
-    # user enter vault page
-    def viewVault(self):
-        vault = Vault()
-
-        parameters = vault.get_accounts()
-
-        return parameters
-
     # a function that create Pop up windows when user deletes an
     # account from vault page, and remove the related groupbox 
     # from vault page
@@ -1458,11 +1450,6 @@ class Ui_MainWindow(object):
 
         else:
             print("Cancel!")
-
-            
-    # useless function 
-    def showButton(self, btn):
-        return btn.text()
 
     # a button will be append to the button list (self.btnList) when it is clicked 
     def appendToBtnList(self):
