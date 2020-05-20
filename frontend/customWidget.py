@@ -1,8 +1,14 @@
-# customwidgets.py
+######################################################
+# This is a custom group box that is used on vault page,
+# It is used to display each account that user created
+# inside the vault that contains website name and 
+# user name.
+#
+######################################################
+
 from PyQt5.QtWidgets import (QWidget, QLabel, QHBoxLayout, QSizePolicy, QGroupBox, QPushButton, QApplication)
 from PyQt5.QtCore import (QSize, Qt, pyqtSlot)
 from PyQt5.QtGui import (QClipboard)
-
 
 
 class customGroupBox(QGroupBox):

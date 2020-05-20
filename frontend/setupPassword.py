@@ -1,3 +1,9 @@
+########################################################################
+# This form is called when user enters the vault page for the first time
+# It allows the user to key setup a masterpassword that locks the vault
+# 
+#
+########################################################################
 import sys
 import resource
 from PyQt5 import QtWidgets, QtCore, QtGui

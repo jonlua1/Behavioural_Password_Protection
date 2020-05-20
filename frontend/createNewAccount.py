@@ -1,3 +1,9 @@
+##############################################################
+# This is a dialog box that allows user to enter website name,
+# user name and password of their account while they are
+# creating their new account in vault.
+##############################################################
+
 import sys
 import resource
 from PyQt5 import QtWidgets, QtCore, QtGui

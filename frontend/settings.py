@@ -1,3 +1,8 @@
+##########################################################
+# This is used to set up the Settings page part of the GUi
+#
+############################################################
+
 import resource
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets

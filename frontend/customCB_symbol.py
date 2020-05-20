@@ -1,4 +1,10 @@
-#customCB.py
+###########################################################
+# It is a custom combo box that gets called when user uses
+# the passphrase generator. User can choose 0 to 9 / some
+# symbols or even empty string while customising his
+# passphrase.
+###########################################################
+
 from PyQt5.QtWidgets import (QComboBox, QGroupBox, QSizePolicy)
 from PyQt5.QtCore import (QSize)
 

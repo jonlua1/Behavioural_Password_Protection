@@ -1,4 +1,9 @@
-#customCB.py
+##############################################################
+# This is a custom combo box that gets called when user use the
+# password generator. It allows user to choose between A to Z
+# and even empty string while customising his passphrase.
+###############################################################
+
 from PyQt5.QtWidgets import (QComboBox, QGroupBox, QSizePolicy)
 from PyQt5.QtCore import (QSize)
 

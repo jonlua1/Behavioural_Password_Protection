@@ -1,3 +1,8 @@
+####################################################################
+# This is a dialog box that gets trigger every time, when user tries 
+# to use function that might affect privacy of the owner.
+######################################################################
+
 import sys
 import resource
 from PyQt5 import QtWidgets, QtCore, QtGui

@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'aboutUs.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.2
-#
-# WARNING! All changes made in this file will be lost!
+##############################################################
+# This is for setting up about us page of our GUI.
+# 
+#############################################################
 
 import resource
 from PyQt5 import QtCore, QtGui, QtWidgets
