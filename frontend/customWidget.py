@@ -12,6 +12,7 @@ class customGroupBox(QGroupBox):
         self.id = id
         self.name = name
         self.uname = uname
+        self.hidden = False
 
         self.styleSheet = """ 
         QPushButton {
@@ -69,15 +70,21 @@ class customGroupBox(QGroupBox):
         """
         Hide this widget, and all child widgets.
         """
+      
         for w in [self, self.lbl]:
             w.setVisible(False)
+          
+
 
     def delete(self):
         """
         delete this widget, and all child widgets.
         """
+  
         for w in [self, self.lbl]:
             w.setVisible(False)
+        
+       
 
     # call mainwindow fucntion when view button is clicked
     # so that mainwindow receives the username, password and website

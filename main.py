@@ -1073,7 +1073,7 @@ class Ui_MainWindow(object):
             if(self.authenticateActionVault() is not None):
                  
                 self.parameters = vault_db.get_accounts()
-                #print(self.parameters)
+            
                 spacer_vault = QtWidgets.QSpacerItem(
                 1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
 
@@ -1090,7 +1090,7 @@ class Ui_MainWindow(object):
                     item = customGroupBox(website, username, id)
                     item.viewDetails(self.viewAccountPwd)
                     item.setContentsMargins(0, 10, 0, 20)
-                #print(x)
+                
                     if (len(self.widgets) != len(self.parameters)):
                         self.verticalLayout_vault.addWidget(item)
                         self.widgets.append(item)
@@ -1395,6 +1395,7 @@ class Ui_MainWindow(object):
             ui.setupUi(Dialog, "Username and password cannot be empty")
             Dialog.show()
             Dialog.exec_()
+            self.infoChanged = False
 
         # else save it into database and add a group box with 
         # corresponding data into vault page
@@ -1408,11 +1409,14 @@ class Ui_MainWindow(object):
                     #update object attributes in self.widgets
                     x.name = self.userNameLE_dynamic.text()
                     #remove the widget from vault page (update display)
+                    x.hide()
                     self.verticalLayout_vault.removeWidget(x)
                     item = customGroupBox(account, x.name, id)
                     item.viewDetails(self.viewAccountPwd)
+                    self.widgets.pop(self.widgets.index(x))
+                    self.widgets.append(item)
+                    
                     self.verticalLayout_vault.addWidget(item)
-                    print(x.name)
                     
             self.infoChanged = True
         
@@ -1434,17 +1438,23 @@ class Ui_MainWindow(object):
         ui.setupUi(Dialog, "Confirm deletion of account?")
         Dialog.show()
         vault = Vault()
+        
 
-        if Dialog.exec_():
-            vault.delete_account(id)
+        if Dialog.exec_(): 
             
             for i in self.widgets:
                 if (i.id == id):
-                    i.setHidden(True)
+                    i.hide()
                     self.verticalLayout_vault.removeWidget(i)
-                    i.delete()
+    
                     self.widgets.pop(self.widgets.index(i))
+                    
+            
+            vault.delete_account(id)
+
+            #self.parameters = vault.get_accounts()
             self.stackedWidget.setCurrentIndex(2)
+            
 
         else:
             print("Cancel!")
@@ -1835,6 +1845,7 @@ class Ui_MainWindow(object):
 
     # get user back to vault page (vault page function)
     def backToVault(self):  
+
         self.stackedWidget.setCurrentIndex(2)
 
     # add an account into the vault page and database (vault page function)

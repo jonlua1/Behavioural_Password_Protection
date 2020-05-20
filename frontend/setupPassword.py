@@ -32,7 +32,7 @@ class setupPasForm(QtWidgets.QDialog):
             border: none;
             padding-left: 20px;
             """)
-        self.setupPasLabel = QtWidgets.QLabel("Setup a Password before you \ncan access to the vault!")
+        self.setupPasLabel = QtWidgets.QLabel("Setup a Password before you \naccess the vault.")
         self.setupPasLabel.setMinimumHeight(100)
         self.setupPasLabel.setStyleSheet("""background-color: #d2c15d;
             color: black;
