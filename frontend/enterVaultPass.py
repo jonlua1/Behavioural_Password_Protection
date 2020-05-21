@@ -51,7 +51,7 @@ class vaultPassword(QtWidgets.QDialog):
         self.button_box.setContentsMargins(0,0,0,80)
         self.button_box.setGeometry(QtCore.QRect(0, 450, 400, 60))
         self.buttonOk = self.button_box.button(QtWidgets.QDialogButtonBox.Ok)
-        self.buttonOk.setText("Log in")
+        self.buttonOk.setText("Submit")
         self.buttonOk.setMinimumSize(250, 50)
         self.buttonCancel = self.button_box.button(QtWidgets.QDialogButtonBox.Cancel)
         self.buttonCancel.setText("Cancel")
