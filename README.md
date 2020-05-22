@@ -1,5 +1,5 @@
 # Behavioural_Password_Protection
-Note: Source of most icons of our application is from icons8.com 
+Note: Source of most icons of our application is from [icons8.com] 
 
 
 ##**Please run 'main.py' under the root directory of the project to see our application.**
