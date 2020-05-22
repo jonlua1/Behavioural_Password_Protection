@@ -2,7 +2,7 @@
 Note: Source of most icons of our application is from [icons8.com](https://icons8.com)
 **Please run 'main.py' under the root directory of the project to see our application.**
 
-## Packages that need to be installed on terminal if you want to run on IDE
+## Packages that need to be installed on terminal if you want to run on IDE :sparkles:
 - pip install pyqt5
 - pip install pyqt5-tools
 - python -m nltk.downloader all
