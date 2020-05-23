@@ -8,6 +8,6 @@ Note: Source of most icons of our application is from :point_right: [icons8.com]
 - python -m nltk.downloader all
 - pip install pycryptodomex
 
-### Our project marketing website link is here :point_right: (https://bhpezpass.wixsite.com/ezpass) :wave:
+### Our project marketing website link is here :point_right: (https://huzair96.wixsite.com/ezpass) :wave:
 
 
